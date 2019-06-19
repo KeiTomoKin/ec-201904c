@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import jp.co.example.ecommerce_c.domain.Item;
 
 /**
- * Itemsテーブルを操作するリポジトリ
+ * Itemsテーブルを操作するリポジトリ.
  * 
  * @author keita.tomooka
  * @author takuya.aramaki
