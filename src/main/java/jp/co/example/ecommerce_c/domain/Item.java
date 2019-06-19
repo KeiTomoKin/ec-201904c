@@ -18,7 +18,7 @@ public class Item {
 	/** 削除フラグ */
 	private Boolean deleted;
 	/** トッピングのリスト */
-	private List toppingList;
+	private List<Topping> toppingList;
 
 	@Override
 	public String toString() {
@@ -82,11 +82,11 @@ public class Item {
 		this.deleted = deleted;
 	}
 
-	public List getToppingList() {
+	public List<Topping> getToppingList() {
 		return toppingList;
 	}
 
-	public void setToppingList(List toppingList) {
+	public void setToppingList(List<Topping> toppingList) {
 		this.toppingList = toppingList;
 	}
 
