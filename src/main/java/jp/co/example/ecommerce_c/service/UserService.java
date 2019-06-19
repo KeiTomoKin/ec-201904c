@@ -26,7 +26,7 @@ public class UserService {
 	 * @param administrator ユーザ情報
 	 */
 	public void insert(User user) {
-		// TODO
+		userRepository.insert(user);
 	}
 
 	/**
