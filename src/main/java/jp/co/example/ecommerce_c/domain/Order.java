@@ -36,6 +36,15 @@ public class Order {
 	/** ユーザー */
 	private User user;
 	/** オーダーリスト */
+	
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
+				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
+				+ destinationEmail + ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
+				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + "]";
+	}
+	
 	private List<OrderItem> orderItemList;
 
 	public final Integer getId() {
@@ -162,13 +171,5 @@ public class Order {
 	 */
 	public int getCalcTotalPrice() {
 		return getTotalPrice()+getTax();
-	}
-
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
-				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
-				+ destinationEmail + ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
-				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + "]";
 	}
 }

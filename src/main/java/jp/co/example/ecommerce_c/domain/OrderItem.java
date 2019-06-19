@@ -18,6 +18,12 @@ public class OrderItem {
 	/** 注文トッピングのリスト */
 	private List<OrderTopping> orderToppingList;
 
+	@Override
+	public String toString() {
+		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
+				+ ", size=" + size + "]";
+	}
+	
 	public int getSubTotal() {
 		// TODO 未実装
 		return 0;
@@ -77,11 +83,5 @@ public class OrderItem {
 
 	public void setOrderToppingList(List<OrderTopping> orderToppingList) {
 		this.orderToppingList = orderToppingList;
-	}
-
-	@Override
-	public String toString() {
-		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
-				+ ", size=" + size + "]";
 	}
 }
