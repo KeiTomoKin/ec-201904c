@@ -2,6 +2,11 @@ package jp.co.example.ecommerce_c.domain;
 
 import java.util.List;
 
+/**
+ * 注文商品を表すクラス.
+ *
+ * @author takuya.aramaki
+ */
 public class OrderItem {
 	/** ID */
 	private Integer id;
