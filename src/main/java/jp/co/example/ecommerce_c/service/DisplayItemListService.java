@@ -24,7 +24,7 @@ public class DisplayItemListService {
 	/**
 	 * 全ての商品情報を取得する.
 	 * 
-	 * @return
+	 * @return 商品情報のリスト
 	 */
 	public List<Item> findAll() {
 		return repository.findAll();
