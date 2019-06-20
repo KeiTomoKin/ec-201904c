@@ -15,11 +15,11 @@
     
 <script th:inline="javascript">
 window.onload=function(){
-  var arr = [[${itemList}]];
+  var arr = [[${itemNameList}]];
  
   for(var i=0;i<arr.length;i++){
     let op = document.createElement("option");
-    op.value = arr[i].name;
+    op.value = arr[i];
     document.getElementById("dt1").appendChild(op);
   }
 };
