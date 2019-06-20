@@ -46,9 +46,27 @@ public class UserRepository {
 	 */
 	public void insert(User user) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
-		String sql = "insert into administrators(name,email,password,zipcode,address,telephone)"
+		String sql = "insert into users(name,email,password,zipcode,address,telephone)"
 				+ "values(:name,:email,:password,:zipcode,:address,:telephone);";
 		template.update(sql, param);
+	}
+	
+	/**
+	 * メールアドレスでユーザー情報を取得.
+	 * 
+	 * @param email メールアドレス
+	 * @return 検索結果
+	 */
+	public User findByMailAddress(String email) {
+		String sql = "select id,name,email,password,zipcode,address,telephone from users where email=:email";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		
+		if(userList.size()==0) {
+			return null;
+		}else {
+			return userList.get(0);
+		}
 	}
 
 	/**

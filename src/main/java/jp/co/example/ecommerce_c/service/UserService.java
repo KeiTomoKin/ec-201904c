@@ -19,15 +19,27 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	
 	/**
-	 * ユーザ情報を登録します.
+	 * ユーザー情報の登録.
 	 * 
-	 * @param administrator ユーザ情報
+	 * @param user 登録するユーザー情報
 	 */
 	public void insert(User user) {
 		userRepository.insert(user);
 	}
+	
+	/**
+	 * メールアドレスでユーザー情報を取得する.
+	 * 
+	 * @param email メールアドレス
+	 * @return ユーザー情報
+	 */
+	public User findByEmail(String email) {
+		return userRepository.findByMailAddress(email);
+	}
+	
 
 	/**
 	 * ログインする.
