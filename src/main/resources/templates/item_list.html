@@ -61,6 +61,8 @@
 								<div class="col-sm-9">
 									<input type="text" name="name" id="code"
 										class="form-control input-sm" />
+						<div th:if=${noResult}>「<span th:text="${name}"></span>」を含む検索結果が見つかりませんでした</div>
+						<div th:if=${nullNameCheck}>商品名を入力してください</div>
 								</div>
 							</div>
 							<div class="text-center">
