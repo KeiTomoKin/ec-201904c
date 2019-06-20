@@ -54,9 +54,6 @@
 							<div class="alert alert-danger" th:if="${errorMessage}">
 			                        <p th:text="${errorMessage}">メールアドレスまたはパスワードが間違っています</p>
 			                </div>
-			                <div class="alert alert-info" th:if="${param.logout}">
-			                        <p>ログアウトしました。</p>
-			                </div>
 							<div class="form-group">
 								<label for="inputEmail">メールアドレス:</label>
 								<input type="text" name = "email" id="inputEmail" class="form-control"
