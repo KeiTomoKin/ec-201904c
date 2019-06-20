@@ -47,10 +47,10 @@ public class OrderRepository {
 	 * orderIdからユーザのオーダーを検索.
 	 * 
 	 * @param orderId sessionスコープ内のオーダーID
-	 * @return status=0のオーダー
+	 * @return オーダー
 	 */
 	public Order findById(Integer orderId) {
-		String sql = "SELECT user_id,status, total_price FROM orders WHERE id=:orderId AND status=0";
+		String sql = "SELECT user_id,status, total_price FROM orders WHERE id=:orderId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 //		try {
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
