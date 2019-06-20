@@ -3,8 +3,11 @@ package jp.co.example.ecommerce_c.repository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import jp.co.example.ecommerce_c.domain.Item;
@@ -34,6 +37,22 @@ public class ItemRepository {
 	private NamedParameterJdbcTemplate template;
 
 	/**
+	 * 指定したIDの商品を返します.
+	 *
+	 * @param id ID
+	 * @return Itemオブジェクト。存在しないIDが指定された場合はnull。
+	 */
+	public Item load(Integer id) {
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE id=:id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		try {
+			return template.queryForObject(sql, param, ITEM_ROW_MAPPER);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+
+	/**
 	 * 商品情報を全て取得する.
 	 * 
 	 * @return 商品情報のリスト
@@ -43,5 +62,4 @@ public class ItemRepository {
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
-
 }
