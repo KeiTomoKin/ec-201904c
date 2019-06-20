@@ -9,24 +9,52 @@ import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.InsertUserForm;
 import jp.co.example.ecommerce_c.service.UserService;
 
+/**
+ * ユーザー登録のコントローラーです
+ * 
+ * @author kazuya.makida
+ *
+ */
 @Controller
 @RequestMapping("/registration")
 public class InsertUserController {
 
 	@Autowired
 	private UserService userService;
-	
+
+	/**
+	 * ユーザー登録画面を表示します
+	 * 
+	 * @return
+	 */
 	@RequestMapping("")
 	public String toInsert() {
 		return "register_user";
 	}
-	
+
+	/**
+	 * ユーザー情報を登録します
+	 * 
+	 * @param form
+	 * @return
+	 */
 	@RequestMapping("/insert")
 	public String insert(InsertUserForm form) {
+
+		// パスワードチェック
+		if (!form.getPassword().equals(form.getPasswordAgain())) {
+			return "redirect:/registration";
+		}
+
+		// メールアドレスチェック
+		if (userService.findByEmail(form.getEmail()) != null) {
+			return "redirect:/registration";			
+		}
+
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
 		userService.insert(user);
-		
+
 		return "login";
 	}
 }
