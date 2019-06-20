@@ -33,6 +33,15 @@ public class DisplayItemListController {
 	@RequestMapping("/showList")
 	public String showList(Model model) {
 		List<Item> itemList = service.findAll();
+		
+		// 名前のみのリストの作成
+		List<String> itemNameList = new ArrayList<String>();
+		for(Item item : itemList) {
+			String name = item.getName();
+			itemNameList.add(name);
+		}
+		model.addAttribute("itemNameList", itemNameList);
+		
 		List<Item> item3List = new ArrayList<Item>();
 		List<List<Item>> item3Lists= new ArrayList<>();
 		for(int i=0;i<itemList.size();i++) {

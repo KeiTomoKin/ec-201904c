@@ -36,6 +36,7 @@ public class Order {
 	/** ユーザー */
 	private User user;
 	/** オーダーリスト */
+	private List<OrderItem> orderItemList;
 	
 	@Override
 	public String toString() {
@@ -45,7 +46,6 @@ public class Order {
 				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + "]";
 	}
 	
-	private List<OrderItem> orderItemList;
 
 	public final Integer getId() {
 		return id;
