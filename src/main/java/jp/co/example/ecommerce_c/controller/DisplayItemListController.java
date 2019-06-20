@@ -1,5 +1,6 @@
 package jp.co.example.ecommerce_c.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,17 @@ public class DisplayItemListController {
 	@RequestMapping("/showList")
 	public String service(Model model) {
 		List<Item> itemList = service.findAll();
-		model.addAttribute("itemList", itemList);
+		List<Item> item3List = new ArrayList<Item>();
+		List<List<Item>> item3Lists= new ArrayList<>();
+		for(int i=0;i<itemList.size();i++) {
+			item3List.add(itemList.get(i));
+			if(item3List.size()==3) {
+				item3Lists.add(item3List);
+				item3List=new ArrayList<>();
+			}
+		}
+		System.out.println(item3Lists);
+		model.addAttribute("item3Lists", item3Lists);
 		return "item_list";
 	}
 
