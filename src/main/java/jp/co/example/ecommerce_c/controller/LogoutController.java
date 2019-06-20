@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LogoutController {
 	
 	/**
-	 * ログアウト処理.
+	 * ログアウト処理.(SpringSecurityで行うためコメントアウト)
 	 * 
 	 * @return ログイン画面へのリダイレクト
 	 */
-	@RequestMapping("/logout")
-	public String logout() {
-		return "redirect:toLogin";
-	}
+//	@RequestMapping("/logout")
+//	public String logout() {
+//		return "redirect:toLogin";
+//	}
 
 }

@@ -1,15 +1,9 @@
 package jp.co.example.ecommerce_c.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import jp.co.example.ecommerce_c.domain.User;
-import jp.co.example.ecommerce_c.form.LoginForm;
-import jp.co.example.ecommerce_c.service.UserService;
 
 /**
  * ログイン用コントローラー.
@@ -20,14 +14,15 @@ import jp.co.example.ecommerce_c.service.UserService;
 @Controller
 @RequestMapping("")
 public class LoginController {
-	
-	@Autowired
-	private UserService userService;
-	
-	@ModelAttribute
-	public LoginForm setUpLoginForm() {
-		return new LoginForm();
-	}
+
+	//ログイン処理はSpringSecurityで行うためコメントアウト)
+//	@Autowired
+//	private UserService userService;
+//	
+//	@ModelAttribute
+//	public LoginForm setUpLoginForm() {
+//		return new LoginForm();
+//	}
 	
 	/**
 	 * ログイン画面を出力.
@@ -45,20 +40,20 @@ public class LoginController {
 	}
 	
 	/**
-	 * ログイン処理.
+	 * ログイン処理.(SpringSecurityで行うためコメントアウト)
 	 * 
 	 * @param form ログインフォーム
 	 * @return アイテムリスト画面
 	 */
-	@RequestMapping("/login")
-	public String login(LoginForm form) {
-		System.out.println(form);
-		User user = userService.login(form.getEmail(), form.getPassword());
-		System.out.println(user);
-		if(user == null) {
-			return "/toLogin";
-		}
-		return "item_list";
-	}
+//	@RequestMapping("/login")
+//	public String login(LoginForm form) {
+//		System.out.println(form);
+//		User user = userService.login(form.getEmail(), form.getPassword());
+//		System.out.println(user);
+//		if(user == null) {
+//			return "/toLogin";
+//		}
+//		return "item_list";
+//	}
 
 }
