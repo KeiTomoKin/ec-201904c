@@ -20,7 +20,7 @@ import jp.co.example.ecommerce_c.repository.ItemRepository;
 public class DisplayItemListService {
 	@Autowired
 	private ItemRepository repository;
-	
+
 	/**
 	 * 全ての商品情報を取得する.
 	 * 
@@ -28,5 +28,14 @@ public class DisplayItemListService {
 	 */
 	public List<Item> findAll() {
 		return repository.findAll();
+	}
+
+	/**
+	 * 指定した名前を含む商品情報を取得する.
+	 * @param name 名前
+	 * @return 	商品情報のリスト
+	 */
+	public List<Item> findByLikeName(String name) {
+		return repository.findByLikeName(name);
 	}
 }
