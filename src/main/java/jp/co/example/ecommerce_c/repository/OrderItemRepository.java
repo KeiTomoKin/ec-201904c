@@ -11,7 +11,14 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import jp.co.example.ecommerce_c.domain.OrderItem;
 
+/**
+ * 注文中商品の操作をするリポジトリ.
+ * 
+ * @author koichi.nagata
+ *
+ */
 public class OrderItemRepository {
+	/** ピザのローマッパー */
 	private static final RowMapper<OrderItem> ORDERITEM_ROW_MAPPER = (rs, i) -> {
 		OrderItem pizza = new OrderItem();
 		pizza.setItemId(rs.getInt("itemId"));
@@ -29,7 +36,7 @@ public class OrderItemRepository {
 	 * @param orderItem 新しいピザ
 	 */
 	public void insert(OrderItem orderItem) {
-		String insertSql = "insert into orders(item_id,order_id,quantity,size) values (:itemId,:orderId,:quantity:size)";
+		String insertSql = "insert into order_items(item_id,order_id,quantity,size) values (:itemId,:orderId,:quantity:size)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
 		template.update(insertSql, param);
 	}
@@ -41,7 +48,7 @@ public class OrderItemRepository {
 	 * @return 注文IDと紐づいているピザのリスト
 	 */
 	public List<OrderItem> findById(Integer orderId) {
-		String sql = "SELECT item_id,order_id,quantity,size FROM orders WHERE id=:orderId";
+		String sql = "SELECT item_id,order_id,quantity,size FROM order_items WHERE id=:orderId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 //	try {
 		List<OrderItem> orderItemList = template.query(sql, param, ORDERITEM_ROW_MAPPER);
@@ -57,8 +64,8 @@ public class OrderItemRepository {
 	 * @param orderItemId 注文中のピザの個別ID
 	 */
 	public void deleteById(Integer orderItemId) {
-		String deleteSql = "delete from orderItems where id=:orderItemId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderItemId);
+		String deleteSql = "delete from order_items where id=:orderItemId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 		template.update(deleteSql, param);
 	}
 }

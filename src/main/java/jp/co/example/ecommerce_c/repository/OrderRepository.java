@@ -21,12 +21,12 @@ public class OrderRepository {
 
 	/** Orderから生成するローマッパー */
 	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
-		Order pizza = new Order();
-		pizza.setId(rs.getInt("id"));
-		pizza.setUserId(rs.getInt("userId"));
-		pizza.setStatus(rs.getInt("status"));
-		pizza.setTotalPrice(rs.getInt("size"));
-		return pizza;
+		Order order = new Order();
+		order.setId(rs.getInt("id"));
+		order.setUserId(rs.getInt("userId"));
+		order.setStatus(rs.getInt("status"));
+		order.setTotalPrice(rs.getInt("size"));
+		return order;
 	};
 
 	@Autowired
