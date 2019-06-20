@@ -62,4 +62,11 @@ public class ItemRepository {
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
+	
+	public List<Item> findByLikeName(String name){
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%"+name+"%");
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
 }
