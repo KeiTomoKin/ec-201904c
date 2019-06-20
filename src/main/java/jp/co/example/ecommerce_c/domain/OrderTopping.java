@@ -7,15 +7,20 @@ package jp.co.example.ecommerce_c.domain;
  *
  */
 public class OrderTopping {
-	//** ID **/
+	/** Mサイズのトッピング料金 */
+	public static final int PRICE_M = 200;
+	/** Lサイズのトッピング料金 */
+	public static final int PRICE_L = 300;
+
+	/** ID */
 	private Integer id;
-	//** トッピング **/
+	/** トッピング */
 	private Integer toppingId;
-	//** 注文商品のID **/
+	/** 注文商品のID */
 	private Integer orderItemId;
-	//** トッピング **/
+	/** トッピング */
 	private Topping topping;
-	
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", toppingId=" + toppingId + ", orderItemId=" + orderItemId + ", topping=" + topping + "]";

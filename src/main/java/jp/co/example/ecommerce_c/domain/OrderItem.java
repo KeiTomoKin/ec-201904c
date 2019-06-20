@@ -28,10 +28,24 @@ public class OrderItem {
 		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
 				+ ", size=" + size + "]";
 	}
-	
+
+	/**
+	 * 小計を返します. (ピザ1枚の価格 + トッピング1つの価格 * トッピングの数) * ピザの枚数 です。
+	 *
+	 * @return 小計
+	 */
 	public int getSubTotal() {
-		// TODO 未実装
-		return 0;
+		int toppingPrice;
+		switch (size) {
+		case 'M':
+			toppingPrice = OrderTopping.PRICE_M * orderToppingList.size();
+			return (item.getPriceM() + toppingPrice) * quantity;
+		case 'L':
+			toppingPrice = OrderTopping.PRICE_L * orderToppingList.size();
+			return (item.getPriceL() + toppingPrice) * quantity;
+		default:
+			throw new RuntimeException("サイズが間違っています: " + size);
+		}
 	}
 
 	public Integer getId() {
