@@ -40,8 +40,7 @@ public class DisplayItemListController {
 			page = 1;
 		}
 		List<Item> itemList = service.findAll();
-<<<<<<< Updated upstream
-=======
+
 
 		// 名前のみのリストの作成
 		List<String> itemNameList = new ArrayList<String>();
@@ -51,7 +50,6 @@ public class DisplayItemListController {
 		}
 		model.addAttribute("itemNameList", itemNameList);
 
->>>>>>> Stashed changes
 		List<Item> item3List = new ArrayList<Item>();
 		List<List<Item>> item3Lists = new ArrayList<>();
 		for (int i = 0; i < itemList.size(); i++) {
