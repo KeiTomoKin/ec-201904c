@@ -41,6 +41,9 @@ public class DisplayItemListController {
 				item3List=new ArrayList<>();
 			}
 		}
+		if(item3List.size()>0) {
+			item3Lists.add(item3List);
+		}
 		System.out.println(item3Lists);
 		model.addAttribute("item3Lists", item3Lists);
 		return "item_list";
@@ -57,6 +60,9 @@ public class DisplayItemListController {
 				item3Lists.add(item3List);
 				item3List=new ArrayList<>();
 			}
+		}
+		if(item3List.size()>0) {
+			item3Lists.add(item3List);
 		}
 		System.out.println(item3Lists);
 		model.addAttribute("item3Lists", item3Lists);
