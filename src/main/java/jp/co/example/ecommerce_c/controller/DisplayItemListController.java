@@ -47,6 +47,7 @@ public class DisplayItemListController {
 		}
 		System.out.println(item3Lists);
 		model.addAttribute("item3Lists", item3Lists);
+		model.addAttribute("itemList", itemList);
 		return "item_list";
 	}
 
