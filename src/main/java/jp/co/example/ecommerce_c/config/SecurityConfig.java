@@ -26,6 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
+	/**
+	 * 静的リソースに対してセキュリティ設定を無視する
+	 *
+	 */
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/css/**"
@@ -34,6 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 								 , "/fonts/**");
 	}
 	
+	/**
+	 * 認可とログインログアウトの設定.
+	 *
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
@@ -41,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//http.formLogin().disable();
 		
 		http.authorizeRequests() //認可に関する設定
-			.antMatchers("/", "/registration", "/registration/insert", "/toLogin").permitAll() //すべてのユーザがアクセスできるリンク
+			.antMatchers("/", "/registration", "/registration/insert", "/toLogin", "/displayItemList", "/displayItemList/showList", "/item", "item/detail").permitAll() //すべてのユーザがアクセスできるリンク
 			.anyRequest().authenticated();
 		
 		http.formLogin() //ログインに関する設定
@@ -61,12 +69,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.invalidateHttpSession(true); // true:ログアウト後、セッションを無効にする false:セッションを無効にしない
 	}
 	
-//	@Override
-//	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.userDetailsService(memberDetailsService)
-//			.passwordEncoder(new BCryptPasswordEncoder());
-//	}
+	/**
+	 * 「認証」に関する設定.
+	 *
+	 */
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(memberDetailsService)
+			.passwordEncoder(new BCryptPasswordEncoder());
+	}
 	
+	/**
+	 * パスワードのハッシュ化を行うためのエンコーダー.
+	 * 
+	 * @return エンコーダー
+	 */
 	@Bean
     public PasswordEncoder passwordEncoder() {
     		return new BCryptPasswordEncoder();
