@@ -2,6 +2,12 @@ package jp.co.example.ecommerce_c.domain;
 
 import java.util.List;
 
+/**
+ * 商品のドメイン.
+ * 
+ * @author keita.tomooka
+ *
+ */
 public class Item {
 	/** ID */
 	private Integer id;
