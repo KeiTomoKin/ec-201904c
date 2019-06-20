@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ネットでピザ注文</title>
-<link href="css/bootstrap.css" rel="stylesheet">
+<link th:href="@{/css/bootstrap.css}" href="css/bootstrap.css" rel="stylesheet">
 
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -38,7 +38,7 @@ $(function() {
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
-						alt="main log" src="img/header_logo.png" height="35">
+						alt="main log" src="img/header_logo.png" th:src="@{/img/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -58,43 +58,53 @@ $(function() {
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
 				<div class="well">
-					<form method="post" action="item_list.html" th:action="@{/registration/insert}">
+					<form th:object="${insertUserForm}" method="post" action="item_list.html" th:action="@{/registration/insert}">
 						<fieldset>
 							<legend>ユーザ登録</legend>
+							<!-- パスワード確認のエラー表示 -->
 							<div class="form-group">
-								<label for="inputName">名前:</label><label class="control-label" style="color: red" for="inputError">名前を入力してください</label>
-								<input type="text" name="name" id="inputName" class="form-control" placeholder="Name">
+		                        <p th:text="${passwordError}" style="color: red"></p>
+							</div>
+							<!-- 同一のメールアドレス登録時のエラー表示 -->
+							<div class="form-group">
+		                        <p th:text="${mailAddressError}" style="color: red"></p>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail">メールアドレス:</label><label class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
-								<input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email">
+								<label for="inputName">名前:</label>
+							<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
+								<input type="text" name="name" id="inputName" class="form-control" placeholder="Name" th:field="*{name}">
+							</div>
+							<div class="form-group">
+								<label for="inputEmail">メールアドレス:</label>
+								<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
+								<input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email" th:field="*{email}">
 							</div>
 							<div class="form-group">
 								<label for="inputZipcode">郵便番号:</label>
 									<input id="js-button" type="button" value="住所検索"><br>
-								<label class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
-								<input type="text" name="zipcode" maxlength="8" id="inputZipcode" class="form-control" placeholder="Zipcode">
+								<label th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
+								<input type="text" name="zipcode" maxlength="8" id="inputZipcode" class="form-control" placeholder="Zipcode" th:field="*{zipcode}">
 								
 							</div>
 							<div class="form-group">
 								<label for="inputAddress">住所:</label>
-								<label class="control-label" style="color: red" for="inputError">住所を入力してください</label>
-								<input type="text" name="address" id="inputAddress" class="form-control" placeholder="Address">
+								<label th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="control-label" style="color: red" for="inputError">住所を入力してください</label>
+								<input type="text" name="address" id="inputAddress" class="form-control" placeholder="Address" th:field="*{address}">
 							</div>
 							<div class="form-group">
 								<label for="inputTel">電話番号:</label>
-								<label class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-								<input type="text" name="telephone" id="inputTel" class="form-control" placeholder="Tel">
+								<label th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
+								<input type="text" name="telephone" id="inputTel" class="form-control" placeholder="Tel" th:field="*{telephone}">
 							</div>
 							<div class="form-group">
 								<label for="inputPassword">パスワード:</label>
-								<label class="control-label" style="color: red" for="inputError">パスワードを入力してください</label>
-								<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
+								<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="control-label" style="color: red" for="inputError">パスワードを入力してください</label>
+								<input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" th:field="*{password}">
 							</div>
 							<div class="form-group">
 								<label for="inputConfirmationPassword">確認用パスワード:</label>
-								<label class="control-label" style="color: red" for="inputError">確認用パスワードを入力してください</label>
-								<input type="password" name="passwordAgain" id="inputConfirmationPassword" class="form-control" placeholder="Confirmation Password">
+								<label th:if="${#fields.hasErrors('passwordAgain')}" th:errors="*{passwordAgain}" class="control-label" style="color: red" for="inputError">確認用パスワードを入力してください</label>
+								<input type="password" name="passwordAgain" id="inputConfirmationPassword" class="form-control" placeholder="Confirmation Password" th:field="*{passwordAgain}">
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary">登録</button>
@@ -105,7 +115,14 @@ $(function() {
 				</div>
 			</div>
 		</div>
-
+		<br>
+		<div class="row">
+			<div class="text-center">
+				<a th:href="@{/toLogin}">ログインはこちら</a>
+			</div>
+		</div>
+		<br>
+		<br>		
 	</div>
 	<!-- end container -->
 </body>

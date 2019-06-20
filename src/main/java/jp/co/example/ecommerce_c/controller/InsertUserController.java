@@ -3,6 +3,10 @@ package jp.co.example.ecommerce_c.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.User;
@@ -21,6 +25,11 @@ public class InsertUserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@ModelAttribute
+	public InsertUserForm setUpInsertUserForm() {
+		return new InsertUserForm();
+	}
 
 	/**
 	 * ユーザー登録画面を表示します
@@ -39,16 +48,23 @@ public class InsertUserController {
 	 * @return
 	 */
 	@RequestMapping("/insert")
-	public String insert(InsertUserForm form) {
+	public String insert(@Validated InsertUserForm form, BindingResult result, Model model) {
 
+		// 入力値チェック
+		if(result.hasErrors()) {
+			return this.toInsert();
+		}
+		
 		// パスワードチェック
 		if (!form.getPassword().equals(form.getPasswordAgain())) {
-			return "redirect:/registration";
+			model.addAttribute("passwordError", "入力されたパスワードが異なります");
+			return this.toInsert();
 		}
 
 		// メールアドレスチェック
 		if (userService.findByEmail(form.getEmail()) != null) {
-			return "redirect:/registration";			
+			model.addAttribute("mailAddressError", "既に同じメールアドレスが登録されています");
+			return this.toInsert();
 		}
 
 		User user = new User();
