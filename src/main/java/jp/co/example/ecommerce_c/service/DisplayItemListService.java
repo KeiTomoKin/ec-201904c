@@ -33,7 +33,7 @@ public class DisplayItemListService {
 	/**
 	 * 指定した名前を含む商品情報を取得する.
 	 * @param name 名前
-	 * @return 商品情報のリスト
+	 * @return 	商品情報のリスト
 	 */
 	public List<Item> findByLikeName(String name) {
 		return repository.findByLikeName(name);

@@ -46,4 +46,20 @@ public class DisplayItemListController {
 		return "item_list";
 	}
 
+	@RequestMapping("/findName")
+	public String findName(Model model,String name) {
+		List<Item> itemList = service.findByLikeName(name);
+		List<Item> item3List = new ArrayList<Item>();
+		List<List<Item>> item3Lists= new ArrayList<>();
+		for(int i=0;i<itemList.size();i++) {
+			item3List.add(itemList.get(i));
+			if(item3List.size()==3) {
+				item3Lists.add(item3List);
+				item3List=new ArrayList<>();
+			}
+		}
+		System.out.println(item3Lists);
+		model.addAttribute("item3Lists", item3Lists);
+		return "item_list";
+	}
 }
