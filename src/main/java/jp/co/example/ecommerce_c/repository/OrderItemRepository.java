@@ -23,7 +23,8 @@ public class OrderItemRepository {
 	/** ピザのローマッパー */
 	private static final RowMapper<OrderItem> ORDERITEM_ROW_MAPPER = (rs, i) -> {
 		OrderItem pizza = new OrderItem();
-		pizza.setItemId(rs.getInt("itemId"));
+		pizza.setId(rs.getInt("id"));
+		pizza.setItemId(rs.getInt("item_id"));
 		pizza.setQuantity(rs.getInt("quantity"));
 		pizza.setSize(rs.getString("size").charAt(0));
 		return pizza;
@@ -50,7 +51,7 @@ public class OrderItemRepository {
 	 * @return 注文IDと紐づいているピザのリスト
 	 */
 	public List<OrderItem> findById(Integer orderId) {
-		String sql = "SELECT item_id,order_id,quantity,size FROM order_items WHERE id=:orderId";
+		String sql = "SELECT id,item_id,order_id,quantity,size FROM order_items WHERE order_id=:orderId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 //	try {
 		List<OrderItem> orderItemList = template.query(sql, param, ORDERITEM_ROW_MAPPER);

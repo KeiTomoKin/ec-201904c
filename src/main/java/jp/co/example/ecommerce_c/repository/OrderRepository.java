@@ -23,9 +23,17 @@ public class OrderRepository {
 	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
 		Order order = new Order();
 		order.setId(rs.getInt("id"));
-		order.setUserId(rs.getInt("userId"));
+		order.setUserId(rs.getInt("user_id"));
 		order.setStatus(rs.getInt("status"));
-		order.setTotalPrice(rs.getInt("size"));
+		order.setTotalPrice(rs.getInt("total_price"));
+		order.setOrderDate(rs.getDate("order_date"));
+		order.setDestinationName(rs.getString("destination_name"));
+		order.setDestinationEmail(rs.getString("destination_email"));
+		order.setDestinationZipcode(rs.getString("destination_zipcode"));
+		order.setDestinationAddress(rs.getString("destination_address"));
+		order.setDestinationTel(rs.getString("destination_tel"));
+		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
+		order.setPaymentMethod(rs.getInt("payment_method"));
 		return order;
 	};
 
@@ -46,12 +54,13 @@ public class OrderRepository {
 	/**
 	 * orderIdからユーザのオーダーを検索.
 	 * 
-	 * @param orderId sessionスコープ内のオーダーID
+	 * @param id sessionスコープ内のオーダーID
 	 * @return オーダー
 	 */
-	public Order findById(Integer orderId) {
-		String sql = "SELECT user_id,status, total_price FROM orders WHERE id=:orderId";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
+	public Order findById(Integer id) {
+		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method"
+				+ " FROM orders WHERE id=:id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 //		try {
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 //		}catch() {
