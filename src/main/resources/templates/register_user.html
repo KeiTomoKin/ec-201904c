@@ -16,11 +16,19 @@
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- 郵便番号から住所を取得 -->
 <script>
 $(function() {
 	$('#js-button').on("click",function(){
 		console.log("hello world!");
 		AjaxZip3.zip2addr('zipcode', '', 'address', 'address');
+	});
+});
+</script>
+<script>
+$(function(){
+	$('#reset').on("click",function(){
+		$("input").val("");
 	});
 });
 </script>
@@ -67,52 +75,68 @@ $(function() {
 						<fieldset>
 							<legend>ユーザ登録</legend>
 							<!-- パスワード確認のエラー表示 -->
-							<div class="form-group">
+							<div class="alert alert-danger" th:if="${passwordError}">
 		                        <p th:text="${passwordError}" style="color: red"></p>
 							</div>
 							<!-- 同一のメールアドレス登録時のエラー表示 -->
-							<div class="form-group">
+							<div class="alert alert-danger" th:if="${mailAddressError}">
 		                        <p th:text="${mailAddressError}" style="color: red"></p>
 							</div>
 							<div class="form-group">
-								<label for="inputName">名前:</label> ※全角50文字以内<br>
-							<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
-								<input type="text" name="name" id="inputName" class="form-control" pattern="[^\x20-\x7E]*" placeholder="Name" th:field="*{name}">
+								<label for="inputFirstName">名前:</label> ※100文字以内<br>
+								<label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
+								<label th:if="${NOT #fields.hasErrors('firstName') AND #fields.hasErrors('lastName')}" th:errors="*{lastName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
+								<div class="form-inline">
+									姓：<input type="text" name="firstName" style="width:200px;" id="inputFirstName" class="form-control " placeholder="First Name" th:field="*{firstName}">
+									　
+									名：<input type="text" name="lastName" style="width:200px;" id="inputLastName" class="form-control" placeholder="Last Name" th:field="*{lastName}">
+								</div>
 							</div>
 							<div class="form-group">
-								<label for="inputEmail">メールアドレス:</label> ※半角100文字以内<br>
+								<label for="inputEmail">メールアドレス:</label> ※100文字以内<br>
 								<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
 								<input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email" th:field="*{email}">
 							</div>
 							<div class="form-group">
-								<label for="inputZipcode">郵便番号:</label>
-									<input id="js-button" type="button" value="住所検索"> ※ハイフンを抜いた7文字で入力してください<br>
+								<label for="inputZipcode">郵便番号:</label>※ハイフンを抜いた7文字で入力してください<br>
 								<label th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
-								<input type="text" name="zipcode" style="width:100px;" maxlength="7" id="inputZipcode" class="form-control" placeholder="Zipcode" th:field="*{zipcode}">			
+								<div class="form-inline">
+									<input type="text" name="zipcode" style="width:100px;" maxlength="7" id="inputZipcode" class="form-control" placeholder="Zipcode" th:field="*{zipcode}">			
+									<button id="js-button" type="button">住所検索</button>
+								</div>	
 							</div>
 							<div class="form-group">
-								<label for="inputAddress">住所:</label> ※全角100文字以内<br>
+								<label for="inputAddress">住所:</label> ※全角200文字以内<br>
 								<label th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="control-label" style="color: red" for="inputError">住所を入力してください</label>
 								<input type="text" name="address" id="inputAddress" class="form-control" pattern="[^\x20-\x7E]*" placeholder="Address" th:field="*{address}">
 							</div>
 							<div class="form-group">
-								<label for="inputTel">電話番号:</label> ※半角15文字以内<br>
-								<label th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-								<input type="tel" name="telephone" maxlength="15" id="inputTel" class="form-control" placeholder="Tel" th:field="*{telephone}">
+								<label for="inputTel1">電話番号:</label><br>
+								<label th:if="${#fields.hasErrors('firstNumber')}" th:errors="*{firstNumber}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
+								<label th:if="${NOT #fields.hasErrors('firstNumber') AND #fields.hasErrors('middleNumber')}" th:errors="*{middleNumber}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
+								<label th:if="${NOT #fields.hasErrors('firstNumber') AND NOT #fields.hasErrors('middleNumber') AND #fields.hasErrors('lastNumber')}" th:errors="*{lastNumber}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
+								<div class="form-inline">
+									<input type="tel" name="firstNumber" style="width:70px;" maxlength="5" id="inputTel1" class="form-control" placeholder="first" th:field="*{firstNumber}">
+									 － 
+									<input type="tel" name="middleNumber" style="width:70px;" maxlength="5" id="inputTel2" class="form-control" placeholder="middle" th:field="*{middleNumber}">								
+									 － 
+									<input type="tel" name="lastNumber" style="width:70px;" maxlength="5" id="inputTel3" class="form-control" placeholder="last" th:field="*{lastNumber}">								
+								</div>
 							</div>
 							<div class="form-group">
 								<label for="inputPassword">パスワード:</label> ※8文字以上20文字以下<br>
 								<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="control-label" style="color: red" for="inputError">パスワードを入力してください</label>
-								<input type="password" name="password" maxlength="20" id="inputPassword" class="form-control" placeholder="Password" th:field="*{password}">
+								<input type="password" name="password" style="width:180px;" maxlength="20" id="inputPassword" class="form-control" placeholder="Password" th:field="*{password}">
 							</div>
 							<div class="form-group">
 								<label for="inputConfirmationPassword">確認用パスワード:</label> ※再度同じものを入力してください<br>
 								<label th:if="${#fields.hasErrors('passwordAgain')}" th:errors="*{passwordAgain}" class="control-label" style="color: red" for="inputError">確認用パスワードを入力してください</label>
-								<input type="password" name="passwordAgain" maxlength="20" id="inputConfirmationPassword" class="form-control" placeholder="Confirmation Password" th:field="*{passwordAgain}">
+								<input type="password" name="passwordAgain" style="width:180px;" maxlength="20" id="inputConfirmationPassword" class="form-control" placeholder="Confirmation Password" th:field="*{passwordAgain}">
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary">登録</button>
-								<input type="reset" class="btn btn-primary" value="クリア">
+								<button type="button" id="reset" class="btn btn-primary">クリア</button>
+								<!-- <input type="reset" class="btn btn-primary" value="クリア"> -->
 							</div>
 						</fieldset>
 					</form>
