@@ -12,6 +12,16 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+<!-- 郵便番号から住所を取得 -->
+<script>
+$(function() {
+	$('#js-button').on("click",function(){
+		console.log("hello world!");
+		AjaxZip3.zip2addr('zipcode', '', 'address', 'address');
+	});
+});
+</script>
 </head>
 <body>
 	<div class="container">
@@ -217,7 +227,8 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">&nbsp;&nbsp;<button>住所検索</button>
+									<input type="text">&nbsp;&nbsp;
+									<button id="js-button" type="button">住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -227,7 +238,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input name="address" type="text">
 								</td>
 							</tr>
 							<tr>
