@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org"
 				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -123,15 +122,22 @@ window.onload=function(){
 					</tbody>
 				</table>
 				<!-- ページング機能 -->
-				<div th:if="${itemPage.totalPages > 0}" class="pagination"
-				    th:each="pageNumber : ${pageNumbers}">
-				    <a th:if="${name==null}" th:href="@{/displayItemList/showList(page=${pageNumber})}"
-				        th:text=${pageNumber}
-				        th:class="${pageNumber==itemPage.number + 1} ? active"></a>
-				    <a th:unless="${name==null}" th:href="@{/displayItemList/findName(name=${name},page=${pageNumber})}"
-				        th:text=${pageNumber}
-				        th:class="${pageNumber==itemPage.number + 1} ? active"></a> 
-				</div>
+				<nav style="text-align: center;">
+					<ul class="pagination" th:remove="all-but-first">
+						<li th:each="pageNumber : ${pageNumbers}"
+							th:class="${pageNumber==itemPage.number + 1} ? active">
+							<a th:if="${name==null}" th:href="@{/displayItemList/showList(page=${pageNumber})}"
+								th:text=${pageNumber}>1</a>
+							<a th:unless="${name==null}" th:href="@{/displayItemList/findName(name=${name},page=${pageNumber})}"
+								th:text=${pageNumber}
+								th:class="${pageNumber==itemPage.number + 1} ? active">1</a>
+						</li>
+						<li class="active"><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</div>
