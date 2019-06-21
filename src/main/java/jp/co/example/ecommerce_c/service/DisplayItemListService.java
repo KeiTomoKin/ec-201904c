@@ -75,7 +75,7 @@ public class DisplayItemListService {
 	 * @param itemList 商品ののリスト
 	 * @return 安い順に並べ替えられた商品のリスト
 	 */
-	public List<Item> priceHighOrder(List<Item> itemList) {
+	public List<Item> priceLowOrder(List<Item> itemList) {
 		Collections.sort(itemList, new Comparator<Item>() {
 			public static final int ASC = 1;
 
@@ -101,7 +101,7 @@ public class DisplayItemListService {
 	 * @param itemList 商品ののリスト
 	 * @return 高い順に並べ替えられた商品のリスト
 	 */
-	public List<Item> priceLowOrder(List<Item> itemList) {
+	public List<Item> priceHighOrder(List<Item> itemList) {
 		Collections.sort(itemList, new Comparator<Item>() {
 			public static final int DESC = -1;
 

@@ -100,11 +100,31 @@ window.onload=function(){
 				</div>
 			</div>
 		</div>
-
+		
 		<!-- table -->
 		<div class="row">
+			
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<form th:if="${name==null}" th:action="@{/displayItemList/showList}" method="post" >
+					<select name="sortOrder">
+						<option value="" selected>デフォルト</option>
+						<option value="DESC" >価格の高い順</option>
+						<option value="ASC" >価格の低い順</option>
+					</select>
+					<input type="hidden" name="page" th:value="${page}">
+					<input type="submit" value="並び替え">
+				</form>
+				<form th:unless="${name==null}" th:action="@{/displayItemList/findName}" method="post" >
+					<select name="sortOrder">
+						<option value="" selected>デフォルト</option>
+						<option value="DESC" >価格の高い順</option>
+						<option value="ASC" >価格の低い順</option>
+					</select>
+					<input type="hidden" name="name" th:value="${name}">
+					<input type="hidden" name="page" th:value="${page}">
+					<input type="submit" value="並び替え">
+				</form>
 				<table class="table table-striped">
 					<tbody>
 						<tr th:each="item3List:${itemPage}">
@@ -113,7 +133,7 @@ window.onload=function(){
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
 										class="img-responsive img-rounded" width="200" height="600">
 								</a><br>
-								<a href="item_detail.html" th:href="@{/item/detail?id=&{item.id}}" th:text="${item.name}">じゃがバターベーコン</a><br>
+								<a href="item_detail.html" th:href="@{'/item/detail?id='+${item.id}}" th:text="${item.name}">じゃがバターベーコン</a><br>
 								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${item.priceM}">1,380円(税抜)</span><br>
 								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${item.priceL}">2,380円(税抜)</span><br>
 							</th>
@@ -123,10 +143,10 @@ window.onload=function(){
 				<!-- ページング機能 -->
 				<div th:if="${itemPage.totalPages > 0}" class="pagination"
 				    th:each="pageNumber : ${pageNumbers}">
-				    <a th:if="${name==null}" th:href="@{/displayItemList/showList(page=${pageNumber})}"
+				    <a th:if="${name==null}" th:href="@{/displayItemList/showList(page=${pageNumber},sortOrder=${sortOrder})}"
 				        th:text=${pageNumber}
 				        th:class="${pageNumber==itemPage.number + 1} ? active"></a>
-				    <a th:unless="${name==null}" th:href="@{/displayItemList/findName(name=${name},page=${pageNumber})}"
+				    <a th:unless="${name==null}" th:href="@{/displayItemList/findName(name=${name},page=${pageNumber},sortOrder=${sortOrder})}"
 				        th:text=${pageNumber}
 				        th:class="${pageNumber==itemPage.number + 1} ? active"></a> 
 				</div>
