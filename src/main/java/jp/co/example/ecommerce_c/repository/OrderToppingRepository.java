@@ -23,6 +23,7 @@ public class OrderToppingRepository {
 	/** トッピングローマッパー */
 	private static final RowMapper<OrderTopping> ORDERTOPPING_ROW_MAPPER = (rs, i) -> {
 		OrderTopping topping = new OrderTopping();
+		topping.setId(rs.getInt("id"));
 		topping.setToppingId(rs.getInt("topping_id"));
 		topping.setOrderItemId(rs.getInt("order_item_id"));
 		return topping;
@@ -49,7 +50,7 @@ public class OrderToppingRepository {
 	 * @return トッピングのリスト
 	 */
 	public List<OrderTopping> findById(Integer orderItemId) {
-		String sql = "SELECT topping_id,order_item_id FROM order_toppings WHERE order_item_id=:orderItemId";
+		String sql = "SELECT id,topping_id,order_item_id FROM order_toppings WHERE order_item_id=:orderItemId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 //	try {
 		List<OrderTopping> orderToppingList = template.query(sql, param, ORDERTOPPING_ROW_MAPPER);
