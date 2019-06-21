@@ -112,7 +112,7 @@ window.onload=function(){
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
 										class="img-responsive img-rounded" width="200" height="600">
 								</a><br>
-								<a href="item_detail.html" th:href="@{/item/detail?id=&{item.id}}" th:text="${item.name}">じゃがバターベーコン</a><br>
+								<a href="item_detail.html" th:href="@{/item/detail(id=${item.id})}" th:text="${item.name}">じゃがバターベーコン</a><br>
 								<span class="price">М</span>
 								<th:block th:text="${#numbers.formatInteger(item.priceM,1,'COMMA')}">1,380</th:block>円(税抜)<br>
 								<span class="price">L</span>
