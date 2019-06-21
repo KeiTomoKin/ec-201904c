@@ -35,12 +35,19 @@ public class DisplayItemListController {
 	 * @return 商品リストの画面「item_list.html」
 	 */
 	@RequestMapping("/showList")
-	public String showList(Model model, Integer page) {
+	public String showList(Model model, Integer page, String sortOrder) {
+		System.out.println("sortOrderは" + sortOrder);
 		if (page == null) {
 			page = 1;
 		}
 		List<Item> itemList = service.findAll();
-
+		if (sortOrder != null) {
+			if (sortOrder.equals("ASC")) {
+				itemList = service.priceLowOrder(itemList);
+			} else if (sortOrder.equals("DESC")) {
+				itemList = service.priceHighOrder(itemList);
+			}
+		}
 		// 名前のみのリストの作成
 		List<String> itemNameList = new ArrayList<String>();
 		for (Item item : itemList) {
@@ -63,8 +70,10 @@ public class DisplayItemListController {
 		Page<List<Item>> itemPage = service.showListPaging(page, VIEW_SIZE, item3Lists);
 		model.addAttribute("itemPage", itemPage);
 		List<Integer> pageNumbers = calcPageNumbers(itemPage);
+		model.addAttribute("page", page);
 		model.addAttribute("pageNumbers", pageNumbers);
 		model.addAttribute("item3Lists", item3Lists);
+		model.addAttribute("sortOrder", sortOrder);
 		return "item_list";
 	}
 
@@ -76,18 +85,26 @@ public class DisplayItemListController {
 	 * @return 商品リストの画面「item_list.html」
 	 */
 	@RequestMapping("/findName")
-	public String findName(Model model, String name, Integer page) {
+	public String findName(Model model, String name, Integer page, String sortOrder) {
+		System.out.println(sortOrder);
 		if (page == null) {
 			page = 1;
 		}
 		if (name == "") {
 			model.addAttribute("nullNameCheck", true);
-			return showList(model, 1);
+			return showList(model, 1, sortOrder);
 		}
 		List<Item> itemList = service.findByLikeName(name);
 		if (itemList.size() == 0) {
 			model.addAttribute("noResult", true);
-			return showList(model, 1);
+			return showList(model, 1, sortOrder);
+		}
+		if (sortOrder != null) {
+			if (sortOrder.equals("ASC")) {
+				itemList = service.priceLowOrder(itemList);
+			} else if (sortOrder.equals("DESC")) {
+				itemList = service.priceHighOrder(itemList);
+			}
 		}
 		List<Item> item3List = new ArrayList<Item>();
 		List<List<Item>> item3Lists = new ArrayList<>();
@@ -104,9 +121,11 @@ public class DisplayItemListController {
 		Page<List<Item>> itemPage = service.showListPaging(page, VIEW_SIZE, item3Lists);
 		model.addAttribute("itemPage", itemPage);
 		List<Integer> pageNumbers = calcPageNumbers(itemPage);
+		model.addAttribute("page", page);
 		model.addAttribute("pageNumbers", pageNumbers);
 		model.addAttribute("name", name);
 		model.addAttribute("item3Lists", item3Lists);
+		model.addAttribute("sortOrder", sortOrder);
 		return "item_list";
 	}
 
