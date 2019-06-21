@@ -21,7 +21,8 @@ public class OrderItemRepository {
 	/** ピザのローマッパー */
 	private static final RowMapper<OrderItem> ORDERITEM_ROW_MAPPER = (rs, i) -> {
 		OrderItem pizza = new OrderItem();
-		pizza.setItemId(rs.getInt("itemId"));
+		pizza.setOrderId(rs.getInt("order_id"));
+		pizza.setItemId(rs.getInt("item_id"));
 		pizza.setQuantity(rs.getInt("quantity"));
 		pizza.setSize(rs.getString("size").charAt(0));
 		return pizza;
@@ -36,7 +37,7 @@ public class OrderItemRepository {
 	 * @param orderItem 新しいピザ
 	 */
 	public void insert(OrderItem orderItem) {
-		String insertSql = "insert into order_items(item_id,order_id,quantity,size) values (:itemId,:orderId,:quantity:size)";
+		String insertSql = "insert into order_items(item_id,order_id,quantity,size) values (:itemId,:orderId,:quantity,:size)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
 		template.update(insertSql, param);
 	}

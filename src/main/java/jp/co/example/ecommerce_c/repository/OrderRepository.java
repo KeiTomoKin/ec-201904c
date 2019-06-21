@@ -23,9 +23,8 @@ public class OrderRepository {
 	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
 		Order order = new Order();
 		order.setId(rs.getInt("id"));
-		order.setUserId(rs.getInt("userId"));
+		order.setUserId(rs.getInt("user_id"));
 		order.setStatus(rs.getInt("status"));
-		order.setTotalPrice(rs.getInt("size"));
 		return order;
 	};
 
@@ -50,7 +49,7 @@ public class OrderRepository {
 	 * @return オーダー
 	 */
 	public Order findById(Integer orderId) {
-		String sql = "SELECT user_id,status, total_price FROM orders WHERE id=:orderId";
+		String sql = "SELECT id,user_id,status, total_price FROM orders WHERE id = :orderId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 //		try {
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
@@ -67,8 +66,8 @@ public class OrderRepository {
 	 * @return status=0のオーダー
 	 */
 	public Order findByUserId(Integer userId) {
-		String sql = "SELECT id FROM orders WHERE user_id=:userId AND status=0";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("user_id", userId);
+		String sql = "SELECT id,user_id,status FROM orders WHERE user_id=:userId AND status=0";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 		return order;
 	}
