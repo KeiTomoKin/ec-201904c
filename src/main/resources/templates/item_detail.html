@@ -57,7 +57,7 @@
 			<!-- /.container-fluid -->
 		</nav>
 
-		<form action="cart_list.html">
+		<form action="cart_list.html" th:action="@{/cart}">
 		<input type="hidden" name="itemId" th:value="${item.id}">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">

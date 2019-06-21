@@ -111,7 +111,7 @@ window.onload=function(){
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<table class="table table-striped">
 					<tbody>
-						<tr th:each="item3List:${item3Lists}">
+						<tr th:each="item3List:${itemPage}">
 							<th th:each="item:${item3List}">
 								<a href="item_detail.html" th:href="@{'/item/detail?id='+${item.id}}">
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
@@ -124,7 +124,16 @@ window.onload=function(){
 						</tr>
 					</tbody>
 				</table>
-
+				<!-- ページング機能 -->
+				<div th:if="${itemPage.totalPages > 0}" class="pagination"
+				    th:each="pageNumber : ${pageNumbers}">
+				    <a th:if="${name==null}" th:href="@{/displayItemList/showList(page=${pageNumber})}"
+				        th:text=${pageNumber}
+				        th:class="${pageNumber==itemPage.number + 1} ? active"></a>
+				    <a th:unless="${name==null}" th:href="@{/displayItemList/findName(name=${name},page=${pageNumber})}"
+				        th:text=${pageNumber}
+				        th:class="${pageNumber==itemPage.number + 1} ? active"></a> 
+				</div>
 			</div>
 		</div>
 	</div>
