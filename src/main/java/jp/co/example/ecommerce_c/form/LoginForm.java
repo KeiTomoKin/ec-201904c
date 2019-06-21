@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_c.form;
 
 /**
  * ログイン時に使用するフォーム.
+ * ログイン処理はSpringSecurityで行っているため現在未使用
  * 
  * @author takara.miyazaki
  *
