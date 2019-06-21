@@ -76,8 +76,8 @@ public class OrderRepository {
 	 * @return status=0のオーダー
 	 */
 	public Order findByUserId(Integer userId) {
-		String sql = "SELECT id FROM orders WHERE user_id=:userId AND status=0";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("user_id", userId);
+		String sql = "SELECT id,user_id,status FROM orders WHERE user_id=:userId AND status=0";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 		return order;
 	}

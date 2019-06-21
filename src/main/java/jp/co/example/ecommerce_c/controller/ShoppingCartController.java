@@ -25,6 +25,7 @@ public class ShoppingCartController {
 			orderId = shoppingCartService.orderCheckByUserId(userId);
 		}
 		shoppingCartService.insert(form, orderId, userId);
+		session.setAttribute("orderId", orderId);
 		return "redirect:/cart/";
 	}
 
@@ -36,6 +37,7 @@ public class ShoppingCartController {
 		}
 		Order order=shoppingCartService.showOrder(userId, orderId);
 		session.setAttribute("order", order);
+		session.setAttribute("orderId", orderId);
 		return "cart_list";
 	}
 

@@ -57,8 +57,14 @@
 			<!-- /.container-fluid -->
 		</nav>
 
+<<<<<<< HEAD
 		<form action="cart_list.html" th:action="@{/cart}">
+=======
+
+		<form action="cart_list.html" th:action="@{/cart/add}" method="post">
+>>>>>>> feature/shoppingcart-operation
 		<input type="hidden" name="itemId" th:value="${item.id}">
+		<input type="hidden" name="userId" value="1">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 

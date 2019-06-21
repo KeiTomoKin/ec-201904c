@@ -3,6 +3,7 @@ package jp.co.example.ecommerce_c.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,8 +43,14 @@ public class ShoppingCartService {
 	 * @return 検索結果のオーダーID
 	 */
 	public Integer orderCheckByUserId(Integer userId) {
-		Order order = orderRepository.findByUserId(userId);
-		return order.getId();
+		Integer id;
+		try {
+			Order order = orderRepository.findByUserId(userId);
+			id = order.getId();
+		} catch (EmptyResultDataAccessException e) {
+			id = createNewOrder(userId);
+		}
+		return id;
 	}
 
 	/**
@@ -52,7 +59,7 @@ public class ShoppingCartService {
 	 * @param userId ユーザID
 	 * @return 新しく作ったオーダーのID
 	 */
-	public int createNewOrder(int userId) {
+	public Integer createNewOrder(Integer userId) {
 		Order order = new Order();
 		order.setUserId(userId);
 		orderRepository.insert(order);
@@ -72,18 +79,22 @@ public class ShoppingCartService {
 			orderId = createNewOrder(userId);
 		}
 		OrderItem pizza = new OrderItem();
+		pizza.setOrderId(orderId);
 		pizza.setItemId(Integer.parseInt(form.getItemId()));
 		pizza.setQuantity(Integer.parseInt(form.getQuantity()));
 		pizza.setSize(form.getSize().charAt(0));
 
-		for (Integer toppingId : form.getOrderToppingList()) {
-			OrderTopping topping = new OrderTopping();
-			topping.setOrderItemId(pizza.getId());
-			topping.setToppingId(toppingId);
-			orderToppingRepository.insert(topping);
-			orderItemRepository.insert(pizza);
+		if (form.getOrderToppingList() != null) {
+			for (Integer toppingId : form.getOrderToppingList()) {
+				OrderTopping topping = new OrderTopping();
+				topping.setOrderItemId(pizza.getId());
+				topping.setToppingId(toppingId);
+				orderToppingRepository.insert(topping);
+			}
 		}
+		orderItemRepository.insert(pizza);
 	}
+
 
 	/**
 	 * カート内の商品の一覧を表示する.
