@@ -69,6 +69,13 @@ public class InsertUserController {
 
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
+		
+		// 名前の作成
+		user.setName(form.getFirstName()+form.getLastName());
+		
+		// 電話番号の生成
+		user.setTelephone(form.getFirstNumber()+form.getMiddleNumber()+form.getLastNumber());
+		
 		userService.insert(user);
 
 		return "login";
