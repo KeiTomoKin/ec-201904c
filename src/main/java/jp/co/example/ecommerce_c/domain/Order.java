@@ -25,6 +25,8 @@ public class Order {
 	private String destinationName;
 	/** 宛先メールアドレス */
 	private String destinationEmail;
+	/** 宛先郵便番号 */
+	private String destinationZipcode;
 	/** 宛先住所 */
 	private String destinationAddress;
 	/** 宛先電話番号 */
@@ -37,117 +39,125 @@ public class Order {
 	private User user;
 	/** オーダーリスト */
 	private List<OrderItem> orderItemList;
-	
+
 	@Override
 	public String toString() {
 		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
 				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
-				+ destinationEmail + ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
-				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + "]";
+				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
+				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
+				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
 	}
-	
 
-	public final Integer getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public final void setId(Integer id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public final Integer getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public final void setUserId(Integer userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
-	public final Integer getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public final void setStatus(Integer status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public final Integer getTotalPrice() {
+	public Integer getTotalPrice() {
 		return totalPrice;
 	}
 
-	public final void setTotalPrice(Integer totalPrice) {
+	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
-	public final Date getOrderDate() {
+	public Date getOrderDate() {
 		return orderDate;
 	}
 
-	public final void setOrderDate(Date orderDate) {
+	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 
-	public final String getDestinationName() {
+	public String getDestinationName() {
 		return destinationName;
 	}
 
-	public final void setDestinationName(String destinationName) {
+	public void setDestinationName(String destinationName) {
 		this.destinationName = destinationName;
 	}
 
-	public final String getDestinationEmail() {
+	public String getDestinationEmail() {
 		return destinationEmail;
 	}
 
-	public final void setDestinationEmail(String destinationEmail) {
+	public void setDestinationEmail(String destinationEmail) {
 		this.destinationEmail = destinationEmail;
 	}
 
-	public final String getDestinationAddress() {
+	public String getDestinationZipcode() {
+		return destinationZipcode;
+	}
+
+	public void setDestinationZipcode(String destinationZipcode) {
+		this.destinationZipcode = destinationZipcode;
+	}
+
+	public String getDestinationAddress() {
 		return destinationAddress;
 	}
 
-	public final void setDestinationAddress(String destinationAddress) {
+	public void setDestinationAddress(String destinationAddress) {
 		this.destinationAddress = destinationAddress;
 	}
 
-	public final String getDestinationTel() {
+	public String getDestinationTel() {
 		return destinationTel;
 	}
 
-	public final void setDestinationTel(String destinationTel) {
+	public void setDestinationTel(String destinationTel) {
 		this.destinationTel = destinationTel;
 	}
 
-	public final Timestamp getDeliveryTime() {
+	public Timestamp getDeliveryTime() {
 		return deliveryTime;
 	}
 
-	public final void setDeliveryTime(Timestamp deliveryTime) {
+	public void setDeliveryTime(Timestamp deliveryTime) {
 		this.deliveryTime = deliveryTime;
 	}
 
-	public final Integer getPaymentMethod() {
+	public Integer getPaymentMethod() {
 		return paymentMethod;
 	}
 
-	public final void setPaymentMethod(Integer paymentMethod) {
+	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public final User getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public final void setUser(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public final List<OrderItem> getOrderItemList() {
+	public List<OrderItem> getOrderItemList() {
 		return orderItemList;
 	}
 
-	public final void setOrderItemList(List<OrderItem> orderItemList) {
+	public void setOrderItemList(List<OrderItem> orderItemList) {
 		this.orderItemList = orderItemList;
 	}
 
@@ -159,7 +169,7 @@ public class Order {
 	 * @return 消費税
 	 */
 	public int getTax() {
-		return (int)(getTotalPrice()*0.08);
+		return (int) (getTotalPrice() * 0.08);
 	}
 
 	/**
@@ -170,6 +180,6 @@ public class Order {
 	 * @return 合計金額
 	 */
 	public int getCalcTotalPrice() {
-		return getTotalPrice()+getTax();
+		return getTotalPrice() + getTax();
 	}
 }
