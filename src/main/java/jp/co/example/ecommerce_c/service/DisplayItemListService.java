@@ -1,6 +1,7 @@
 package jp.co.example.ecommerce_c.service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,39 +37,87 @@ public class DisplayItemListService {
 
 	/**
 	 * 指定した名前を含む商品情報を取得する.
+	 * 
 	 * @param name 名前
-	 * @return 	商品情報のリスト
+	 * @return 商品情報のリスト
 	 */
 	public List<Item> findByLikeName(String name) {
 		return repository.findByLikeName(name);
 	}
+
 	/**
 	 * ページング用メソッド.
-	 * @param page 表示させたいページ数
-	 * @param size １ページに表示させる従業員数
+	 * 
+	 * @param page         表示させたいページ数
+	 * @param size         １ページに表示させる従業員数
 	 * @param employeeList 絞り込み対象リスト
 	 * @return １ページに表示されるサイズ分の従業員一覧情報
 	 */
 	public Page<List<Item>> showListPaging(int page, int size, List<List<Item>> itemLists) {
-	    // 表示させたいページ数を-1しなければうまく動かない
-	    page--;
-	    // どの従業員から表示させるかと言うカウント値
-	    int startItemCount = page * size;
-	    // 絞り込んだ後の従業員リストが入る変数
-	    List<List<Item>> lists;
+		page--;
+		int startItemCount = page * size;
+		List<List<Item>> lists;
 
-	    if (itemLists.size() < startItemCount) {
-	    	// (ありえないが)もし表示させたい従業員カウントがサイズよりも大きい場合は空のリストを返す
-	        lists = Collections.emptyList();
-	    } else {
-	    	// 該当ページに表示させる従業員一覧を作成
-	        int toIndex = Math.min(startItemCount + size,itemLists.size());
-	        lists = itemLists.subList(startItemCount, toIndex);
-	    }
+		if (itemLists.size() < startItemCount) {
+			lists = Collections.emptyList();
+		} else {
+			int toIndex = Math.min(startItemCount + size, itemLists.size());
+			lists = itemLists.subList(startItemCount, toIndex);
+		}
 
-	    // 上記で作成した該当ページに表示させる従業員一覧をページングできる形に変換して返す
-	    Page<List<Item>> itemPage
-	      = new PageImpl<List<Item>>(lists,PageRequest.of(page, size),itemLists.size());
-	    return itemPage;
+		Page<List<Item>> itemPage = new PageImpl<List<Item>>(lists, PageRequest.of(page, size), itemLists.size());
+		return itemPage;
+	}
+
+	/**
+	 * 価格が安い順に並べ替えるためのメソッド.
+	 * 
+	 * @param itemList 商品ののリスト
+	 * @return 安い順に並べ替えられた商品のリスト
+	 */
+	public List<Item> priceHighOrder(List<Item> itemList) {
+		Collections.sort(itemList, new Comparator<Item>() {
+			public static final int ASC = 1;
+
+			@Override
+			public int compare(Item o1, Item o2) {
+				int sortType = ASC;
+				if (o1 == null && o2 == null) {
+					return 0;
+				} else if (o1 == null) {
+					return 1 * sortType;
+				} else if (o2 == null) {
+					return -1 * sortType;
+				}
+				return (o1.getPriceL() - o2.getPriceL()) * sortType;
+			}
+		});
+		return itemList;
+	}
+
+	/**
+	 * 価格が高い順に並べ替えるためのメソッド.
+	 * 
+	 * @param itemList 商品ののリスト
+	 * @return 高い順に並べ替えられた商品のリスト
+	 */
+	public List<Item> priceLowOrder(List<Item> itemList) {
+		Collections.sort(itemList, new Comparator<Item>() {
+			public static final int DESC = -1;
+
+			@Override
+			public int compare(Item o1, Item o2) {
+				int sortType = DESC;
+				if (o1 == null && o2 == null) {
+					return 0;
+				} else if (o1 == null) {
+					return 1 * sortType;
+				} else if (o2 == null) {
+					return -1 * sortType;
+				}
+				return (o1.getPriceL() - o2.getPriceL()) * sortType;
+			}
+		});
+		return itemList;
 	}
 }
