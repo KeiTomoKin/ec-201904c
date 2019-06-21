@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Repository;
 
 import jp.co.example.ecommerce_c.domain.OrderItem;
 
@@ -17,6 +18,7 @@ import jp.co.example.ecommerce_c.domain.OrderItem;
  * @author koichi.nagata
  *
  */
+@Repository
 public class OrderItemRepository {
 	/** ピザのローマッパー */
 	private static final RowMapper<OrderItem> ORDERITEM_ROW_MAPPER = (rs, i) -> {
