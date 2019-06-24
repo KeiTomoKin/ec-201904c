@@ -1,5 +1,6 @@
 package jp.co.example.ecommerce_c.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,13 @@ import jp.co.example.ecommerce_c.domain.Item;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.OrderItem;
 import jp.co.example.ecommerce_c.domain.OrderTopping;
+import jp.co.example.ecommerce_c.domain.Topping;
 import jp.co.example.ecommerce_c.form.OrderItemForm;
 import jp.co.example.ecommerce_c.repository.ItemRepository;
 import jp.co.example.ecommerce_c.repository.OrderItemRepository;
 import jp.co.example.ecommerce_c.repository.OrderRepository;
 import jp.co.example.ecommerce_c.repository.OrderToppingRepository;
+import jp.co.example.ecommerce_c.repository.ToppingRepository;
 
 /**
  * ショッピングカートの操作をするサービス.
@@ -35,36 +38,44 @@ public class ShoppingCartService {
 	private OrderToppingRepository orderToppingRepository;
 	@Autowired
 	private ItemRepository itemRepository;
+	@Autowired
+	private ToppingRepository toppingRepository;
 
 	/**
 	 * ユーザIDで注文状態＝0のorderを検索.
 	 * 
 	 * @param userId ユーザID
-	 * @return 検索結果のオーダーID
+	 * @return 検索結果のオーダー
 	 */
-	public Integer orderCheckByUserId(Integer userId) {
-		Integer id;
+	public Order orderCheckByUserId(Integer userId) {
 		try {
 			Order order = orderRepository.findByUserId(userId);
-			id = order.getId();
+			order.setUserId(userId);
+			System.out.println("トライ"+order);
+			return order;
 		} catch (EmptyResultDataAccessException e) {
-			id = createNewOrder(userId);
+			Order order = createNewOrder(userId);
+			order.setUserId(userId);
+			System.out.println("キャッチ"+order);
+			return order;
 		}
-		return id;
 	}
 
 	/**
 	 * ユーザIDに結びついたorderがない場合に、新しくorderを作る.
 	 * 
 	 * @param userId ユーザID
-	 * @return 新しく作ったオーダーのID
+	 * @return 新しく作ったオーダー
 	 */
-	public Integer createNewOrder(Integer userId) {
+	public Order createNewOrder(Integer userId) {
 		Order order = new Order();
 		order.setUserId(userId);
 		orderRepository.insert(order);
 		order = orderRepository.findByUserId(userId);
-		return order.getId();
+//		List<OrderItem> orderItemList = new ArrayList<>();
+//		order.setOrderItemList(orderItemList);
+		System.out.println(order.getId());
+		return order;
 	}
 
 	/**
@@ -75,26 +86,46 @@ public class ShoppingCartService {
 	 * @param userId  ユーザID
 	 */
 	public void insert(OrderItemForm form, Integer orderId, Integer userId) {
+		Order order = new Order();
+		System.out.println("オーダーID"+orderId);
+		System.out.println("ユーザID" + userId);
 		if (orderId == null) {
-			orderId = createNewOrder(userId);
+			System.out.println("サービス1個目" + orderId);
+			if (userId == -1) {
+				System.out.println("サービス2個目" + orderId);
+				order = createNewOrder(userId);
+			} else {
+				System.out.println("if文の中");
+				order = orderCheckByUserId(userId);
+			}
+			System.out.println(order.getId());
+		}else {
+			order=orderCheckByUserId(userId);
 		}
+		orderId=order.getId();
 		OrderItem pizza = new OrderItem();
 		pizza.setOrderId(orderId);
 		pizza.setItemId(Integer.parseInt(form.getItemId()));
 		pizza.setQuantity(Integer.parseInt(form.getQuantity()));
 		pizza.setSize(form.getSize().charAt(0));
-
+		pizza.setId(orderItemRepository.insert(pizza));
+		List<OrderTopping> orderToppingList = new ArrayList<>();
 		if (form.getOrderToppingList() != null) {
 			for (Integer toppingId : form.getOrderToppingList()) {
 				OrderTopping topping = new OrderTopping();
 				topping.setOrderItemId(pizza.getId());
 				topping.setToppingId(toppingId);
+				System.out.println("topping" + topping);
 				orderToppingRepository.insert(topping);
+				orderToppingList.add(topping);
 			}
 		}
-		orderItemRepository.insert(pizza);
+		pizza.setOrderToppingList(orderToppingList);
+		if (order.getOrderItemList() == null) {
+			order.setOrderItemList(new ArrayList<OrderItem>());
+		}
+		order.getOrderItemList().add(pizza);
 	}
-
 
 	/**
 	 * カート内の商品の一覧を表示する.
@@ -104,17 +135,30 @@ public class ShoppingCartService {
 	 * @return 注文内容(order)
 	 */
 	public Order showOrder(Integer userId, Integer orderId) {
+		Order order = new Order();
 		if (orderId == null) {
-			if (orderRepository.findByUserId(userId) == null || userId == -1) {
-				orderId = createNewOrder(userId);
+			if (userId == -1) {
+				order = createNewOrder(userId);
+			} else {
+				System.out.println("showCreate");
+				order = orderCheckByUserId(userId);
 			}
+		}else {
+			order=orderCheckByUserId(userId);
 		}
-		Order order = orderRepository.findById(orderId);
+		orderId = order.getId();
+		System.out.println("showのオーダー"+order);
 		List<OrderItem> orderItemList = orderItemRepository.findById(orderId);
 		for (OrderItem pizza : orderItemList) {
-			Item item = itemRepository.load(pizza.getId());
+			Item item = itemRepository.load(pizza.getItemId());
 			pizza.setItem(item);
-			pizza.setOrderToppingList(orderToppingRepository.findById(pizza.getItemId()));
+			List<OrderTopping> orderToppingList = orderToppingRepository.findById(pizza.getId());
+			for (OrderTopping orderTopping : orderToppingList) {
+				Topping topping = toppingRepository.load(orderTopping.getToppingId());
+				orderTopping.setTopping(topping);
+				System.out.println("トッピング" + orderTopping);				
+			}
+			pizza.setOrderToppingList(orderToppingList);
 		}
 		order.setOrderItemList(orderItemList);
 		return order;
