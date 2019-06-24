@@ -26,10 +26,10 @@ public class ShoppingCartController {
 		orderId = shoppingCartService.orderCheckByUserId(userId).getId();
 		session.setAttribute("orderId", orderId);
 		session.setAttribute("userId", userId);
-		return "redirect:/cart/";
+		return "redirect:/cart";
 	}
 
-	@RequestMapping("/")
+	@RequestMapping("")
 	public String showOrder() {
 		Integer userId=(Integer) session.getAttribute("userId");
 		Integer orderId = (Integer) session.getAttribute("orderId");
@@ -43,6 +43,6 @@ public class ShoppingCartController {
 	@RequestMapping("/delete")
 	public String deleteOrderItem(Integer orderItemId,Integer orderId) {
 		shoppingCartService.deleteOrderItem(orderItemId,orderId);
-		return "redirect:/cart/";
+		return "redirect:/cart";
 	}
 }
