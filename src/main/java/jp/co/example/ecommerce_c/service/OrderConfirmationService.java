@@ -69,4 +69,13 @@ public class OrderConfirmationService {
 		Item item = itemRepository.load(orderItem.getItemId());
 		orderItem.setItem(item);
 	}
+	
+	/**
+	 * 注文の確定
+	 * 
+	 * @param order
+	 */
+	public void orderComplete(Order order) {
+		orderRepository.updateByOrderId(order);
+	}
 }

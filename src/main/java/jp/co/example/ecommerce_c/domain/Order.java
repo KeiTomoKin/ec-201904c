@@ -182,4 +182,18 @@ public class Order {
 	public int getCalcTotalPrice() {
 		return getTotalPrice() + getTax();
 	}
+
+	/**
+	 * 支払方法によって注文の状態を変更
+	 * 
+	 */
+	public void setStutasByPaymentMethod() {
+		if (this.paymentMethod == 1) {
+			this.setStatus(1);
+		}else if(this.paymentMethod==2){
+			this.setStatus(2);
+		}else {
+			System.out.println("error:status代入");
+		}
+	}
 }

@@ -25,7 +25,7 @@ public class InsertUserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@ModelAttribute
 	public InsertUserForm setUpInsertUserForm() {
 		return new InsertUserForm();
@@ -51,10 +51,10 @@ public class InsertUserController {
 	public String insert(@Validated InsertUserForm form, BindingResult result, Model model) {
 
 		// 入力値チェック
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return this.toInsert();
 		}
-		
+
 		// パスワードチェック
 		if (!form.getPassword().equals(form.getPasswordAgain())) {
 			model.addAttribute("passwordError", "入力されたパスワードが異なります");
@@ -69,13 +69,13 @@ public class InsertUserController {
 
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
-		
+
 		// 名前の作成
-		user.setName(form.getFirstName()+form.getLastName());
-		
+		user.setName(form.getFirstName() + " " + form.getLastName());
+
 		// 電話番号の生成
-		user.setTelephone(form.getFirstNumber()+form.getMiddleNumber()+form.getLastNumber());
-		
+		user.setTelephone(form.getFirstNumber() + "-" + form.getMiddleNumber() + "-" + form.getLastNumber());
+
 		userService.insert(user);
 
 		return "login";

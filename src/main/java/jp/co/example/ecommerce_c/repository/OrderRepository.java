@@ -114,4 +114,15 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 		template.update(deleteSql, param);
 	}
+	
+	/**
+	 * 注文完了操作.
+	 * 
+	 * @param order 注文内容
+	 */
+	public void updateByOrderId(Order order) {
+		String sql ="UPDATE Users SET status=:status,order_date=:orderDate,destination_name=:destinationName,destination_email=:destinationEmail,destination_zipcode=:destinationZipcode,destination_address=:destinationAddress,destination_tel=:destinationTel,delivery_time=:deliveryTime,payment_method=:paymentMethod WHERE id=:id;";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		template.update(sql, param);
+	}
 }

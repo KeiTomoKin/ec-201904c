@@ -83,7 +83,7 @@ $(function(){
 		                        <p th:text="${mailAddressError}" style="color: red"></p>
 							</div>
 							<div class="form-group">
-								<label for="inputFirstName">名前:</label> ※100文字以内<br>
+								<label for="inputFirstName">名前:</label> ※各50文字以内<br>
 								<label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
 								<label th:if="${NOT #fields.hasErrors('firstName') AND #fields.hasErrors('lastName')}" th:errors="*{lastName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
 								<div class="form-inline">
@@ -106,9 +106,9 @@ $(function(){
 								</div>	
 							</div>
 							<div class="form-group">
-								<label for="inputAddress">住所:</label> ※全角200文字以内<br>
+								<label for="inputAddress">住所:</label> ※200文字以内<br>
 								<label th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="control-label" style="color: red" for="inputError">住所を入力してください</label>
-								<input type="text" name="address" id="inputAddress" class="form-control" pattern="[^\x20-\x7E]*" placeholder="Address" th:field="*{address}">
+								<input type="text" name="address" id="inputAddress" class="form-control" placeholder="Address" th:field="*{address}">
 							</div>
 							<div class="form-group">
 								<label for="inputTel1">電話番号:</label><br>
@@ -116,11 +116,11 @@ $(function(){
 								<label th:if="${NOT #fields.hasErrors('firstNumber') AND #fields.hasErrors('middleNumber')}" th:errors="*{middleNumber}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
 								<label th:if="${NOT #fields.hasErrors('firstNumber') AND NOT #fields.hasErrors('middleNumber') AND #fields.hasErrors('lastNumber')}" th:errors="*{lastNumber}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
 								<div class="form-inline">
-									<input type="tel" name="firstNumber" style="width:70px;" maxlength="5" id="inputTel1" class="form-control" placeholder="first" th:field="*{firstNumber}">
+									<input type="tel" name="firstNumber" style="width:70px;" maxlength="4" id="inputTel1" class="form-control" placeholder="first" th:field="*{firstNumber}">
 									 － 
-									<input type="tel" name="middleNumber" style="width:70px;" maxlength="5" id="inputTel2" class="form-control" placeholder="middle" th:field="*{middleNumber}">								
+									<input type="tel" name="middleNumber" style="width:70px;" maxlength="4" id="inputTel2" class="form-control" placeholder="middle" th:field="*{middleNumber}">								
 									 － 
-									<input type="tel" name="lastNumber" style="width:70px;" maxlength="5" id="inputTel3" class="form-control" placeholder="last" th:field="*{lastNumber}">								
+									<input type="tel" name="lastNumber" style="width:70px;" maxlength="4" id="inputTel3" class="form-control" placeholder="last" th:field="*{lastNumber}">								
 								</div>
 							</div>
 							<div class="form-group">
