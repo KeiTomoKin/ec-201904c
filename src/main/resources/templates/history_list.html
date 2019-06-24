@@ -12,6 +12,29 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+$(function(){
+    //ready関数
+});
+</script>
+
+   
+<script>
+	$(function(){
+		$(".order_detail").hide();
+		$(".detail_switch").on("click",function(){
+			var detail = $(this).siblings("table").find(".order_detail") ;
+			if(detail.css("display") == "none"){
+				detail.css({'display':'table-row'});
+				$(this).text("詳細を非表示");
+			}else{
+				detail.hide();
+				$(this).text("詳細を表示");
+			}
+		});
+	});
+</script>
 </head>
 <body>
 	<div class="container">
@@ -65,13 +88,13 @@
 				<h3 class="text-center">注文履歴</h3>
 				<div th:each = "order : ${orderList}">
 					<div th:if=${order.status!=0}>
-						<table class="table table-bordered">
+						<table class="table table-bordered" >
 							<tr><td>
-								<table class="table table-condensed">
+								<table class="table">
 					    				<tr class="warning">
-					    					<th>注文日</th>
-					    					<th>合計金額</th>
-					    					<th>注文状態</th>
+					    					<th class="col-xs-3">注文日</th>
+					    					<th class="col-xs-5">合計金額</th>
+					    					<th class="col-xs-4">注文状態</th>
 					    					<th></th>
 					    				</tr>
 					    				<tr>
@@ -85,22 +108,40 @@
 					    							<span th:case = "9" th:text="キャンセル">NO STATUS</span>
 					    						</span>
 					    					</td>
-					    					<td><input class="btn btn-warning btn-block pull-right" type="submit" value="詳細表示"></td>
 					    				</tr>
-					    				<tr>
-					    					<th>お届け先情報</th>
+					    				<tr class="order_detail">
 					    					<th>配達日時</th>
-					    					<th>お支払い方法</th>
+					    					<th>お届け先住所</th>
+					    					<th>ご連絡先</th>
 					    				</tr>
-					    				<tr>
+					    				<tr class="order_detail">
+					    					<td>
+					    						<span th:text="|${#dates.month(order.deliveryTime)}月|">1月</span>
+					    						<span th:text="|${#dates.day(order.deliveryTime)}日|">1日</span><br>
+					    						<span th:text="${#dates.format(order.deliveryTime,'HH時')}">00時</span>
+					    					</td>
 					    					<td>
 					    						<span th:text="${order.destinationName}">name</span><br>
 					    						<span th:text="〒+${order.destinationZipcode}">〒000-0000</span><br>
 					    						<span th:text="${order.destinationAddress}">address</span><br>
-					    						<span th:text="${order.destinationTel}"></span><br>
 					    					</td>
+					    					<td><span th:text="${order.destinationTel}">000-0000-0000</span></td>
 					    				</tr>
-									</table>
+					    				<tr class="order_detail">
+					    					<th>お支払い方法</th>
+					    					<th>メールアドレス</th>
+					    				</tr>
+					    				<tr class="order_detail">
+					    					<td>
+					    						<span th:switch="${order.paymentMethod}">
+					    							<span th:case = "1" th:text="代金引換">NO PAY</span>
+					    							<span th:case = "2" th:text="クレジットカード">NO PAY</span>
+					    						</span>
+					    					</td>
+					    					<td><span th:text="${order.destinationEmail}">test@test.com</span></td>
+					    				</tr>
+								</table>
+								<a  class="btn btn-link detail_switch">詳細を表示</a>
 							</td></tr>
 							<tr><td>
 								<table class="table table-striped">
@@ -160,7 +201,7 @@
 										</tr>
 									</tbody>
 								</table>
-								</td></tr>
+							</td></tr>
 						</table>
 						<br>
 					</div>
