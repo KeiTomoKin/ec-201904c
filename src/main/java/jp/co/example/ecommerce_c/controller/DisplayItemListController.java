@@ -36,7 +36,6 @@ public class DisplayItemListController {
 	 */
 	@RequestMapping("/showList")
 	public String showList(Model model, Integer page, String sortOrder) {
-		System.out.println("sortOrderは" + sortOrder);
 		if (page == null) {
 			page = 1;
 		}
@@ -48,28 +47,17 @@ public class DisplayItemListController {
 				itemList = service.priceHighOrder(itemList);
 			}
 		}
-		// 名前のみのリストの作成
+		// 名前のみリストの作成
 		List<String> itemNameList = new ArrayList<String>();
 		for (Item item : itemList) {
 			String name = item.getName();
 			itemNameList.add(name);
 		}
-		model.addAttribute("itemNameList", itemNameList);
-		List<Item> item3List = new ArrayList<Item>();
-		List<List<Item>> item3Lists = new ArrayList<>();
-		for (int i = 0; i < itemList.size(); i++) {
-			item3List.add(itemList.get(i));
-			if (item3List.size() == 3) {
-				item3Lists.add(item3List);
-				item3List = new ArrayList<>();
-			}
-		}
-		if (item3List.size() > 0) {
-			item3Lists.add(item3List);
-		}
+		List<List<Item>> item3Lists = service.makeItemTable(itemList);
 		Page<List<Item>> itemPage = service.showListPaging(page, VIEW_SIZE, item3Lists);
-		model.addAttribute("itemPage", itemPage);
 		List<Integer> pageNumbers = calcPageNumbers(itemPage);
+		model.addAttribute("itemPage", itemPage);
+		model.addAttribute("itemNameList", itemNameList);
 		model.addAttribute("page", page);
 		model.addAttribute("pageNumbers", pageNumbers);
 		model.addAttribute("item3Lists", item3Lists);
@@ -86,7 +74,6 @@ public class DisplayItemListController {
 	 */
 	@RequestMapping("/findName")
 	public String findName(Model model, String name, Integer page, String sortOrder) {
-		System.out.println(sortOrder);
 		if (page == null) {
 			page = 1;
 		}
@@ -106,21 +93,18 @@ public class DisplayItemListController {
 				itemList = service.priceHighOrder(itemList);
 			}
 		}
-		List<Item> item3List = new ArrayList<Item>();
-		List<List<Item>> item3Lists = new ArrayList<>();
-		for (int i = 0; i < itemList.size(); i++) {
-			item3List.add(itemList.get(i));
-			if (item3List.size() == 3) {
-				item3Lists.add(item3List);
-				item3List = new ArrayList<>();
-			}
-		}
-		if (item3List.size() > 0) {
-			item3Lists.add(item3List);
-		}
+		List<List<Item>> item3Lists = service.makeItemTable(itemList);
 		Page<List<Item>> itemPage = service.showListPaging(page, VIEW_SIZE, item3Lists);
-		model.addAttribute("itemPage", itemPage);
 		List<Integer> pageNumbers = calcPageNumbers(itemPage);
+		itemList = service.findAll();
+		// 名前のみリストの作成
+		List<String> itemNameList = new ArrayList<String>();
+		for (Item item : itemList) {
+			String itemName = item.getName();
+			itemNameList.add(itemName);
+		}
+		model.addAttribute("itemNameList", itemNameList);
+		model.addAttribute("itemPage", itemPage);
 		model.addAttribute("page", page);
 		model.addAttribute("pageNumbers", pageNumbers);
 		model.addAttribute("name", name);
