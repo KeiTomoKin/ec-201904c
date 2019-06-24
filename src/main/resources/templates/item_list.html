@@ -105,24 +105,24 @@ window.onload=function(){
 			
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<form th:if="${name==null}" th:action="@{/displayItemList/showList}" method="get" >
-					<select name="sortOrder">
+				<form th:if="${name==null}" th:action="@{/displayItemList/showList}" method="get" class="form-inline">
+					<select name="sortOrder" class="form-control col-xs-3">
 						<option value="" selected>デフォルト</option>
 						<option value="DESC" >価格の高い順</option>
 						<option value="ASC" >価格の低い順</option>
 					</select>
 					<input type="hidden" name="page" th:value="${page}">
-					<input type="submit" value="並び替え">
+					<input type="submit" value="並び替え" class="btn btn-default">
 				</form>
-				<form th:unless="${name==null}" th:action="@{/displayItemList/findName}" method="get" >
-					<select name="sortOrder">
+				<form th:unless="${name==null}" th:action="@{/displayItemList/findName}" method="get" class="form-inline">
+					<select name="sortOrder" class="form-control col-xs-3">
 						<option value="" selected>デフォルト</option>
 						<option value="DESC" >価格の高い順</option>
 						<option value="ASC" >価格の低い順</option>
 					</select>
 					<input type="hidden" name="name" th:value="${name}">
 					<input type="hidden" name="page" th:value="${page}">
-					<input type="submit" value="並び替え">
+					<input type="submit" value="並び替え" class="btn btn-default">
 				</form>
 				<table class="table table-striped">
 					<tbody>
