@@ -4,6 +4,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/ec-201904c
     username: postgres
     password: postgres
+  mail:
+    host: localhost
+    port: 25
+    properties:
+      mail:
+        from: noreply@example.com
 
 server:
   servlet:

@@ -14,28 +14,33 @@ import javax.validation.constraints.Size;
 public class InsertUserForm {
 
 	/** 名前 **/
-	@Size(min = 0, max = 100, message = "文字数制限を超えています")
+	@Size(min = 0, max = 50, message = "文字数制限を超えています")
 	@NotBlank(message = "名前を入力してください")
-	private String name;
+	private String firstName;
+	@Size(min = 0, max = 50, message = "文字数制限を超えています")
+	@NotBlank(message = "名前を入力してください")
+	private String lastName;
 
 	/** メールアドレス **/
-	@Pattern(regexp = "^[0-9A-Za-z.@]*$", message = "半角英数字のみです")
+	@Pattern(regexp = "^[0-9A-Za-z.@._.,]*$", message = "半角英数字のみです")
 	@Size(min = 0, max = 100, message = "文字数制限を超えています")
 	@Email(message = "メール形式で記入してください")
 	@NotBlank(message = "メールアドレスを入力してください")
 	private String email;
 
 	/** パスワード **/
-	@Size(min = 8, max = 20, message = "文字数制限に反してます")
+	@Pattern(regexp = ".{8,20}|", message = "文字数制約に反してます")
+	@NotBlank(message="パスワードを入力してください")
 	private String password;
 
 	/** 確認パスワード **/
-	@Size(min = 8, max = 20, message = "文字数制限に反してます")
+	@Pattern(regexp = ".{8,20}|", message = "文字数制約に反してます")
+	@NotBlank(message="パスワードを再度入力してください")
 	private String passwordAgain;
 
 	/** 郵便番号 **/
-	@Pattern(regexp = "^([0-9]{7}|)$", message = "半角数字のみです")
-	@Size(min = 0, max = 7, message = "文字数制限を超えています")
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
+	@Pattern(regexp = ".{7}|", message = "7文字で入力してください")
 	@NotBlank(message = "郵便番号を入力してください")
 	private String zipcode;
 
@@ -47,14 +52,28 @@ public class InsertUserForm {
 	/** 電話番号 **/
 	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
 	@NotBlank(message = "電話番号を入力してください")
-	private String telephone;
+	private String firstNumber;
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
+	@NotBlank(message = "電話番号を入力してください")
+	private String middleNumber;
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
+	@NotBlank(message = "電話番号を入力してください")
+	private String lastNumber;
 
-	public String getName() {
-		return name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -97,11 +116,27 @@ public class InsertUserForm {
 		this.address = address;
 	}
 
-	public String getTelephone() {
-		return telephone;
+	public String getFirstNumber() {
+		return firstNumber;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setFirstNumber(String firstNumber) {
+		this.firstNumber = firstNumber;
+	}
+
+	public String getMiddleNumber() {
+		return middleNumber;
+	}
+
+	public void setMiddleNumber(String middleNumber) {
+		this.middleNumber = middleNumber;
+	}
+
+	public String getLastNumber() {
+		return lastNumber;
+	}
+
+	public void setLastNumber(String latterNumber) {
+		this.lastNumber = latterNumber;
 	}
 }

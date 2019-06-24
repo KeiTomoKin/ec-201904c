@@ -42,7 +42,7 @@
 					<p class="navbar-text navbar-right">
 						<a href="cart_list.html" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
 						<span sec:authorize="isAuthenticated()">
-							<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
+							<a href="order_history.html" class="navbar-link" th:href="@{/history/showHistoryList}">注文履歴</a>&nbsp;&nbsp;
 						</span>
 						<span sec:authorize="isAnonymous()">
 							<a href="login.html" class="navbar-link" th:href="@{/toLogin}">ログイン</a>&nbsp;&nbsp;
@@ -146,6 +146,6 @@
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 </body>
 </html>
