@@ -55,7 +55,7 @@ window.onload=function(){
 					<p class="navbar-text navbar-right">
 						<a href="cart_list.html" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
 						<span sec:authorize="isAuthenticated()">
-							<a href="order_history.html" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
+							<a href="order_history.html" class="navbar-link" th:href="@{/history/showHistoryList}">注文履歴</a>&nbsp;&nbsp;
 						</span>
 						<span sec:authorize="isAnonymous()">
 							<a href="login.html" class="navbar-link" th:href="@{/toLogin}">ログイン</a>&nbsp;&nbsp;
@@ -81,7 +81,7 @@ window.onload=function(){
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" th:action="@{/displayItemList/findName}" class="form-horizontal">
+						<form method="get" th:action="@{/displayItemList/findName}" class="form-horizontal">
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
