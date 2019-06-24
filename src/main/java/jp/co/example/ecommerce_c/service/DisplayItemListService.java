@@ -1,5 +1,6 @@
 package jp.co.example.ecommerce_c.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -119,5 +120,27 @@ public class DisplayItemListService {
 			}
 		});
 		return itemList;
+	}
+	
+	/**
+	 * 商尾品情報をテーブル表示するための２次元配列を作る.
+	 * 
+	 * @param itemList
+	 * @return 商品情報を格納した２次元配列
+	 */
+	public List<List<Item>> makeItemTable(List<Item> itemList){
+		List<Item> item3List = new ArrayList<Item>();
+		List<List<Item>> item3Lists = new ArrayList<>();
+		for (int i = 0; i < itemList.size(); i++) {
+			item3List.add(itemList.get(i));
+			if (item3List.size() == 3) {
+				item3Lists.add(item3List);
+				item3List = new ArrayList<>();
+			}
+		}
+		if (item3List.size() > 0) {
+			item3Lists.add(item3List);
+		}
+		return item3Lists;
 	}
 }
