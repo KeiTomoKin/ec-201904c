@@ -86,11 +86,11 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio" name="size" value="M" checked="checked">
-										<span class="price">&nbsp;Ｍ&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)
+										<span class="price">M</span><span th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)
 									</label>
 									<label class="radio-inline">
 										<input type="radio" name="size" value="L">
-										<span class="price">&nbsp;Ｌ&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceL, 1, 'COMMA')}">2,380</span>円(税抜)
+										<span class="price">L </span><span th:text="${#numbers.formatInteger(item.priceL, 1, 'COMMA')}">2,380</span>円(税抜)
 									</label>
 								</div>
 							</div>
@@ -146,7 +146,6 @@
 							<div class="row">
 								<div class="col-xs-5 col-sm-5">
 									<label for="">数量:</label>
-									<label class="control-label" style="color: red" for="inputError">数量を選択してください</label>
 									<select name="quantity" class="form-control">
 										<option value="1">1</option>
 										<option value="2">2</option>
@@ -170,7 +169,7 @@
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-10">
 						<div class="form-group">
-							この商品金額：<span id="total-price">38,000</span> 円(税抜)
+							<span id="total-price">この商品金額：<span id="totalPrice">38,000</span> 円(税抜)</span>
 						</div>
 					</div>
 				</div>

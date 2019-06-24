@@ -20,7 +20,7 @@ $(function() {
 
 	const showCalculatedPrice = () => {
 		const price = calcPrice();
-		$("#total-price").text(price.toLocaleString());
+		$("#totalPrice").text(price.toLocaleString());
 	}
 
 	$("input[type=radio]").on("click", showCalculatedPrice);
