@@ -1,0 +1,17 @@
+[# th:object="${order}"][(*{destinationName})]様
+
+この度はラクラクピザをご利用いただき誠にありがとうございます。
+ご注文が以下の通り確定しましたのでお知らせいたします。
+
+ご注文日：[(*{#dates.format(orderDate,'yyyy年M月d日')})]
+合計金額：[(*{#numbers.formatInteger(totalPrice,1,'COMMA')})]円
+ご注文品数：[(*{#lists.size(orderItemList)})]点[# th:each="orderItem,status : *{orderItemList}" th:object="${orderItem}"]
+  注文[(${status.count})]：[(*{item.name})]
+    トッピング：[(*{#lists.isEmpty(orderToppingList) ?
+    		 		'なし' :
+					#strings.listJoin(orderToppingList.![topping.name], '、')})][/]
+お届け予定時間：[(*{#dates.format(deliveryTime,'M月d日 H時ごろ')})]
+お届け先：〒[(*{destinationZipcode})] [(*{destinationAddress})]
+お支払方法：[(*{paymentMethod})]
+
+今後ともどうぞラクラクピザをご利用くださいませ。[/]
