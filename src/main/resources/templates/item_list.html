@@ -105,7 +105,7 @@ window.onload=function(){
 			
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<form th:if="${name==null}" th:action="@{/displayItemList/showList}" method="post" >
+				<form th:if="${name==null}" th:action="@{/displayItemList/showList}" method="get" >
 					<select name="sortOrder">
 						<option value="" selected>デフォルト</option>
 						<option value="DESC" >価格の高い順</option>
