@@ -51,8 +51,7 @@ public class OrderConfirmationController {
 	}
 
 	@RequestMapping("/orderComplete")
-	public String orderComplete(@Validated OrderConfirmationForm form, BindingResult result, String userId,
-			String totalPrice) {
+	public String orderComplete(@Validated OrderConfirmationForm form, BindingResult result) {
 		// 入力値チェック
 		if (result.hasErrors()) {
 			return "order_confirm";
@@ -63,8 +62,6 @@ public class OrderConfirmationController {
 		BeanUtils.copyProperties(form, order);
 		order.setStutasByPaymentMethod();
 		order.setDestinationName(form.getDestinationFirstName() + " " + form.getDestinationLastName());
-		order.setUserId(Integer.parseInt(userId));
-		order.setTotalPrice(Integer.parseInt(totalPrice));
 
 		orderConfirmationService.orderComplete(order);
 
