@@ -3,6 +3,7 @@ package jp.co.example.ecommerce_c.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import jp.co.example.ecommerce_c.ThymeleafText;
@@ -28,6 +29,7 @@ public class OrderMailService {
 	 *
 	 * @param order 完了した注文
 	 */
+	@Async
 	public void sendOrderCompleteMail(Order order) {
 		String to = order.getDestinationEmail();
 		String subject = "【ラクラクピザ】注文を承りました";
