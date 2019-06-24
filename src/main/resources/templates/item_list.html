@@ -114,7 +114,7 @@ window.onload=function(){
 					<input type="hidden" name="page" th:value="${page}">
 					<input type="submit" value="並び替え">
 				</form>
-				<form th:unless="${name==null}" th:action="@{/displayItemList/findName}" method="post" >
+				<form th:unless="${name==null}" th:action="@{/displayItemList/findName}" method="get" >
 					<select name="sortOrder">
 						<option value="" selected>デフォルト</option>
 						<option value="DESC" >価格の高い順</option>
