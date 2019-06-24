@@ -20,6 +20,7 @@ public class OrderTopping {
 	private Integer orderItemId;
 	/** トッピング */
 	private Topping topping;
+	
 
 	@Override
 	public String toString() {

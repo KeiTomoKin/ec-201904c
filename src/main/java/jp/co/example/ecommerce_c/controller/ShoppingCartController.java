@@ -21,21 +21,21 @@ public class ShoppingCartController {
 	@RequestMapping("/add")
 	public String addOrderItem(OrderItemForm form, Integer userId) {
 		Integer orderId = (Integer) session.getAttribute("orderId");
-		if (orderId == null) {
-			orderId = shoppingCartService.orderCheckByUserId(userId);
-		}
+		System.out.println(orderId);
 		shoppingCartService.insert(form, orderId, userId);
+		orderId = shoppingCartService.orderCheckByUserId(userId).getId();
 		session.setAttribute("orderId", orderId);
-		return "redirect:/cart/";
+		return showOrder(userId);
 	}
 
 	@RequestMapping("/")
 	public String showOrder(Integer userId) {
 		Integer orderId = (Integer) session.getAttribute("orderId");
-		if (orderId == null) {
-			orderId = shoppingCartService.orderCheckByUserId(userId);
-		}
+		System.out.println("show"+orderId);
+		System.out.println("showの"+userId);
 		Order order=shoppingCartService.showOrder(userId, orderId);
+		System.out.println("オーダー"+order.getOrderItemList());
+		orderId = shoppingCartService.orderCheckByUserId(userId).getId();
 		session.setAttribute("order", order);
 		session.setAttribute("orderId", orderId);
 		return "cart_list";
