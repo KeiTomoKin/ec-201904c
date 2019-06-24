@@ -54,6 +54,17 @@ public class OrderRepository {
 	}
 
 	/**
+	 * UserIDを取得して更新を行う.
+	 * 
+	 * @param order オーダー
+	 */
+	public void update(Order order) {
+		String updateSql = "UPDATE orders SET total_price = :totalPrice where id = :id";
+		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		template.update(updateSql, param);
+	}
+
+	/**
 	 * orderIdからユーザのオーダーを検索.
 	 * 
 	 * @param id sessionスコープ内のオーダーID
@@ -84,21 +95,21 @@ public class OrderRepository {
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 		return order;
 	}
-	
+
 	/**
 	 * ユーザーIDでオーダーの全件検索を行い、注文日及び配達日降順で返す.
 	 * 
 	 * @param userId ユーザID
 	 * @return 注文履歴。ない場合はnullを返す
 	 */
-	public List<Order> findAllOrderByUserId(Integer userId){
+	public List<Order> findAllOrderByUserId(Integer userId) {
 		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,"
-					+ "destination_zipcode,destination_address,destination_tel,delivery_time,payment_method "
-					+ "FROM orders where user_id = :userId ORDER BY order_date DESC, delivery_time DESC;";
+				+ "destination_zipcode,destination_address,destination_tel,delivery_time,payment_method "
+				+ "FROM orders where user_id = :userId ORDER BY order_date DESC, delivery_time DESC;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
-		
-		if(orderList.size() == 0) {
+
+		if (orderList.size() == 0) {
 			return null;
 		}
 		return orderList;

@@ -51,12 +51,10 @@ public class ShoppingCartService {
 		try {
 			Order order = orderRepository.findByUserId(userId);
 			order.setUserId(userId);
-			System.out.println("トライ"+order);
 			return order;
 		} catch (EmptyResultDataAccessException e) {
 			Order order = createNewOrder(userId);
 			order.setUserId(userId);
-			System.out.println("キャッチ"+order);
 			return order;
 		}
 	}
@@ -87,35 +85,30 @@ public class ShoppingCartService {
 	 */
 	public void insert(OrderItemForm form, Integer orderId, Integer userId) {
 		Order order = new Order();
-		System.out.println("オーダーID"+orderId);
-		System.out.println("ユーザID" + userId);
 		if (orderId == null) {
-			System.out.println("サービス1個目" + orderId);
 			if (userId == -1) {
-				System.out.println("サービス2個目" + orderId);
 				order = createNewOrder(userId);
 			} else {
-				System.out.println("if文の中");
 				order = orderCheckByUserId(userId);
 			}
-			System.out.println(order.getId());
-		}else {
-			order=orderCheckByUserId(userId);
+		} else {
+			order = orderCheckByUserId(userId);
 		}
-		orderId=order.getId();
+		orderId = order.getId();
 		OrderItem pizza = new OrderItem();
 		pizza.setOrderId(orderId);
 		pizza.setItemId(Integer.parseInt(form.getItemId()));
 		pizza.setQuantity(Integer.parseInt(form.getQuantity()));
 		pizza.setSize(form.getSize().charAt(0));
 		pizza.setId(orderItemRepository.insert(pizza));
+		Item item = itemRepository.load(pizza.getItemId());
+		pizza.setItem(item);
 		List<OrderTopping> orderToppingList = new ArrayList<>();
 		if (form.getOrderToppingList() != null) {
 			for (Integer toppingId : form.getOrderToppingList()) {
 				OrderTopping topping = new OrderTopping();
 				topping.setOrderItemId(pizza.getId());
 				topping.setToppingId(toppingId);
-				System.out.println("topping" + topping);
 				orderToppingRepository.insert(topping);
 				orderToppingList.add(topping);
 			}
@@ -124,6 +117,8 @@ public class ShoppingCartService {
 		if (order.getOrderItemList() == null) {
 			order.setOrderItemList(new ArrayList<OrderItem>());
 		}
+		order.setTotalPrice(order.getTotalPrice() + pizza.getSubTotal());
+		orderRepository.update(order);
 		order.getOrderItemList().add(pizza);
 	}
 
@@ -140,14 +135,12 @@ public class ShoppingCartService {
 			if (userId == -1) {
 				order = createNewOrder(userId);
 			} else {
-				System.out.println("showCreate");
 				order = orderCheckByUserId(userId);
 			}
-		}else {
-			order=orderCheckByUserId(userId);
+		} else {
+			order = orderCheckByUserId(userId);
 		}
 		orderId = order.getId();
-		System.out.println("showのオーダー"+order);
 		List<OrderItem> orderItemList = orderItemRepository.findById(orderId);
 		for (OrderItem pizza : orderItemList) {
 			Item item = itemRepository.load(pizza.getItemId());
@@ -156,7 +149,6 @@ public class ShoppingCartService {
 			for (OrderTopping orderTopping : orderToppingList) {
 				Topping topping = toppingRepository.load(orderTopping.getToppingId());
 				orderTopping.setTopping(topping);
-				System.out.println("トッピング" + orderTopping);				
 			}
 			pizza.setOrderToppingList(orderToppingList);
 		}
@@ -167,10 +159,23 @@ public class ShoppingCartService {
 	/**
 	 * カート内の商品を削除する.
 	 * 
-	 * @param orderItemId 注文中のピザのID
+	 * @param orderItemId カートから削除するピザのID
+	 * @param orderId     削除するピザを含んだオーダーのID
 	 */
-	public void deleteOrderItem(Integer orderItemId) {
+	public void deleteOrderItem(Integer orderItemId, Integer orderId) {
+		Order order = orderRepository.findById(orderId);
+		OrderItem orderItem = orderItemRepository.load(orderItemId);
+		Item item = itemRepository.load(orderItem.getItemId());
+		List<OrderTopping> orderToppingList = orderToppingRepository.findById(orderItemId);
+		orderItem.setItem(item);
+		if (orderToppingList == null) {
+			orderToppingList = new ArrayList<>();
+		}
+		orderItem.setOrderToppingList(orderToppingList);
+		order.setTotalPrice(order.getTotalPrice() - orderItem.getSubTotal());
+		orderRepository.update(order);
 		orderToppingRepository.deleteById(orderItemId);
 		orderItemRepository.deleteById(orderItemId);
 	}
+
 }
