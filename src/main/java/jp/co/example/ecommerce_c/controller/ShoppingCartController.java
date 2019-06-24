@@ -3,9 +3,11 @@ package jp.co.example.ecommerce_c.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.form.OrderItemForm;
 import jp.co.example.ecommerce_c.service.ShoppingCartService;
@@ -19,7 +21,13 @@ public class ShoppingCartController {
 	private HttpSession session;
 
 	@RequestMapping("/add")
-	public String addOrderItem(OrderItemForm form, Integer userId) {
+	public String addOrderItem(OrderItemForm form, @AuthenticationPrincipal LoginUser loginUser) {
+		int userId;
+		if(loginUser == null) {
+			userId = -1;
+		}else {
+			userId = loginUser.getUser().getId();
+		}
 		Integer orderId = (Integer) session.getAttribute("orderId");
 		System.out.println(orderId);
 		shoppingCartService.insert(form, orderId, userId);
