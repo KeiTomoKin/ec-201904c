@@ -25,16 +25,15 @@ public class ShoppingCartController {
 		shoppingCartService.insert(form, orderId, userId);
 		orderId = shoppingCartService.orderCheckByUserId(userId).getId();
 		session.setAttribute("orderId", orderId);
-		return showOrder(userId);
+		session.setAttribute("userId", userId);
+		return "redirect:/cart/";
 	}
 
 	@RequestMapping("/")
-	public String showOrder(Integer userId) {
+	public String showOrder() {
+		Integer userId=(Integer) session.getAttribute("userId");
 		Integer orderId = (Integer) session.getAttribute("orderId");
-		System.out.println("show"+orderId);
-		System.out.println("showの"+userId);
 		Order order=shoppingCartService.showOrder(userId, orderId);
-		System.out.println("オーダー"+order.getOrderItemList());
 		orderId = shoppingCartService.orderCheckByUserId(userId).getId();
 		session.setAttribute("order", order);
 		session.setAttribute("orderId", orderId);
@@ -42,8 +41,8 @@ public class ShoppingCartController {
 	}
 
 	@RequestMapping("/delete")
-	public String deleteOrderItem(Integer orderItemId) {
-		shoppingCartService.deleteOrderItem(orderItemId);
+	public String deleteOrderItem(Integer orderItemId,Integer orderId) {
+		shoppingCartService.deleteOrderItem(orderItemId,orderId);
 		return "redirect:/cart/";
 	}
 }
