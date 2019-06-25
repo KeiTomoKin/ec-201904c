@@ -1,6 +1,11 @@
 package jp.co.example.ecommerce_c.form;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 注文内容確認画面の登録フォームです.
@@ -33,12 +38,13 @@ public class OrderConfirmationForm {
 	private String destinationLastFirstTel;
 	
 	/** 注文日 **/
-	@NotBlank(message = "配達日時を入力して下さい")
-	private String orderDate;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@NotNull(message = "配達日時を指定して下さい")
+	private LocalDate deliveryDate;
 	/** 配達時間 **/
 	private String deliveryTime;
 	/** 支払方法 **/
-	private String paymentMethod;
+	private Integer paymentMethod;
 
 	public String getDestinationFirstName() {
 		return destinationFirstName;
@@ -104,12 +110,12 @@ public class OrderConfirmationForm {
 		this.destinationLastFirstTel = destinationLastFirstTel;
 	}
 
-	public String getOrderDate() {
-		return orderDate;
+	public LocalDate getDeliveryDate() {
+		return deliveryDate;
 	}
 
-	public void setOrderDate(String orderDate) {
-		this.orderDate = orderDate;
+	public void setDeliveryDate(LocalDate deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 
 	public String getDeliveryTime() {
@@ -120,11 +126,11 @@ public class OrderConfirmationForm {
 		this.deliveryTime = deliveryTime;
 	}
 
-	public String getPaymentMethod() {
+	public Integer getPaymentMethod() {
 		return paymentMethod;
 	}
 
-	public void setPaymentMethod(String status) {
+	public void setPaymentMethod(Integer status) {
 		this.paymentMethod = status;
 	}
 }

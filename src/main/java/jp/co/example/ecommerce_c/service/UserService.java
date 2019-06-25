@@ -61,4 +61,13 @@ public class UserService {
 //		return user;
 //	}
 
+	/**
+	 * ユーザー情報をIDで検索します
+	 * 
+	 * @param userId 検索するユーザーID
+	 * @return 検索結果
+	 */
+	public User findByUserId(Integer userId) {
+		return userRepository.findByUserId(userId);
+	}
 }
