@@ -10,7 +10,10 @@ spring:
     properties:
       mail:
         from: noreply@example.com
+  jmx:
+      default-domain: ec-emp-management
 
 server:
   servlet:
     context-path: /ec-201904c
+  
