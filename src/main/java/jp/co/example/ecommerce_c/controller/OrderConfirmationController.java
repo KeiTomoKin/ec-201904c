@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.OrderConfirmationForm;
@@ -41,8 +43,22 @@ public class OrderConfirmationController {
 	private HttpSession session;
 
 	@ModelAttribute
-	public OrderConfirmationForm setOrderCompleteForm() {
-		return new OrderConfirmationForm();
+	public OrderConfirmationForm setOrderCompleteForm(@AuthenticationPrincipal LoginUser loginUser) {
+		OrderConfirmationForm orderConfirmationForm = new OrderConfirmationForm();
+		User user = loginUser.getUser();
+		String[] userName = user.getName().split(" ");
+		String[] userTel = user.getTelephone().split("-");
+
+		orderConfirmationForm.setDestinationFirstName(userName[0]);
+		orderConfirmationForm.setDestinationLastName(userName[1]);
+		orderConfirmationForm.setDestinationEmail(user.getEmail());
+		orderConfirmationForm.setDestinationZipcode(user.getZipcode());
+		orderConfirmationForm.setDestinationAddress(user.getAddress());
+		orderConfirmationForm.setDestinationFirstTel(userTel[0]);
+		orderConfirmationForm.setDestinationMiddleFirstTel(userTel[1]);
+		orderConfirmationForm.setDestinationLastFirstTel(userTel[2]);
+
+		return orderConfirmationForm;
 	}
 
 	/**
@@ -65,10 +81,10 @@ public class OrderConfirmationController {
 	}
 
 	@RequestMapping("/orderComplete")
-	public String orderComplete(@Validated OrderConfirmationForm form, BindingResult result) {
+	public String orderComplete(@Validated OrderConfirmationForm form, BindingResult result, Model model) {
 		// 入力値チェック
 		if (result.hasErrors()) {
-			return "order_confirm";
+			return confirmOrder(model);
 		}
 
 		Order order = (Order) session.getAttribute("order");
@@ -81,22 +97,23 @@ public class OrderConfirmationController {
 		order.setOrderDate(orderDate);
 
 		order.setDestinationName(form.getDestinationFirstName() + " " + form.getDestinationLastName());
-		order.setDestinationTel(form.getDestinationFirstTel() + "-" + form.getDestinationMiddleFirstTel() + "-" + form.getDestinationLastFirstTel());
+		order.setDestinationTel(form.getDestinationFirstTel() + "-" + form.getDestinationMiddleFirstTel() + "-"
+				+ form.getDestinationLastFirstTel());
 
 		// 配達日時の作成
-		
+
 		LocalDate deliveryDate = form.getDeliveryDate();
 		LocalTime deliveryTime = LocalTime.of(Integer.parseInt(form.getDeliveryTime()), 0);
 		LocalDateTime deliveryDateTime = LocalDateTime.of(deliveryDate, deliveryTime);
-		
+
 		order.setDeliveryTime(Timestamp.valueOf(deliveryDateTime));
-		
+
 		order.setStutasByPaymentMethod();
-		
+
 		order.setUser(userService.findByUserId(order.getUserId()));
 
 		System.out.println(order.toString());
-		
+
 		// データベースへアップロード
 		orderConfirmationService.orderComplete(order);
 
