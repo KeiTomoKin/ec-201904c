@@ -19,12 +19,10 @@
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<!-- 郵便番号検索機能 -->
+
 <script>
-$(function() {
-	$('#js-button').on("click",function(){
-		AjaxZip3.zip2addr('destinationZipcode', '', 'destinationAddress', 'destinationAddress');
-	});
+$(function(){
+	$('')
 });
 </script>
 </head>
@@ -244,8 +242,7 @@ $(function() {
 									<div class="form-group">
 										<div class="form-inline">
 											<label th:if="${#fields.hasErrors('destinationZipcode')}" th:errors="*{destinationZipcode}" class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
-											<input type="text" name="destinationZipcode" placeholder="Zipcode" th:field="*{destinationZipcode}" id="inputZipcode" class="form-control" style="width:100px;" maxlength="7">&nbsp;&nbsp;
-											<button id="js-button" type="button">住所検索</button>
+											<input type="text" name="destinationZipcode" placeholder="Zipcode" th:field="*{destinationZipcode}" id="inputZipcode" class="form-control" style="width:100px;" maxlength="7" onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
 										</div>
 									</div>
 								</td>
@@ -343,26 +340,19 @@ $(function() {
 									</div>
 								</td>
 							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<!-- table -->
-			<div class="row">
-				<div class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-					<h3 class="text-center">お支払い方法</h3>
-					<table class="table table-striped">
-						<tbody>
 							<tr>
-								<td>
+								<td align="center">
 									<div class="text-center">
-										代金引換
+										<label for="inputDate">お支払い方法</label>
 									</div>
 								</td>
-								<td>
+								<td align="center">
 									<div class="row">
 										<div class="col-sm-12">
+											<label class="radio-inline">
+												<input type="radio" name="paymentMethod" value="2">
+												クレジットカード決済
+											</label>
 											<label class="radio-inline">
 												<input type="radio" name="paymentMethod" value="1" checked="checked">
 												代金引換
@@ -371,27 +361,11 @@ $(function() {
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<div class="text-center">
-										クレジットカード決済
-									</div>
-								</td>
-								<td align="center">
-									<div class="row">
-										<div class="col-sm-12">
-											<label class="radio-inline">
-												<input type="radio" name="paymentMethod" value="2">
-												クレジットカード
-											</label><br><br>
-										</div>
-									</div>
-								</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
+			<!-- 送信 -->
 			<div class="row">
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">
