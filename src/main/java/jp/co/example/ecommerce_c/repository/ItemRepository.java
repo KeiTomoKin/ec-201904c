@@ -69,7 +69,7 @@ public class ItemRepository {
 	 * @return　検索条件に一致した商品情報のリスト
 	 */
 	public List<Item> findByLikeName(String name) {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE UPPER(name) LIKE UPPER(:name)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
