@@ -20,7 +20,7 @@ import jp.co.example.ecommerce_c.service.DisplayItemListService;
  *
  */
 @Controller
-@RequestMapping("/displayItemList")
+@RequestMapping("/")
 public class DisplayItemListController {
 	@Autowired
 	DisplayItemListService service;
@@ -34,7 +34,7 @@ public class DisplayItemListController {
 	 * @param model リクエストスコープ
 	 * @return 商品リストの画面「item_list.html」
 	 */
-	@RequestMapping("/showList")
+	@RequestMapping("")
 	public String showList(Model model, Integer page, String sortOrder) {
 		if (page == null) {
 			page = 1;

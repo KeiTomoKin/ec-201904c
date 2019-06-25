@@ -20,39 +20,11 @@
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<!-- 郵便番号検索機能 -->
-<script>
-$(function() {
-	$('#js-button').on("click",function(){
-		AjaxZip3.zip2addr('destinationZipcode', '', 'destinationAddress', 'destinationAddress');
-	});
-});
-</script>
 
-<!-- 入力フォームに値をセット -->
-<script th:inline="javascript">
-window.onload=function(){
-  var user = [[${order}]].user;
-  
-  var nameList = user.name.split(' ');
-  
-  var email = user.email;
-  var zipcode = user.zipcode;
-  var address = user.address;
-  
-  var telephoneList = user.telephone.split('-');
-  
-  $('#inputDestinationFirstName').val(nameList[0]);
-  $('#inputDestinationLastName').val(nameList[1]);
-  
-  $('#inputEmail').val(email);
-  $('#inputZipcode').val(zipcode);
-  $('#inputAddress').val(address);
-  
-  $('#inputFirstTel').val(telephoneList[0]);
-  $('#inputMiddleTel').val(telephoneList[1]);
-  $('#inputLastTel').val(telephoneList[2]);
-};
+<script>
+$(function(){
+	$('')
+});
 </script>
 </head>
 <body>
@@ -68,7 +40,7 @@ window.onload=function(){
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html" th:href="@{/displayItemList/showList}"> <!-- 企業ロゴ --> <img
+					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> <img
 						alt="main log" src="img/header_logo.png" th:src="@{/img/header_logo.png}" height="35">
 					</a>
 				</div>
@@ -215,10 +187,14 @@ window.onload=function(){
 									</div>
 								</td>
 								<td>
-									<label th:if="${#fields.hasErrors('destinationFirstName')}" th:errors="*{destinationFirstName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
-									<label th:if="${NOT #fields.hasErrors('destinationFirstName') AND #fields.hasErrors('destinationLastName')}" th:errors="*{destinationLastName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
-									姓：<input type="text" name="destinationFirstName" placeholder="First Name" th:field="*{destinationFirstName}" id="inputDestinationFirstName" style="width:145px;">
-									名：<input type="text" name="destinationLastName" placeholder="Last Name" th:field="*{destinationLastName}" style="width:145px;" id="inputDestinationLastName">
+									<div class="form-group">
+										<label th:if="${#fields.hasErrors('destinationFirstName')}" th:errors="*{destinationFirstName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
+										<label th:if="${NOT #fields.hasErrors('destinationFirstName') AND #fields.hasErrors('destinationLastName')}" th:errors="*{destinationLastName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
+											<div class="form-inline">
+											姓：<input type="text" name="destinationFirstName" placeholder="First Name" th:field="*{destinationFirstName}" id="inputDestinationFirstName" class="form-control" style="width:145px;">
+											名：<input type="text" name="destinationLastName" placeholder="Last Name" th:field="*{destinationLastName}" id="inputDestinationLastName" class="form-control" style="width:145px;">
+										</div>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -228,8 +204,10 @@ window.onload=function(){
 									</div>
 								</td>
 								<td>
-									<label th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
-									<input type="text" name="destinationEmail" placeholder="Email" th:field="*{destinationEmail}" id="inputEmail" style="width:350px;">
+									<div class="form-group">
+										<label th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
+										<input type="text" name="destinationEmail" placeholder="Email" th:field="*{destinationEmail}" id="inputEmail" class="form-control" style="width:350px;">
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -239,9 +217,12 @@ window.onload=function(){
 									</div>
 								</td>
 								<td>
-									<label th:if="${#fields.hasErrors('destinationZipcode')}" th:errors="*{destinationZipcode}" class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
-									<input type="text" name="destinationZipcode" placeholder="Zipcode" th:field="*{destinationZipcode}" id="inputZipcode" style="width:100px;" maxlength="7">&nbsp;&nbsp;
-									<button id="js-button" type="button">住所検索</button>
+									<div class="form-group">
+										<div class="form-inline">
+											<label th:if="${#fields.hasErrors('destinationZipcode')}" th:errors="*{destinationZipcode}" class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
+											<input type="text" name="destinationZipcode" placeholder="Zipcode" th:field="*{destinationZipcode}" id="inputZipcode" class="form-control" style="width:100px;" maxlength="7" onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
+										</div>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -251,8 +232,10 @@ window.onload=function(){
 									</div>
 								</td>
 								<td>
-									<label th:if="${#fields.hasErrors('destinationAddress')}" th:errors="*{destinationAddress}" class="control-label" style="color: red" for="inputError">住所を入力してください</label>
-									<textarea rows="3" cols="45" name="destinationAddress" placeholder="Address" th:field="*{destinationAddress}" id="inputAddress"></textarea>
+									<div class="form-group">
+										<label th:if="${#fields.hasErrors('destinationAddress')}" th:errors="*{destinationAddress}" class="control-label" style="color: red" for="inputError">住所を入力してください</label>
+										<textarea rows="3" cols="45" name="destinationAddress" placeholder="Address" th:field="*{destinationAddress}" id="inputAddress" class="form-control"></textarea>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -262,12 +245,16 @@ window.onload=function(){
 									</div>
 								</td>
 								<td>
-									<label th:if="${#fields.hasErrors('destinationFirstTel')}" th:errors="*{destinationFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-									<label th:if="${NOT #fields.hasErrors('destinationFirstTel') AND #fields.hasErrors('destinationMiddleFirstTel')}" th:errors="*{destinationMiddleFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-									<label th:if="${NOT #fields.hasErrors('destinationFirstTel') AND NOT #fields.hasErrors('destinationMiddleFirstTel') AND #fields.hasErrors('destinationLastFirstTel')}" th:errors="*{destinationLastFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-									<input type="text" name="destinationFirstTel" placeholder="First" th:field="*{destinationFirstTel}" maxlength="4" style="width:60px;" id="inputFirstTel"> - 
-									<input type="text" name="destinationMiddleFirstTel" placeholder="Middle" th:field="*{destinationMiddleFirstTel}" maxlength="4" style="width:60px;" id="inputMiddleTel"> - 
-									<input type="text" name="destinationLastFirstTel" placeholder="Last" th:field="*{destinationLastFirstTel}" maxlength="4" style="width:60px;" id="inputLastTel">
+									<div class="form-group">
+										<label th:if="${#fields.hasErrors('destinationFirstTel')}" th:errors="*{destinationFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
+										<label th:if="${NOT #fields.hasErrors('destinationFirstTel') AND #fields.hasErrors('destinationMiddleFirstTel')}" th:errors="*{destinationMiddleFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
+										<label th:if="${NOT #fields.hasErrors('destinationFirstTel') AND NOT #fields.hasErrors('destinationMiddleFirstTel') AND #fields.hasErrors('destinationLastFirstTel')}" th:errors="*{destinationLastFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
+										<div class="form-inline">
+											<input type="text" name="destinationFirstTel" placeholder="First" th:field="*{destinationFirstTel}" id="inputFirstTel" class="form-control" maxlength="4" style="width:60px;"> - 
+											<input type="text" name="destinationMiddleFirstTel" placeholder="Middle" th:field="*{destinationMiddleFirstTel}" id="inputMiddleTel" class="form-control" maxlength="4" style="width:60px;"> - 
+											<input type="text" name="destinationLastFirstTel" placeholder="Last" th:field="*{destinationLastFirstTel}" id="inputLastTel" class="form-control" maxlength="4" style="width:60px;">
+										</div>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -280,12 +267,13 @@ window.onload=function(){
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
+												<div class="col-sm-5">
+													<nobr>
+														<label th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" class="control-label" style="color: red;" for="inputError">配達日時を入力してください</label>
+													</nobr>
+													<input type="date" name="deliveryDate" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:field="*{deliveryDate}" id="inputDate"  class="form-control input-sm" />
+												</div>
 											</div>
-											<div class="col-sm-5">
-												<label th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" class="control-label" style="color: red" for="inputError">配達日時を入力してください</label>
-												<input type="date" name="deliveryDate" th:field="*{deliveryDate}" id="inputDate" class="form-control input-sm" />
-											</div>
-
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
@@ -330,26 +318,19 @@ window.onload=function(){
 									</div>
 								</td>
 							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-
-			<!-- table -->
-			<div class="row">
-				<div class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-					<h3 class="text-center">お支払い方法</h3>
-					<table class="table table-striped">
-						<tbody>
 							<tr>
-								<td>
+								<td align="center">
 									<div class="text-center">
-										代金引換
+										<label for="inputDate">お支払い方法</label>
 									</div>
 								</td>
-								<td>
+								<td align="center">
 									<div class="row">
 										<div class="col-sm-12">
+											<label class="radio-inline">
+												<input type="radio" name="paymentMethod" value="2">
+												クレジットカード決済
+											</label>
 											<label class="radio-inline">
 												<input type="radio" name="paymentMethod" value="1" checked="checked">
 												代金引換
@@ -358,27 +339,11 @@ window.onload=function(){
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<div class="text-center">
-										クレジットカード決済
-									</div>
-								</td>
-								<td align="center">
-									<div class="row">
-										<div class="col-sm-12">
-											<label class="radio-inline">
-												<input type="radio" name="paymentMethod" value="2">
-												クレジットカード
-											</label><br><br>
-										</div>
-									</div>
-								</td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
+			<!-- 送信 -->
 			<div class="row">
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">

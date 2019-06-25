@@ -16,15 +16,7 @@
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script src="js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
-<!-- 郵便番号から住所を取得 -->
-<script>
-$(function() {
-	$('#js-button').on("click",function(){
-		console.log("hello world!");
-		AjaxZip3.zip2addr('zipcode', '', 'address', 'address');
-	});
-});
-</script>
+
 <script>
 $(function(){
 	$('#reset').on("click",function(){
@@ -46,7 +38,7 @@ $(function(){
 							class="icon-bar"></span> <span class="icon-bar"></span> <span
 							class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html" th:href="@{/displayItemList/showList}"> <!-- 企業ロゴ --> <img
+					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> <img
 						alt="main log" src="img/header_logo.png" th:src="@{/img/header_logo.png}" height="35">
 
 					</a>
@@ -101,8 +93,7 @@ $(function(){
 								<label for="inputZipcode">郵便番号:</label>※ハイフンを抜いた7文字で入力してください<br>
 								<label th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
 								<div class="form-inline">
-									<input type="text" name="zipcode" style="width:100px;" maxlength="7" id="inputZipcode" class="form-control" placeholder="Zipcode" th:field="*{zipcode}">			
-									<button id="js-button" type="button">住所検索</button>
+									<input type="text" name="zipcode" style="width:100px;" maxlength="7" id="inputZipcode" class="form-control" placeholder="Zipcode" th:field="*{zipcode}" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">			
 								</div>	
 							</div>
 							<div class="form-group">
