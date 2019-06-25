@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_c.form;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -36,7 +37,7 @@ public class OrderConfirmationForm {
 	private String destinationMiddleFirstTel;
 	@NotBlank(message = "電話番号を入力して下さい")
 	private String destinationLastFirstTel;
-	
+
 	/** 注文日 **/
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@NotNull(message = "配達日時を指定して下さい")
@@ -45,6 +46,9 @@ public class OrderConfirmationForm {
 	private String deliveryTime;
 	/** 支払方法 **/
 	private Integer paymentMethod;
+	/** クレジットカード情報 */
+	@Valid
+	private CreditCardForm creditCardForm;
 
 	public String getDestinationFirstName() {
 		return destinationFirstName;
@@ -132,5 +136,13 @@ public class OrderConfirmationForm {
 
 	public void setPaymentMethod(Integer status) {
 		this.paymentMethod = status;
+	}
+
+	public CreditCardForm getCreditCardForm() {
+		return creditCardForm;
+	}
+
+	public void setCreditCardForm(CreditCardForm creditCardForm) {
+		this.creditCardForm = creditCardForm;
 	}
 }

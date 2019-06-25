@@ -27,32 +27,7 @@ $(function() {
 	});
 });
 </script>
-
-<!-- 入力フォームに値をセット -->
-<script th:inline="javascript">
-window.onload=function(){
-  var user = [[${order}]].user;
-  
-  var nameList = user.name.split(' ');
-  
-  var email = user.email;
-  var zipcode = user.zipcode;
-  var address = user.address;
-  
-  var telephoneList = user.telephone.split('-');
-  
-  $('#inputDestinationFirstName').val(nameList[0]);
-  $('#inputDestinationLastName').val(nameList[1]);
-  
-  $('#inputEmail').val(email);
-  $('#inputZipcode').val(zipcode);
-  $('#inputAddress').val(address);
-  
-  $('#inputFirstTel').val(telephoneList[0]);
-  $('#inputMiddleTel').val(telephoneList[1]);
-  $('#inputLastTel').val(telephoneList[2]);
-};
-</script>
+<script th:src="@{/js/order_confirm.js}"></script>
 </head>
 <body>
 	<div class="container">
@@ -373,7 +348,7 @@ window.onload=function(){
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
-												<input type="radio" name="paymentMethod" value="1" checked="checked">
+												<input type="radio" name="paymentMethod" value="1" th:field="*{paymentMethod}">
 												代金引換
 											</label>
 										</div>
@@ -390,11 +365,79 @@ window.onload=function(){
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
-												<input type="radio" name="paymentMethod" value="2">
+												<input type="radio" name="paymentMethod" value="2" th:field="*{paymentMethod}">
 												クレジットカード
 											</label><br><br>
 										</div>
 									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<div th:if="${#fields.hasErrors('creditCardForm')}" th:errors="*{creditCardForm}" class="text-center" style="color: red">カード番号を入力してください</div>
+					<table class="table" id="creditCardForm" th:object="${orderConfirmationForm.creditCardForm}">
+						<tbody>
+							<tr>
+								<td>
+									<div class="text-center">
+										<label for="creditCardForm.cardNumber">カード番号</label>
+									</div>
+								</td>
+								<td>
+									<div th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}" style="color: red">カード番号を入力してください</div>
+									<input type="text" pattern="\d{14,16}" th:field="*{cardNumber}">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="text-center">
+										<label for="creditCardForm.cardExpYear">有効期限</label>
+									</div>
+								</td>
+								<td th:with="currentYear=${#dates.year(#dates.createNow())}">
+									<div th:if="${#fields.hasErrors('cardExpYear')}" th:errors="*{cardExpYear}" style="color: red">カード有効期限の年を入力してください</div>
+									<div th:if="${#fields.hasErrors('cardExpMonth')}" th:errors="*{cardExpMonth}" style="color: red">カード有効期限の月を入力してください</div>
+									<select th:field="*{cardExpYear}">
+										<option value="">年</option>
+										<option th:each="year : ${#numbers.sequence(currentYear,currentYear+20)}" th:value="${year}" th:text="${year}">2019</option>
+									</select>
+									<select th:field="*{cardExpMonth}">
+										<option value="">月</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="text-center">
+										<label for="cardName">カード名義人</label>
+									</div>
+								</td>
+								<td>
+									<div th:if="${#fields.hasErrors('cardName')}" th:errors="*{cardName}" style="color: red">カード名義人を入力してください</div>
+									<input type="text" th:field="*{cardName}">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="text-center">
+										<label for="cardCvv">セキュリティコード</label>
+									</div>
+								</td>
+								<td>
+									<div th:if="${#fields.hasErrors('cardCvv')}" th:errors="*{cardCvv}" style="color: red">セキュリティコードを入力してください</div>
+									<input type="text" pattern="\d{3,4}" th:field="*{cardCvv}">
 								</td>
 							</tr>
 						</tbody>

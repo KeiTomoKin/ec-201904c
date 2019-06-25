@@ -20,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
+import jp.co.example.ecommerce_c.domain.Payment;
+import jp.co.example.ecommerce_c.domain.PaymentResult;
 import jp.co.example.ecommerce_c.domain.User;
+import jp.co.example.ecommerce_c.form.CreditCardForm;
 import jp.co.example.ecommerce_c.form.OrderConfirmationForm;
+import jp.co.example.ecommerce_c.service.CreditCardService;
 import jp.co.example.ecommerce_c.service.OrderConfirmationService;
 import jp.co.example.ecommerce_c.service.UserService;
 
@@ -33,6 +37,8 @@ import jp.co.example.ecommerce_c.service.UserService;
 @Controller
 @RequestMapping("/confirm_order")
 public class OrderConfirmationController {
+	@Autowired
+	private CreditCardService creditCardService;
 
 	@Autowired
 	private OrderConfirmationService orderConfirmationService;
@@ -57,6 +63,9 @@ public class OrderConfirmationController {
 		orderConfirmationForm.setDestinationFirstTel(userTel[0]);
 		orderConfirmationForm.setDestinationMiddleFirstTel(userTel[1]);
 		orderConfirmationForm.setDestinationLastFirstTel(userTel[2]);
+		orderConfirmationForm.setPaymentMethod(1);
+
+		orderConfirmationForm.setCreditCardForm(new CreditCardForm());
 
 		return orderConfirmationForm;
 	}
@@ -81,8 +90,8 @@ public class OrderConfirmationController {
 	}
 
 	@RequestMapping("/orderComplete")
-	public String orderComplete(@Validated OrderConfirmationForm form, @AuthenticationPrincipal LoginUser loginUser, 
-			BindingResult result, Model model) {
+	public String orderComplete(@Validated OrderConfirmationForm form, BindingResult result,
+			@AuthenticationPrincipal LoginUser loginUser, Model model) {
 		// 入力値チェック
 		if (result.hasErrors()) {
 			return confirmOrder(model);
@@ -90,9 +99,22 @@ public class OrderConfirmationController {
 
 		Order order = (Order) session.getAttribute("order");
 
+		// クレジットカード決済処理
+		if (form.getPaymentMethod() == 2) {
+			Payment payment = new Payment();
+			BeanUtils.copyProperties(form.getCreditCardForm(), payment);
+			payment.setAmount(order.getCalcTotalPrice());
+			PaymentResult paymentResult = creditCardService.makePayment(payment);
+
+			if (!paymentResult.isSuccess()) {
+				result.rejectValue("creditCardForm", null, "クレジットカードでの決済に失敗しました");
+				return confirmOrder(model);
+			}
+		}
+
 		// フォームから注文情報をコピー
 		BeanUtils.copyProperties(form, order);
-		
+
 		// オーダーのuserIdを今ログインしているユーザに書き換え
 		order.setUserId(loginUser.getUser().getId());
 
@@ -101,7 +123,8 @@ public class OrderConfirmationController {
 		order.setOrderDate(orderDate);
 
 		order.setDestinationName(form.getDestinationFirstName() + " " + form.getDestinationLastName());
-		order.setDestinationTel(form.getDestinationFirstTel() + "-" + form.getDestinationMiddleFirstTel() + "-" + form.getDestinationLastFirstTel());
+		order.setDestinationTel(form.getDestinationFirstTel() + "-" + form.getDestinationMiddleFirstTel() + "-"
+				+ form.getDestinationLastFirstTel());
 
 		// 配達日時の作成
 
