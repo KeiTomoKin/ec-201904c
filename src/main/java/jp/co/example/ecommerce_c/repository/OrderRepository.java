@@ -128,6 +128,17 @@ public class OrderRepository {
 	}
 	
 	/**
+	 * 未確定のオーダーを削除する.
+	 * 
+	 * @param userId ユーザID
+	 */
+	public void deleteUnsettledById(Integer userId) {
+		String deleteSql = "delete from orders where user_id=:userId AND status=0;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		template.update(deleteSql, param);
+	}
+	
+	/**
 	 * 注文完了操作.
 	 * 
 	 * @param order 注文内容
