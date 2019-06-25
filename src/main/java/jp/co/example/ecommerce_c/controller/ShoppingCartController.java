@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.form.OrderItemForm;
+import jp.co.example.ecommerce_c.service.GuestShoppingCartService;
 import jp.co.example.ecommerce_c.service.ShoppingCartService;
 
 @Controller
@@ -18,34 +19,39 @@ public class ShoppingCartController {
 	@Autowired
 	private ShoppingCartService shoppingCartService;
 	@Autowired
+	private GuestShoppingCartService guestShoppingCartService;
+	@Autowired
 	private HttpSession session;
 
 	@RequestMapping("/add")
 	public String addOrderItem(OrderItemForm form, @AuthenticationPrincipal LoginUser loginUser) {
+		Integer orderId = (Integer) session.getAttribute("orderId");
 		int userId;
 		if(loginUser == null) {
 			userId = -1;
+			orderId=guestShoppingCartService.insert(form, orderId, userId);
 		}else {
 			userId = loginUser.getUser().getId();
+			shoppingCartService.insert(form, orderId, userId);
+			orderId = shoppingCartService.orderCheckByUserId(userId).getId();
 		}
-		Integer orderId = (Integer) session.getAttribute("orderId");
-		shoppingCartService.insert(form, orderId, userId);
-		orderId = shoppingCartService.orderCheckByUserId(userId).getId();
 		session.setAttribute("orderId", orderId);
 		return "redirect:/cart";
 	}
 
 	@RequestMapping("")
 	public String showOrder(@AuthenticationPrincipal LoginUser loginUser) {
+		Integer orderId = (Integer) session.getAttribute("orderId");
+		Order order = new Order();
 		int userId;
 		if(loginUser == null) {
 			userId = -1;
+			order=guestShoppingCartService.showOrder(userId, orderId);
 		}else {
 			userId = loginUser.getUser().getId();
+			order=shoppingCartService.showOrder(userId, orderId);
 		}
-		Integer orderId = (Integer) session.getAttribute("orderId");
-		Order order=shoppingCartService.showOrder(userId, orderId);
-		orderId = shoppingCartService.orderCheckByUserId(userId).getId();
+		orderId= order.getId();
 		session.setAttribute("order", order);
 		session.setAttribute("orderId", orderId);
 		return "cart_list";

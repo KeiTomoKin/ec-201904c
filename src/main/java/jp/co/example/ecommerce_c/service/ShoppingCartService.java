@@ -70,9 +70,6 @@ public class ShoppingCartService {
 		order.setUserId(userId);
 		orderRepository.insert(order);
 		order = orderRepository.findByUserId(userId);
-//		List<OrderItem> orderItemList = new ArrayList<>();
-//		order.setOrderItemList(orderItemList);
-		System.out.println(order.getId());
 		return order;
 	}
 

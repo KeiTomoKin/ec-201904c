@@ -47,10 +47,10 @@ public class OrderRepository {
 	 * 
 	 * @param order 新しいオーダー
 	 */
-	public void insert(Order order) {
-		String insertSql = "insert into orders(user_id,status, total_price) values (:userId,0,0)";
+	public Integer insert(Order order) {
+		String insertSql = "insert into orders(user_id,status, total_price) values (:userId,0,0) returning id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
-		template.update(insertSql, param);
+		return template.queryForObject(insertSql, param,Integer.class);
 	}
 
 	/**
