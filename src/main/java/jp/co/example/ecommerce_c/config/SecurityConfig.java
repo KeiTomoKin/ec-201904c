@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests() //認可に関する設定
 			//すべてのユーザがアクセスできるリンク
-			.antMatchers("/registration/**", "/toLogin",  "/displayItemList/**", "/item/**", "/cart/**").permitAll() 
+			.antMatchers("/","/registration/**", "/toLogin",  "/displayItemList/**", "/item/**", "/cart/**").permitAll() 
 			.anyRequest().authenticated();
 		
 		http.formLogin() //ログインに関する設定
