@@ -97,8 +97,7 @@ public class OrderConfirmationController {
 		order.setOrderDate(orderDate);
 
 		order.setDestinationName(form.getDestinationFirstName() + " " + form.getDestinationLastName());
-		order.setDestinationTel(form.getDestinationFirstTel() + "-" + form.getDestinationMiddleFirstTel() + "-"
-				+ form.getDestinationLastFirstTel());
+		order.setDestinationTel(form.getDestinationFirstTel() + "-" + form.getDestinationMiddleFirstTel() + "-" + form.getDestinationLastFirstTel());
 
 		// 配達日時の作成
 
