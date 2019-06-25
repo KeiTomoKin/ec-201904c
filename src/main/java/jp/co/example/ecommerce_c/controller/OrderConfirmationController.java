@@ -43,9 +43,9 @@ public class OrderConfirmationController {
 	 */
 	@RequestMapping("")
 	public String confirmOrder(Model model) {
-//		Integer orderId = (Integer) session.getAttribute("orderId");
-//		Order order = orderConfirmationService.getOrder(orderId);
-//		model.addAttribute("order", order);
+		Integer orderId = (Integer) session.getAttribute("orderId");
+		Order order = orderConfirmationService.getOrder(orderId);
+		model.addAttribute("order", order);
 
 		return "order_confirm";
 	}
