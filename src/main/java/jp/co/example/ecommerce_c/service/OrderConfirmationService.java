@@ -45,29 +45,33 @@ public class OrderConfirmationService {
 
 	private void setOrderItemListToOrder(Order order) {
 		List<OrderItem> orderItemList = orderItemRepository.findById(order.getId());
-		order.setOrderItemList(orderItemList);
 		for (OrderItem orderItem : orderItemList) {
 			setItemToOrderItem(orderItem);
 			setOrderToppingListToOrderItem(orderItem);
+			System.out.println("オーダーアイテムリスト"+orderItem);
 		}
+		order.setOrderItemList(orderItemList);
 	}
 
 	private void setOrderToppingListToOrderItem(OrderItem orderItem) {
 		List<OrderTopping> orderToppingList = orderToppingRepository.findById(orderItem.getId());
-		orderItem.setOrderToppingList(orderToppingList);
 		for (OrderTopping orderTopping : orderToppingList) {
 			setToppingToOrderTopping(orderTopping);
+			System.out.println("オーダートッピングリスト"+orderTopping);
 		}
+		orderItem.setOrderToppingList(orderToppingList);
 	}
 
 	private void setToppingToOrderTopping(OrderTopping orderTopping) {
-		Topping topping = toppingRepository.load(orderTopping.getId());
+		Topping topping = toppingRepository.load(orderTopping.getToppingId());
 		orderTopping.setTopping(topping);
+		System.out.println("オーダートッピング"+orderTopping);
 	}
 
 	private void setItemToOrderItem(OrderItem orderItem) {
 		Item item = itemRepository.load(orderItem.getItemId());
 		orderItem.setItem(item);
+		System.out.println("セットアイテム"+orderItem);
 	}
 	
 	/**
