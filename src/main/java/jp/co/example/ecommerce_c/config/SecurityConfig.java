@@ -83,14 +83,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 「認証」に関する設定.
 	 *
 	 */
-	/**
 	@Override
 	
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService)
 			.passwordEncoder(new BCryptPasswordEncoder());
 	}
-	**/
 	
 	/**
 	 * ログイン成功した時の処理.
@@ -98,6 +96,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * .formLogin().successHandler(new MyAuthenticationSuccessHandler());
 	 *
 	 */
+	/*
 	public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	    @Override
@@ -108,6 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        
 	    }
 	}
+	*/
 	
 	/**
 	 * パスワードのハッシュ化を行うためのエンコーダー.
