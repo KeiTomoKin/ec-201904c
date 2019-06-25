@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,6 @@ public class GuestShoppingCartService {
 	@Autowired
 	private ToppingRepository toppingRepository;
 
-
 	/**
 	 * ユーザIDに結びついたorderがない場合に、新しくorderを作る.
 	 * 
@@ -50,11 +50,9 @@ public class GuestShoppingCartService {
 	public Order createNewOrder(Integer userId) {
 		Order order = new Order();
 		order.setUserId(userId);
-		orderRepository.insert(order);
-		order = orderRepository.findByUserId(userId);
-//		List<OrderItem> orderItemList = new ArrayList<>();
-//		order.setOrderItemList(orderItemList);
-		System.out.println(order.getId());
+		Integer orderId = orderRepository.insert(order);
+		order=orderRepository.findById(orderId);
+		System.out.println(orderId);
 		return order;
 	}
 
@@ -65,12 +63,16 @@ public class GuestShoppingCartService {
 	 * @param orderId オーダーID
 	 * @param userId  ユーザID
 	 */
-	public void insert(OrderItemForm form, Integer orderId, Integer userId) {
+	public Integer insert(OrderItemForm form, Integer orderId, Integer userId) {
 		Order order = new Order();
 		if (orderId == null) {
 			order = createNewOrder(userId);
-		}else {
-			order = orderRepository.findById(orderId);
+		} else {
+			try {
+				order = orderRepository.findById(orderId);
+			} catch (EmptyResultDataAccessException e) {
+				order = createNewOrder(userId);
+			}
 		}
 		orderId = order.getId();
 		OrderItem pizza = new OrderItem();
@@ -95,9 +97,13 @@ public class GuestShoppingCartService {
 		if (order.getOrderItemList() == null) {
 			order.setOrderItemList(new ArrayList<OrderItem>());
 		}
+		System.out.println(order);
+		System.out.println(order.getTotalPrice());
 		order.setTotalPrice(order.getTotalPrice() + pizza.getSubTotal());
+		System.out.println(order.getTotalPrice());
 		orderRepository.update(order);
 		order.getOrderItemList().add(pizza);
+		return orderId;
 	}
 
 	/**
@@ -111,8 +117,12 @@ public class GuestShoppingCartService {
 		Order order = new Order();
 		if (orderId == null) {
 			order = createNewOrder(userId);
-		}else {
-			order = orderRepository.findById(orderId);
+		} else {
+			try {
+				order = orderRepository.findById(orderId);
+			} catch (EmptyResultDataAccessException e) {
+				order = createNewOrder(userId);
+			}
 		}
 		orderId = order.getId();
 		List<OrderItem> orderItemList = orderItemRepository.findById(orderId);
@@ -128,28 +138,6 @@ public class GuestShoppingCartService {
 		}
 		order.setOrderItemList(orderItemList);
 		return order;
-	}
-
-	/**
-	 * カート内の商品を削除する.
-	 * 
-	 * @param orderItemId カートから削除するピザのID
-	 * @param orderId     削除するピザを含んだオーダーのID
-	 */
-	public void deleteOrderItem(Integer orderItemId, Integer orderId) {
-		Order order = orderRepository.findById(orderId);
-		OrderItem orderItem = orderItemRepository.load(orderItemId);
-		Item item = itemRepository.load(orderItem.getItemId());
-		List<OrderTopping> orderToppingList = orderToppingRepository.findById(orderItemId);
-		orderItem.setItem(item);
-		if (orderToppingList == null) {
-			orderToppingList = new ArrayList<>();
-		}
-		orderItem.setOrderToppingList(orderToppingList);
-		order.setTotalPrice(order.getTotalPrice() - orderItem.getSubTotal());
-		orderRepository.update(order);
-		orderToppingRepository.deleteById(orderItemId);
-		orderItemRepository.deleteById(orderItemId);
 	}
 
 }
