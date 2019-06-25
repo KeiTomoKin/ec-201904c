@@ -149,7 +149,6 @@ public class ShoppingCartService {
 			}
 			pizza.setOrderToppingList(orderToppingList);
 		}
-		order.setOrderItemList(orderItemList);
 		return order;
 	}
 

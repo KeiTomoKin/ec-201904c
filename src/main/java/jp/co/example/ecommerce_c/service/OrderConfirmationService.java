@@ -48,7 +48,6 @@ public class OrderConfirmationService {
 		for (OrderItem orderItem : orderItemList) {
 			setItemToOrderItem(orderItem);
 			setOrderToppingListToOrderItem(orderItem);
-			System.out.println("オーダーアイテムリスト"+orderItem);
 		}
 		order.setOrderItemList(orderItemList);
 	}
@@ -57,7 +56,6 @@ public class OrderConfirmationService {
 		List<OrderTopping> orderToppingList = orderToppingRepository.findById(orderItem.getId());
 		for (OrderTopping orderTopping : orderToppingList) {
 			setToppingToOrderTopping(orderTopping);
-			System.out.println("オーダートッピングリスト"+orderTopping);
 		}
 		orderItem.setOrderToppingList(orderToppingList);
 	}
@@ -65,13 +63,11 @@ public class OrderConfirmationService {
 	private void setToppingToOrderTopping(OrderTopping orderTopping) {
 		Topping topping = toppingRepository.load(orderTopping.getToppingId());
 		orderTopping.setTopping(topping);
-		System.out.println("オーダートッピング"+orderTopping);
 	}
 
 	private void setItemToOrderItem(OrderItem orderItem) {
 		Item item = itemRepository.load(orderItem.getItemId());
 		orderItem.setItem(item);
-		System.out.println("セットアイテム"+orderItem);
 	}
 	
 	/**
