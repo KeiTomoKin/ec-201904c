@@ -77,5 +77,7 @@ public class OrderConfirmationService {
 	 */
 	public void orderComplete(Order order) {
 		orderRepository.updateByOrderId(order);
+		//未確定のオーダが残っていたら削除
+		orderRepository.deleteUnsettledById(order.getUserId());
 	}
 }

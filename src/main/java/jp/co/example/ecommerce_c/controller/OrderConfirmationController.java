@@ -81,7 +81,8 @@ public class OrderConfirmationController {
 	}
 
 	@RequestMapping("/orderComplete")
-	public String orderComplete(@Validated OrderConfirmationForm form, BindingResult result, Model model) {
+	public String orderComplete(@Validated OrderConfirmationForm form, @AuthenticationPrincipal LoginUser loginUser, 
+			BindingResult result, Model model) {
 		// 入力値チェック
 		if (result.hasErrors()) {
 			return confirmOrder(model);
@@ -91,6 +92,9 @@ public class OrderConfirmationController {
 
 		// フォームから注文情報をコピー
 		BeanUtils.copyProperties(form, order);
+		
+		// オーダーのuserIdを今ログインしているユーザに書き換え
+		order.setUserId(loginUser.getUser().getId());
 
 		// コピーできなかった各情報の作成
 		Date orderDate = Date.valueOf(LocalDate.now());
