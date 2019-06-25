@@ -27,6 +27,32 @@ $(function() {
 	});
 });
 </script>
+
+<!-- 入力フォームに値をセット -->
+<script th:inline="javascript">
+window.onload=function(){
+  var user = [[${order}]].user;
+  
+  var nameList = user.name.split(' ');
+  
+  var email = user.email;
+  var zipcode = user.zipcode;
+  var address = user.address;
+  
+  var telephoneList = user.telephone.split('-');
+  
+  $('#inputDestinationFirstName').val(nameList[0]);
+  $('#inputDestinationLastName').val(nameList[1]);
+  
+  $('#inputEmail').val(email);
+  $('#inputZipcode').val(zipcode);
+  $('#inputAddress').val(address);
+  
+  $('#inputFirstTel').val(telephoneList[0]);
+  $('#inputMiddleTel').val(telephoneList[1]);
+  $('#inputLastTel').val(telephoneList[2]);
+};
+</script>
 </head>
 <body>
 	<div class="container">
@@ -207,14 +233,14 @@ $(function() {
 							<tr>
 								<td>
 									<div class="text-center">
-										<label for="inputName">お名前</label>
+										<label for="inputDestinationFirstName">お名前</label>
 									</div>
 								</td>
 								<td>
 									<label th:if="${#fields.hasErrors('destinationFirstName')}" th:errors="*{destinationFirstName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
 									<label th:if="${NOT #fields.hasErrors('destinationFirstName') AND #fields.hasErrors('destinationLastName')}" th:errors="*{destinationLastName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
-									姓：<input type="text" name="destinationFirstName" placeholder="First Name" th:field="*{destinationFirstName}" id="inputName" style="width:145px;">
-									名：<input type="text" name="destinationLastName" placeholder="Last Name" th:field="*{destinationLastName}" style="width:145px;">
+									姓：<input type="text" name="destinationFirstName" placeholder="First Name" th:field="*{destinationFirstName}" id="inputDestinationFirstName" style="width:145px;">
+									名：<input type="text" name="destinationLastName" placeholder="Last Name" th:field="*{destinationLastName}" style="width:145px;" id="inputDestinationLastName">
 								</td>
 							</tr>
 							<tr>
@@ -225,7 +251,7 @@ $(function() {
 								</td>
 								<td>
 									<label th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
-									<input type="text" name="destinationEmail" placeholder="Email" th:field="*{destinationEmail}" id="Email" style="width:350px;">
+									<input type="text" name="destinationEmail" placeholder="Email" th:field="*{destinationEmail}" id="inputEmail" style="width:350px;">
 								</td>
 							</tr>
 							<tr>
@@ -254,16 +280,16 @@ $(function() {
 							<tr>
 								<td>
 									<div class="text-center">
-										<label for="inputTel">電話番号</label>
+										<label for="inputFirstTel">電話番号</label>
 									</div>
 								</td>
 								<td>
 									<label th:if="${#fields.hasErrors('destinationFirstTel')}" th:errors="*{destinationFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
 									<label th:if="${NOT #fields.hasErrors('destinationFirstTel') AND #fields.hasErrors('destinationMiddleFirstTel')}" th:errors="*{destinationMiddleFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
 									<label th:if="${NOT #fields.hasErrors('destinationFirstTel') AND NOT #fields.hasErrors('destinationMiddleFirstTel') AND #fields.hasErrors('destinationLastFirstTel')}" th:errors="*{destinationLastFirstTel}" class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-									<input type="text" name="destinationFirstTel" placeholder="First" th:field="*{destinationFirstTel}" id="inputTel" maxlength="4" style="width:60px;"> - 
-									<input type="text" name="destinationMiddleFirstTel" placeholder="Middle" th:field="*{destinationMiddleFirstTel}" maxlength="4" style="width:60px;"> - 
-									<input type="text" name="destinationLastFirstTel" placeholder="Last" th:field="*{destinationLastFirstTel}" maxlength="4" style="width:60px;">
+									<input type="text" name="destinationFirstTel" placeholder="First" th:field="*{destinationFirstTel}" maxlength="4" style="width:60px;" id="inputFirstTel"> - 
+									<input type="text" name="destinationMiddleFirstTel" placeholder="Middle" th:field="*{destinationMiddleFirstTel}" maxlength="4" style="width:60px;" id="inputMiddleTel"> - 
+									<input type="text" name="destinationLastFirstTel" placeholder="Last" th:field="*{destinationLastFirstTel}" maxlength="4" style="width:60px;" id="inputLastTel">
 								</td>
 							</tr>
 							<tr>
@@ -278,8 +304,8 @@ $(function() {
 											<div class="col-sm-12">
 											</div>
 											<div class="col-sm-5">
-												<label th:if="${#fields.hasErrors('orderDate')}" th:errors="*{orderDate}" class="control-label" style="color: red" for="inputError">配達日時を入力してください</label>
-												<input type="date" name="orderDate" placeholder="Tel" th:field="*{orderDate}" id="inputDate" class="form-control input-sm" />
+												<label th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" class="control-label" style="color: red" for="inputError">配達日時を入力してください</label>
+												<input type="date" name="deliveryDate" th:field="*{deliveryDate}" id="inputDate" class="form-control input-sm" />
 											</div>
 
 										</div>
