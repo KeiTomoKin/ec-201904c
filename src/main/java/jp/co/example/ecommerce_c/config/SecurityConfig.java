@@ -42,8 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/css/**"
 								 , "/img/**"
-								 , "/js/**"
-								 , "/fonts/**");
+								 , "/js/**");
 		
 	}
 	
@@ -84,11 +83,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * 「認証」に関する設定.
 	 *
 	 */
+	/**
 	@Override
+	
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService)
 			.passwordEncoder(new BCryptPasswordEncoder());
 	}
+	**/
 	
 	/**
 	 * ログイン成功した時の処理.
