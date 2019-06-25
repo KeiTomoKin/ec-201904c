@@ -40,7 +40,7 @@
 						</span>
 					</p>					
 					<p class="navbar-text navbar-right">
-						<a href="cart_list.html" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
+						<a href="cart_list.html" class="navbar-link" th:href="@{/cart}">ショッピングカート</a>&nbsp;&nbsp;
 						<span sec:authorize="isAuthenticated()">
 							<a href="order_history.html" class="navbar-link" th:href="@{/history/showHistoryList}">注文履歴</a>&nbsp;&nbsp;
 						</span>
