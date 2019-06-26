@@ -36,11 +36,25 @@ public class ShoppingCartController {
 			orderId = shoppingCartService.orderCheckByUserId(userId).getId();
 		}
 		session.setAttribute("orderId", orderId);
+<<<<<<< Updated upstream
 		return "redirect:/cart";
 	}
 
 	@RequestMapping("")
 	public String showOrder(@AuthenticationPrincipal LoginUser loginUser) {
+=======
+		return "redirect:/cart/";
+	}
+
+	@RequestMapping("/")
+	public String showOrder(@AuthenticationPrincipal LoginUser loginUser) {
+		int userId;
+		if(loginUser == null) {
+			userId = -1;
+		}else {
+			userId = loginUser.getUser().getId();
+		}
+>>>>>>> Stashed changes
 		Integer orderId = (Integer) session.getAttribute("orderId");
 		Order order = new Order();
 		int userId;
