@@ -45,8 +45,6 @@ public class EditUserController {
 		userForm.setMiddleNumber(userTel[1]);
 		userForm.setLastNumber(userTel[2]);
 		
-		System.out.println(userForm);
-		
 		return userForm;
 	}
 	
@@ -76,7 +74,6 @@ public class EditUserController {
 		if(result.hasErrors()) {
 			return showEdit();
 		}
-		
 		if (!form.getEmail().equals(loginUser.getUsername()) && userService.findByEmail(form.getEmail()) != null) {
 			model.addAttribute("mailAddressError", "既に同じメールアドレスが登録されています");
 			return showEdit();
