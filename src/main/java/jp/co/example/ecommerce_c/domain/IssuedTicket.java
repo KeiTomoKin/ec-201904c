@@ -15,15 +15,17 @@ public class IssuedTicket {
 	private Integer userId;
 	/** クーポンコード */
 	private String couponCode;
-
-	public String getCouponCode() {
-		return couponCode;
-	}
+	/** クーポン */
+	private Coupon coupon;
 
 	@Override
 	public String toString() {
 		return "IssuedTicket [id=" + id + ", CouponId=" + CouponId + ", userId=" + userId + ", couponCode=" + couponCode
 				+ "]";
+	}
+
+	public String getCouponCode() {
+		return couponCode;
 	}
 
 	public Integer getId() {
@@ -52,6 +54,14 @@ public class IssuedTicket {
 
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
+	}
+
+	public Coupon getCoupon() {
+		return coupon;
+	}
+
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
 	}
 
 }

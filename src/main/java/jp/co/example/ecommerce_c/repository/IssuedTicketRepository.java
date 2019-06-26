@@ -37,7 +37,7 @@ public class IssuedTicketRepository {
 	 * @return 発行済みのクーポン
 	 */
 	
-	public IssuedTicket FindCouponByUserIdAndCouponCode(Integer userId, String couponCode) {
+	public IssuedTicket findCouponByUserIdAndCouponCode(Integer userId, String couponCode) {
 
 		String sql = "SELECT id,coupon_id,user_id,coupon_code FROM issued_tickets WHERE user_id=:userId AND coupon_code=:couponCode";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("couponCode",

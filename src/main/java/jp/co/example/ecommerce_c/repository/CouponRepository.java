@@ -36,7 +36,7 @@ public class CouponRepository {
 	 * @param couponId クーポンのid
 	 * @return クーポン
 	 */
-	public Coupon FindCouponByCouponId(Integer couponId) {
+	public Coupon findCouponByCouponId(Integer couponId) {
 
 		String sql = "SELECT id,name,description,class_name,deadline FROM coupons WHERE id=:id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", couponId);
