@@ -20,7 +20,7 @@ import jp.co.example.ecommerce_c.service.DisplayItemListService;
  *
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("")
 public class DisplayItemListController {
 	@Autowired
 	DisplayItemListService service;
