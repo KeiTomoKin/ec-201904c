@@ -65,13 +65,27 @@ public class ItemRepository {
 
 	/**
 	 * 指定した名前を含む商品情報を取得する.
+	 * 
 	 * @param name 検索する名前
-	 * @return　検索条件に一致した商品情報のリスト
+	 * @return 検索条件に一致した商品情報のリスト
 	 */
 	public List<Item> findByLikeName(String name) {
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE UPPER(name) LIKE UPPER(:name)";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
+	}
+
+	/**
+	 * 人気順でソートされたアイテムリストを取得する.
+	 * 同率の場合はID順に並びます.
+	 * 
+	 * @return ソートされたアイテムリスト
+	 */
+	public List<Item> findAllSortByPopularity() {
+		String sql = "select i.id as id,i.name as name,description as description,price_m as price_m,price_l as price_l,image_path as image_path,deleted as deleted "
+				+ "FROM items i LEFT OUTER JOIN order_items o ON o.item_id=i.id GROUP BY o.item_id,i.name,i.id "
+				+ "ORDER BY CASE WHEN sum(quantity) is null THEN 0 ELSE sum(quantity) END DESC,id;";
+		return template.query(sql, ITEM_ROW_MAPPER);
 	}
 }

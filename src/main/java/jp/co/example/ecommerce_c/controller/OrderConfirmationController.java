@@ -69,10 +69,12 @@ public class OrderConfirmationController {
 		LocalDate nowDate = LocalDate.now();
 		LocalTime nowTime = LocalTime.now();
 
+		
 		if (nowTime.getHour() < 16) {
 			orderConfirmationForm.setDeliveryDate(nowDate);
 		}else {
-			nowDate.plusDays(1);
+			nowDate = nowDate.plusDays(1);
+			System.out.println(nowDate);			
 			orderConfirmationForm.setDeliveryDate(nowDate);
 		}
 

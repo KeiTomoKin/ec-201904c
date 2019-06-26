@@ -143,4 +143,13 @@ public class DisplayItemListService {
 		}
 		return item3Lists;
 	}
+	
+	/**
+	 * ランキングを取得する.
+	 * 
+	 * @return ソートされたランキング
+	 */
+	public List<Item> getRanking(){
+		return repository.findAllSortByPopularity();
+	}
 }
