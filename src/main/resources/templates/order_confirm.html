@@ -15,16 +15,44 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-<!-- 郵便番号から住所を取得 -->
-
 <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 
+<!-- 現在の日付と時間から、配達可能時間の制御 -->
+<!--デフォルトで本日の日付　間に合わないなら、明日 -->
 <script>
 $(function(){
-	$('')
+	var nowDate = new Date().getDate();
+	var nowHours = new Date().getHours();
+	
+	$('#inputDate').change(function(){
+		var selectDateInformation = $('#inputDate').val().split('-');
+		var selectDate = selectDateInformation[2];
+		
+		$('.deliveryTime').prop('disabled',true);
+		
+		console.log(nowHours);
+		
+		if(nowDate == selectDate){
+			$('.deliveryTime').filter(function(index, element){
+				console.log($(element).val());
+				return $(element).val() > (nowHours + 2);
+			}).prop('disabled',false);
+			
+			if(nowHours >= 16){
+				alert('ただ今の時間での、本日中の配達はできません');		
+				$('#inputDate').val("");
+			}
+		}else{
+			$('.deliveryTime').prop('disabled',false);
+		};	
+	});
 });
+
+window.onload=function(){
+	$('.deliveryTime').prop('disabled',true);
+};
 </script>
 <script th:src="@{/js/order_confirm.js}"></script>
 </head>
@@ -279,39 +307,39 @@ $(function(){
 										<div class="row">
 											<div class="col-sm-12">
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="10" checked="checked">
+													<input type="radio" name="deliveryTime" value="10" class="deliveryTime">
 													10時
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="11">
+													<input type="radio" name="deliveryTime" value="11" class="deliveryTime">
 													11時
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="12">
+													<input type="radio" name="deliveryTime" value="12" class="deliveryTime">
 													12時
 												</label><br>
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="13">
+													<input type="radio" name="deliveryTime" value="13" class="deliveryTime">
 													13時
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="14">
+													<input type="radio" name="deliveryTime" value="14" class="deliveryTime">
 													14時
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="15">
+													<input type="radio" name="deliveryTime" value="15" class="deliveryTime">
 													15時
 												</label><br>
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="16">
+													<input type="radio" name="deliveryTime" value="16" class="deliveryTime">
 													16時
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="17">
+													<input type="radio" name="deliveryTime" value="17" class="deliveryTime">
 													17時
 												</label>
 												<label class="radio-inline">
-													<input type="radio" name="deliveryTime" value="18">
+													<input type="radio" name="deliveryTime" value="18" class="deliveryTime">
 													18時
 												</label><br>
 											</div>
@@ -320,12 +348,12 @@ $(function(){
 								</td>
 							</tr>
 							<tr>
-								<td align="center">
+								<td>
 									<div class="text-center">
 										<label for="inputDate">お支払い方法</label>
 									</div>
 								</td>
-								<td align="center">
+								<td>
 									<div class="row">
 										<div class="col-sm-12">
 											<label class="radio-inline">
