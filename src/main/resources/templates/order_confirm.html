@@ -401,8 +401,11 @@ $(function(){
 									</div>
 								</td>
 								<td>
-									<div th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}" style="color: red">カード番号を入力してください</div>
-									<input type="text" pattern="\d{14,16}" th:field="*{cardNumber}">
+									<div class="form-group">
+										※ハイフン抜きの数字14～16桁
+										<div th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}" style="color: red">カード番号を入力してください</div>
+										<input type="text" class="form-control" pattern="\d{14,16}" th:field="*{cardNumber}">
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -412,27 +415,30 @@ $(function(){
 									</div>
 								</td>
 								<td th:with="currentYear=${#dates.year(#dates.createNow())}">
-									<div th:if="${#fields.hasErrors('cardExpYear')}" th:errors="*{cardExpYear}" style="color: red">カード有効期限の年を入力してください</div>
-									<div th:if="${#fields.hasErrors('cardExpMonth')}" th:errors="*{cardExpMonth}" style="color: red">カード有効期限の月を入力してください</div>
-									<select th:field="*{cardExpYear}">
-										<option value="">年</option>
-										<option th:each="year : ${#numbers.sequence(currentYear,currentYear+20)}" th:value="${year}" th:text="${year}">2019</option>
-									</select>
-									<select th:field="*{cardExpMonth}">
-										<option value="">月</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-									</select>
+									<div class="form-inline">
+										<div th:if="${#fields.hasErrors('cardExpYear')}" th:errors="*{cardExpYear}" style="color: red">カード有効期限の年を入力してください</div>
+										<div th:if="${#fields.hasErrors('cardExpMonth')}" th:errors="*{cardExpMonth}" style="color: red">カード有効期限の月を入力してください</div>
+										<select class="form-control" th:field="*{cardExpYear}">
+											<option value="">年</option>
+											<option th:each="year : ${#numbers.sequence(currentYear,currentYear+20)}" th:value="${year}" th:text="${year}">2019</option>
+										</select>
+										/
+										<select class="form-control" th:field="*{cardExpMonth}">
+											<option value="">月</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+										</select>
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -442,8 +448,10 @@ $(function(){
 									</div>
 								</td>
 								<td>
-									<div th:if="${#fields.hasErrors('cardName')}" th:errors="*{cardName}" style="color: red">カード名義人を入力してください</div>
-									<input type="text" th:field="*{cardName}">
+									<div class="form-group">
+										<div th:if="${#fields.hasErrors('cardName')}" th:errors="*{cardName}" style="color: red">カード名義人を入力してください</div>
+										<input type="text" class="form-control" th:field="*{cardName}">
+									</div>
 								</td>
 							</tr>
 							<tr>
@@ -453,8 +461,10 @@ $(function(){
 									</div>
 								</td>
 								<td>
-									<div th:if="${#fields.hasErrors('cardCvv')}" th:errors="*{cardCvv}" style="color: red">セキュリティコードを入力してください</div>
-									<input type="text" pattern="\d{3,4}" th:field="*{cardCvv}">
+									<div class="form-group">
+										<div th:if="${#fields.hasErrors('cardCvv')}" th:errors="*{cardCvv}" style="color: red">セキュリティコードを入力してください</div>
+										<input type="text" class="form-control" pattern="\d{3,4}" th:field="*{cardCvv}">
+									</div>
 								</td>
 							</tr>
 						</tbody>

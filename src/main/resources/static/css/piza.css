@@ -20,3 +20,6 @@ span#total-price {
 	font-size: 35px;
 }
 
+td .form-group:last-child {
+	margin-bottom: 0;
+}
