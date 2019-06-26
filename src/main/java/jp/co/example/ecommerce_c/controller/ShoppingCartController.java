@@ -41,6 +41,7 @@ public class ShoppingCartController {
 
 	@RequestMapping("")
 	public String showOrder(@AuthenticationPrincipal LoginUser loginUser) {
+
 		Integer orderId = (Integer) session.getAttribute("orderId");
 		Order order = new Order();
 		int userId;

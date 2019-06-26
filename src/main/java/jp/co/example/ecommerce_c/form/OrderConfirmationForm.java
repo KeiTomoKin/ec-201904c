@@ -32,18 +32,18 @@ public class OrderConfirmationForm {
 	@Email(message = "メール形式で記入してください")
 	@NotBlank(message = "メールアドレスを入力して下さい")
 	private String destinationEmail;
-	
+
 	/** 宛先郵便番号 **/
 	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
 	@Pattern(regexp = ".{7}|", message = "7文字で入力してください")
 	@NotBlank(message = "郵便番号を入力して下さい")
 	private String destinationZipcode;
-	
+
 	/** 宛先住所 **/
 	@Size(min = 0, max = 200, message = "文字数制限を超えています")
 	@NotBlank(message = "住所を入力して下さい")
 	private String destinationAddress;
-	
+
 	/** 宛先電話番号 **/
 	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
 	@NotBlank(message = "電話番号を入力して下さい")
@@ -59,16 +59,23 @@ public class OrderConfirmationForm {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@NotNull(message = "配達日時を指定して下さい")
 	private LocalDate deliveryDate;
-	
+
 	/** 配達時間 **/
 	private String deliveryTime;
-	
+
 	/** 支払方法 **/
 	private Integer paymentMethod;
-	
+
+
 	/** クレジットカード情報 */
 	@Valid
 	private CreditCardForm creditCardForm;
+
+	/** 送料、税込みの合計金額 */
+	private Integer totalPrice;
+
+	/** 送料 */
+	private Integer cost;
 
 	public String getDestinationFirstName() {
 		return destinationFirstName;
@@ -165,4 +172,34 @@ public class OrderConfirmationForm {
 	public void setCreditCardForm(CreditCardForm creditCardForm) {
 		this.creditCardForm = creditCardForm;
 	}
+
+	public final Integer getTotalPrice() {
+		return totalPrice;
+	}
+
+	public final void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
+	
+
+	public final Integer getCost() {
+		return cost;
+	}
+
+	public final void setCost(Integer cost) {
+		this.cost = cost;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderConfirmationForm [destinationFirstName=" + destinationFirstName + ", destinationLastName="
+				+ destinationLastName + ", destinationEmail=" + destinationEmail + ", destinationZipcode="
+				+ destinationZipcode + ", destinationAddress=" + destinationAddress + ", destinationFirstTel="
+				+ destinationFirstTel + ", destinationMiddleFirstTel=" + destinationMiddleFirstTel
+				+ ", destinationLastFirstTel=" + destinationLastFirstTel + ", deliveryDate=" + deliveryDate
+				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + ", creditCardForm="
+				+ creditCardForm + ", totalPrice=" + totalPrice + ", cost=" + cost + "]";
+	}
+
 }

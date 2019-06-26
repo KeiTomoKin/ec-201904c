@@ -41,6 +41,8 @@ public class Order {
 	private User user;
 	/** オーダーリスト */
 	private List<OrderItem> orderItemList;
+	/** 送料 */
+	private Integer cost;
 
 	@Override
 	public String toString() {
@@ -48,7 +50,8 @@ public class Order {
 				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
 				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
+				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + ", cost="
+				+ cost + "]";
 	}
 
 	public Integer getId() {
@@ -161,6 +164,14 @@ public class Order {
 
 	public void setOrderItemList(List<OrderItem> orderItemList) {
 		this.orderItemList = orderItemList;
+	}
+
+	public final Integer getCost() {
+		return cost;
+	}
+
+	public final void setCost(Integer cost) {
+		this.cost = cost;
 	}
 
 	/**
