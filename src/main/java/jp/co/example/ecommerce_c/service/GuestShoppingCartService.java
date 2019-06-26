@@ -52,7 +52,6 @@ public class GuestShoppingCartService {
 		order.setUserId(userId);
 		Integer orderId = orderRepository.insert(order);
 		order=orderRepository.findById(orderId);
-		System.out.println(orderId);
 		return order;
 	}
 
@@ -97,10 +96,7 @@ public class GuestShoppingCartService {
 		if (order.getOrderItemList() == null) {
 			order.setOrderItemList(new ArrayList<OrderItem>());
 		}
-		System.out.println(order);
-		System.out.println(order.getTotalPrice());
 		order.setTotalPrice(order.getTotalPrice() + pizza.getSubTotal());
-		System.out.println(order.getTotalPrice());
 		orderRepository.update(order);
 		order.getOrderItemList().add(pizza);
 		return orderId;

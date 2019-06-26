@@ -92,7 +92,6 @@ public class OrderRepository {
 		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method"
 				+ " FROM orders WHERE user_id=:userId AND status=0";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
-		System.out.println(userId);
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 		return order;
 	}
