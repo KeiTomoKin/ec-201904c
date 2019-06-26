@@ -22,28 +22,19 @@
 <!-- 現在の日付と時間から、配達可能時間の制御 -->
 <!--デフォルトで本日の日付　間に合わないなら、明日 -->
 <script>
-<<<<<<< HEAD
 var nowDate = new Date().getDate();
 var nowHours = new Date().getHours();
+	
 
 window.onload=function(){
 	$('#inputDate').trigger('change');
-	
+	$('#inputZipcode').trigger('change');
 	if(nowHours >= 16){
 		alert('ただ今の時間、本日中にお届けできません');		
 	};
 };
 
-=======
-<<<<<<< Updated upstream
-=======
-window.onload=function(){
-	$('#inputDate').trigger('change');
-	$('#inputZipcode').trigger('change');
-};
 
->>>>>>> Stashed changes
->>>>>>> feature/new
 $(function(){
 	$('#inputDate').change(function(){
 		var selectDateInformation = $('#inputDate').val().split('-');

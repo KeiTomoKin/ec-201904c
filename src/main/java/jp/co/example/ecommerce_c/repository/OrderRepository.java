@@ -73,7 +73,7 @@ public class OrderRepository {
 	 * @return オーダー
 	 */
 	public Order findById(Integer id) {
-		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method"
+		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method,cost"
 				+ " FROM orders WHERE id=:id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 //		try {
@@ -91,7 +91,7 @@ public class OrderRepository {
 	 * @return status=0のオーダー
 	 */
 	public Order findByUserId(Integer userId) {
-		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method"
+		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method,cost"
 				+ " FROM orders WHERE user_id=:userId AND status=:status";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId)
 				.addValue("status", OrderStatus.NOT_ORDERED.getCode());
