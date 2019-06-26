@@ -106,18 +106,20 @@ window.onload=function(){
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<form th:if="${name==null}" th:action="@{/}" method="get" class="form-inline">
-					<select name="sortOrder" class="form-control col-xs-3"onchange="submit(this.form)">
-						<option value="" selected>デフォルト</option>
-						<option value="DESC" >価格の高い順</option>
-						<option value="ASC" >価格の低い順</option>
+					<select name="sortOrder" class="form-control col-xs-3" onchange="submit(this.form)"
+							th:with="hasSortOrder=${param.sortOrder != null}">
+						<option value="">デフォルト</option>
+						<option value="DESC" th:selected="${hasSortOrder && 'DESC'.equals(param.sortOrder[0])}">価格の高い順</option>
+						<option value="ASC" th:selected="${hasSortOrder && 'ASC'.equals(param.sortOrder[0])}">価格の低い順</option>
 					</select>
 					<input type="hidden" name="page" th:value="${page}">
 				</form>
 				<form th:unless="${name==null}" th:action="@{/findName}" method="get" class="form-inline">
-					<select name="sortOrder" class="form-control col-xs-3" onchange="submit(this.form)">
-						<option value="" selected>デフォルト</option>
-						<option value="DESC" >価格の高い順</option>
-						<option value="ASC" >価格の低い順</option>
+					<select name="sortOrder" class="form-control col-xs-3" onchange="submit(this.form)"
+							th:with="hasSortOrder=${param.sortOrder != null}">
+						<option value="">デフォルト</option>
+						<option value="DESC" th:selected="${hasSortOrder && 'DESC'.equals(param.sortOrder[0])}">価格の高い順</option>
+						<option value="ASC" th:selected="${hasSortOrder && 'ASC'.equals(param.sortOrder[0])}">価格の低い順</option>
 					</select>
 					<input type="hidden" name="name" th:value="${name}">
 					<input type="hidden" name="page" th:value="${page}">
