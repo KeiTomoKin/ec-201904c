@@ -84,7 +84,7 @@ public class HistoryService {
 	}
 
 	private void setToppingToOrderTopping(OrderTopping orderTopping) {
-		Topping topping = toppingRepository.load(orderTopping.getId());
+		Topping topping = toppingRepository.load(orderTopping.getToppingId());
 		orderTopping.setTopping(topping);
 	}
 

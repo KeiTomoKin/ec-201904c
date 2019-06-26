@@ -135,7 +135,6 @@ public class OrderConfirmationController {
 
 		order.setUser(userService.findByUserId(order.getUserId()));
 
-		System.out.println(order.toString());
 
 		// データベースへアップロード
 		orderConfirmationService.orderComplete(order);

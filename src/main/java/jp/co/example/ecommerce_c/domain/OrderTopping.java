@@ -24,7 +24,7 @@ public class OrderTopping {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", toppingId=" + toppingId + ", orderItemId=" + orderItemId + ", topping=" + topping + "]";
+		return "OrderTopping [id=" + id + ", toppingId=" + toppingId + ", orderItemId=" + orderItemId + ", topping=" + topping + "]";
 	}
 
 	public Integer getId() {
