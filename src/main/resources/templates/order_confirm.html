@@ -24,8 +24,6 @@
 <script>
 window.onload=function(){
 	$('#inputDate').trigger('change');
-	
-	$('#time-message2').hide();
 };
 
 $(function(){
@@ -41,9 +39,9 @@ $(function(){
 			$('#time-message1').hide();
 			
 			if(nowDate == selectDate){
+				console.log('OK');
 				$('#time-message2').show();
 				$('.deliveryTime').filter(function(index, element){
-					console.log($(element).val());
 					return $(element).val() > (nowHours + 2);
 				}).prop('disabled',false);
 				
@@ -66,7 +64,7 @@ $(function(){
 		}else{
 			$('#time-message1').show();			
 			$('#time-message2').hide();
-			 $('.deliveryTime').prop('checked', false);
+			$('.deliveryTime').prop('checked', false);
 		};	
 	});
 });
@@ -327,8 +325,8 @@ $(function(){
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
-												<label th:if="${NOT #fields.hasErrors('deliveryDate')}" id="time-message1" for="inputDate">先に配達日時を選択してください。</label>
-												<label id="time-message2">2時間後から選択できます。</label><br>
+												<label th:if="${NOT #fields.hasErrors('deliveryDate')}" id="time-message1" style="color: red;" for="inputDate">先に配達日時を選択してください。</label>
+												<label id="time-message2" style="color: red;">2時間後から選択できます。</label><br>
 												<label class="radio-inline">
 													<input type="radio" name="deliveryTime" value="10" class="deliveryTime">
 													10時
