@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import jp.co.example.ecommerce_c.domain.Order;
+import jp.co.example.ecommerce_c.enumclass.OrderStatus;
 
 /**
  * Orderドメインを操作するリポジトリー.
@@ -26,7 +27,7 @@ public class OrderRepository {
 		Order order = new Order();
 		order.setId(rs.getInt("id"));
 		order.setUserId(rs.getInt("user_id"));
-		order.setStatus(rs.getInt("status"));
+		order.setStatus(OrderStatus.getByCode(rs.getInt("status")));
 		order.setTotalPrice(rs.getInt("total_price"));
 		order.setOrderDate(rs.getDate("order_date"));
 		order.setDestinationName(rs.getString("destination_name"));
@@ -48,9 +49,9 @@ public class OrderRepository {
 	 * @param order 新しいオーダー
 	 */
 	public Integer insert(Order order) {
-		String insertSql = "insert into orders(user_id,status, total_price) values (:userId,0,0) returning id";
+		String insertSql = "insert into orders(user_id,status, total_price) values (:userId,:status.code,:totalPrice) returning id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
-		return template.queryForObject(insertSql, param,Integer.class);
+		return template.queryForObject(insertSql, param, Integer.class);
 	}
 
 	/**
@@ -90,9 +91,9 @@ public class OrderRepository {
 	 */
 	public Order findByUserId(Integer userId) {
 		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method"
-				+ " FROM orders WHERE user_id=:userId AND status=0";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
-		System.out.println(userId);
+				+ " FROM orders WHERE user_id=:userId AND status=:status";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId)
+				.addValue("status", OrderStatus.NOT_ORDERED.getCode());
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 		return order;
 	}
@@ -126,25 +127,26 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 		template.update(deleteSql, param);
 	}
-	
+
 	/**
 	 * 未確定のオーダーを削除する.
 	 * 
 	 * @param userId ユーザID
 	 */
 	public void deleteUnsettledById(Integer userId) {
-		String deleteSql = "delete from orders where user_id=:userId AND status=0;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		String deleteSql = "delete from orders where user_id=:userId AND status=:status;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId)
+				.addValue("status", OrderStatus.NOT_ORDERED.getCode());
 		template.update(deleteSql, param);
 	}
-	
+
 	/**
 	 * 注文完了操作.
 	 * 
 	 * @param order 注文内容
 	 */
 	public void updateByOrderId(Order order) {
-		String sql =" UPDATE orders SET user_id=:userId,status=:status,order_date=:orderDate,destination_name=:destinationName,destination_email=:destinationEmail,destination_zipcode=:destinationZipcode,destination_address=:destinationAddress,destination_tel=:destinationTel,delivery_time=:deliveryTime,payment_method=:paymentMethod WHERE id=:id;";
+		String sql = "UPDATE orders SET user_id=:userId,status=:status.code,order_date=:orderDate,destination_name=:destinationName,destination_email=:destinationEmail,destination_zipcode=:destinationZipcode,destination_address=:destinationAddress,destination_tel=:destinationTel,delivery_time=:deliveryTime,payment_method=:paymentMethod WHERE id=:id;";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}

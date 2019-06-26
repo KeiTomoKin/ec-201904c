@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import jp.co.example.ecommerce_c.enumclass.OrderStatus;
+
 /**
  * オーダー内容のドメイン.
  * 
@@ -16,9 +18,9 @@ public class Order {
 	/** 注文者ID */
 	private Integer userId;
 	/** 注文の状態 */
-	private Integer status;
+	private OrderStatus status = OrderStatus.NOT_ORDERED;
 	/** 合計金額 */
-	private Integer totalPrice;
+	private Integer totalPrice = 0;
 	/** 注文日 */
 	private Date orderDate;
 	/** 宛先名 */
@@ -65,11 +67,11 @@ public class Order {
 		this.userId = userId;
 	}
 
-	public Integer getStatus() {
+	public OrderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
 
@@ -189,10 +191,10 @@ public class Order {
 	 */
 	public void setStutasByPaymentMethod() {
 		if (this.paymentMethod == 1) {
-			this.setStatus(1);
-		}else if(this.paymentMethod==2){
-			this.setStatus(2);
-		}else {
+			this.setStatus(OrderStatus.NOT_PAID);
+		} else if(this.paymentMethod == 2){
+			this.setStatus(OrderStatus.PAID);
+		} else {
 			System.out.println("error:status代入");
 		}
 	}
