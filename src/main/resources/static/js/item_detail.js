@@ -23,9 +23,9 @@ $(function() {
 		$("#totalPrice").text(price.toLocaleString());
 	}
 
-	$("input[type=radio]").on("click", showCalculatedPrice);
-	$("input[type=checkbox]").on("click", showCalculatedPrice);
-	$("select").on("click", showCalculatedPrice);
+	$("input[type=radio]").on("change", showCalculatedPrice);
+	$("input[type=checkbox]").on("change", showCalculatedPrice);
+	$("select").on("change", showCalculatedPrice);
 
 	showCalculatedPrice();
 });
