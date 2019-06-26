@@ -94,7 +94,7 @@ $(function(){
 						<table class="table table-bordered" >
 							<tr><td>
 								<table class="table">
-					    				<tr class="warning">
+					    				<tr class="warning text-center">
 					    					<th class="col-xs-4">注文日</th>
 					    					<th class="col-xs-4">合計金額</th>
 					    					<th class="col-xs-4">注文状態</th>
@@ -150,22 +150,32 @@ $(function(){
 								<table class="table table-striped">
 									<tbody>
 										<tr>
-											<th>
+											<th class="col-sm-3">
 												<div class="text-center">
 													商品名
 												</div>
 											</th>
-											<th>
+											<th class="col-sm-1">
 												<div class="text-center">
-													サイズ、価格(税抜)、数量
+													サイズ
 												</div>
 											</th>
-											<th>
+											<th class="col-sm-2">
 												<div class="text-center">
-													トッピング、価格(税抜)
+													価格(税抜)
 												</div>
 											</th>
-											<th>
+											<th class="col-sm-1">
+												<div class="text-center">
+													数量
+												</div>
+											</th>
+											<th class="col-sm-4">
+												<div class="text-center">
+													トッピング、価格(税抜・1枚あたり)
+												</div>
+											</th>
+											<th class="col-sm-1">
 												<div class="text-center">
 													小計
 												</div>
@@ -174,16 +184,28 @@ $(function(){
 										<tr th:each="orderItem : ${order.orderItemList}" th:object="${orderItem}"
 												th:with="isMSize=*{size == 'M'.charAt(0)}">
 											<td>
-												<div class="center">
-													<img src="img/1.jpg" th:src="@{/img/{imgPath}(imgPath=*{item.imagePath})}"
-														class="img-responsive img-rounded" width="100" height="300"><br>
-													<span th:text="*{item.name}">じゃがバターベーコン</span>
+												<div class="text-center">
+													<a href="item_detail.html" th:href="@{'/item/detail?id='+*{item.id}}">
+														<img src="img/1.jpg" th:src="@{/img/{imgPath}(imgPath=*{item.imagePath})}"
+															class="img-responsive img-rounded" width="100" height="300" style="display:inline-block">
+													</a><br>
+													<a href="item_detail.html" th:href="@{/item/detail(id=*{item.id})}" th:text="*{item.name}">じゃがバターベーコン</a>
+												</div>
+											</td>
+											<td>
+												<div class="text-center">
+													<span class="price" th:text="*{size}">&nbsp;Ｌ</span>
 												</div>
 											</td>
 											<td th:with="price=${isMSize ? orderItem.item.priceM : orderItem.item.priceL}">
-												<span class="price">&nbsp;<th:block th:text="*{size}">L</th:block>&nbsp;</span>
-												&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(price, 1, 'COMMA')}">2,380</span>円
-												&nbsp;&nbsp;<th:block th:text="*{quantity}">1</th:block>個
+												<div class="text-center">
+													&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(price, 1, 'COMMA')}">2,380</span>円
+												</div>
+											</td>
+											<td>
+												<div class="text-center">
+													<span th:text="*{quantity}">&nbsp;&nbsp;1個</span>
+												</div>
 											</td>
 											<td>
 												<ul th:with="OrderTopping=${T(jp.co.example.ecommerce_c.domain.OrderTopping)},
