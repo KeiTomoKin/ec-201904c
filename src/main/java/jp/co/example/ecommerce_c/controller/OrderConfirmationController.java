@@ -18,12 +18,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_c.domain.IssuedTicket;
 import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.Payment;
 import jp.co.example.ecommerce_c.domain.PaymentResult;
 import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.OrderConfirmationForm;
+import jp.co.example.ecommerce_c.service.CouponService;
 import jp.co.example.ecommerce_c.service.CreditCardService;
 import jp.co.example.ecommerce_c.service.OrderConfirmationService;
 import jp.co.example.ecommerce_c.service.UserService;
@@ -32,6 +34,7 @@ import jp.co.example.ecommerce_c.service.UserService;
  * 注文確認画面を表示するクラス.
  *
  * @author takuya.aramaki
+ * @author keita.tomooka
  */
 @Controller
 @RequestMapping("/confirm_order")
@@ -43,7 +46,8 @@ public class OrderConfirmationController {
 	private OrderConfirmationService orderConfirmationService;
 	@Autowired
 	private UserService userService;
-
+	@Autowired
+	private CouponService couponService;
 	@Autowired
 	private HttpSession session;
 
@@ -141,5 +145,20 @@ public class OrderConfirmationController {
 		orderConfirmationService.orderComplete(order);
 
 		return "order_finished";
+	}
+	
+	@RequestMapping("/useCoupon")
+	public String useCoupon(Integer orderId,String couponCode,Model model) {
+		Order order = orderConfirmationService.getOrder(orderId);
+		IssuedTicket issuedTicket = couponService.findCouponByUserIdAndCouponCode(order.getUserId(), couponCode);
+		issuedTicket.setCoupon(couponService.findCouponByCouponId(issuedTicket.getCouponId()));
+		if(couponService.checkCoupon(order, issuedTicket)) {
+			order = couponService.useCoupon(order, issuedTicket);
+			model.addAttribute("useCoupon",true);
+		}else {
+			model.addAttribute("notToUse",true);
+		}
+		
+		return "order_confirm";
 	}
 }
