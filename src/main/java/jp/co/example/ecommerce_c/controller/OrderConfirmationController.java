@@ -66,6 +66,16 @@ public class OrderConfirmationController {
 		orderConfirmationForm.setDestinationLastFirstTel(userTel[2]);
 		orderConfirmationForm.setPaymentMethod(1);
 
+		LocalDate nowDate = LocalDate.now();
+		LocalTime nowTime = LocalTime.now();
+
+		if (nowTime.getHour() < 16) {
+			orderConfirmationForm.setDeliveryDate(nowDate);
+		}else {
+			nowDate.plusDays(1);
+			orderConfirmationForm.setDeliveryDate(nowDate);
+		}
+
 		return orderConfirmationForm;
 	}
 
@@ -136,7 +146,6 @@ public class OrderConfirmationController {
 		order.setStutasByPaymentMethod();
 
 		order.setUser(userService.findByUserId(order.getUserId()));
-
 
 		// データベースへアップロード
 		orderConfirmationService.orderComplete(order);

@@ -22,6 +22,12 @@
 <!-- 現在の日付と時間から、配達可能時間の制御 -->
 <!--デフォルトで本日の日付　間に合わないなら、明日 -->
 <script>
+window.onload=function(){
+	$('#inputDate').trigger('change');
+	
+	$('#time-message2').hide();
+};
+
 $(function(){
 	var nowDate = new Date().getDate();
 	var nowHours = new Date().getHours();
@@ -31,34 +37,39 @@ $(function(){
 		var selectDate = selectDateInformation[2];
 		
 		$('.deliveryTime').prop('disabled',true);
-		
-		console.log(nowHours);
-		
-		if(nowDate == selectDate){
-			$('.deliveryTime').filter(function(index, element){
-				console.log($(element).val());
-				return $(element).val() > (nowHours + 2);
-			}).prop('disabled',false);
-			$('.deliveryTime').filter(function(index, element){
-				return $(element).val() == (nowHours + 3);
-			}).prop('checked',true);
+		if($('#inputDate').val() != ""){
+			$('#time-message1').hide();
 			
-			if(nowHours >= 16){
-				alert('ただ今の時間での、本日中の配達はできません');		
-				$('#inputDate').val("");
-			}
+			if(nowDate == selectDate){
+				$('#time-message2').show();
+				$('.deliveryTime').filter(function(index, element){
+					console.log($(element).val());
+					return $(element).val() > (nowHours + 2);
+				}).prop('disabled',false);
+				
+				$('.deliveryTime').filter(function(index, element){
+					return $(element).val() == (nowHours + 3);
+				}).prop('checked',true);
+				
+				if(nowHours >= 16){
+					alert('ただ今の時間、本日中にお届けできません');		
+					$('#inputDate').val("");
+				}
+			}else{
+				$('#time-message2').hide();
+				$('.deliveryTime').prop('disabled',false);
+				
+				$('.deliveryTime').filter(function(index, element){
+					return $(element).val() == 10;
+				}).prop('checked',true);
+			};
 		}else{
-			$('.deliveryTime').prop('disabled',false);
-			$('.deliveryTime').filter(function(index, element){
-				return $(element).val() == 10;
-			}).prop('checked',true);
+			$('#time-message1').show();			
+			$('#time-message2').hide();
+			 $('.deliveryTime').prop('checked', false);
 		};	
 	});
 });
-
-window.onload=function(){
-	$('.deliveryTime').prop('disabled',true);
-};
 </script>
 <script th:src="@{/js/order_confirm.js}"></script>
 </head>
@@ -312,6 +323,8 @@ window.onload=function(){
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
+												<label th:if="${NOT #fields.hasErrors('deliveryDate')}" id="time-message1" for="inputDate">先に配達日時を選択してください。</label>
+												<label id="time-message2">2時間後から選択できます。</label><br>
 												<label class="radio-inline">
 													<input type="radio" name="deliveryTime" value="10" class="deliveryTime">
 													10時
