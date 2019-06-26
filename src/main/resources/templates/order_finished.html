@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ピザ屋のネット注文</title>
+<title>注文完了 - ラクラクピザ</title>
 <link th:href="@{/css/bootstrap.css}" href="../../static/css/bootstrap.css" rel="stylesheet">
 <link th:href="@{/css/piza.css}" href="../../static/css/piza.css" rel="stylesheet">
 <!--[if lt IE 9]>
@@ -39,7 +39,8 @@
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-left">
 						<span sec:authorize="isAuthenticated()">
-							<span sec:authentication="principal.user.name">山田</span>さんこんにちは！
+							ようこそ <span sec:authentication="principal.user.name">山田</span> さん<br>
+							<a href="item_list.html" class="navbar-link" th:href="@{/logout}"><small>ユーザ情報の変更</small></a>
 						</span>
 					</p>
 					<p class="navbar-text navbar-right">
@@ -48,10 +49,10 @@
 							<a href="order_history.html" class="navbar-link" th:href="@{/history/showHistoryList}">注文履歴</a>&nbsp;&nbsp;
 						</span>
 						<span sec:authorize="isAnonymous()">
-							<a href="login.html" class="navbar-link" th:href="@{/toLogin}">ログイン</a>&nbsp;&nbsp;
+							<a href="login.html" class="navbar-link btn" th:href="@{/toLogin}">ログイン</a>&nbsp;&nbsp;
 						</span>
 						<span sec:authorize="isAuthenticated()">
-							<a href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
+							<a href="item_list.html" class="navbar-link btn" th:href="@{/logout}">ログアウト</a>
 						</span>
 					</p>
 				</div>

@@ -70,4 +70,13 @@ public class UserService {
 	public User findByUserId(Integer userId) {
 		return userRepository.findByUserId(userId);
 	}
+	
+	/**
+	 * ユーザ情報を更新.
+	 * 
+	 * @param user 更新するユーザデータ
+	 */
+	public void update(User user) {
+		userRepository.update(user);
+	}
 }
