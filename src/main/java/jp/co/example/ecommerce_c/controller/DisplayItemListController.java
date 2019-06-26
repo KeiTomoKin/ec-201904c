@@ -22,9 +22,11 @@ import jp.co.example.ecommerce_c.service.DisplayItemListService;
 @Controller
 @RequestMapping("")
 public class DisplayItemListController {
+	
 	@Autowired
-	DisplayItemListService service;
+	private DisplayItemListService displayItemListService;
 
+	
 	/** 商品を表示する際の行の数 */
 	private static final int VIEW_SIZE = 3;
 
@@ -39,12 +41,14 @@ public class DisplayItemListController {
 		if (page == null) {
 			page = 1;
 		}
-		List<Item> itemList = service.findAll();
+		List<Item> itemList = displayItemListService.findAll();
 		if (sortOrder != null) {
 			if (sortOrder.equals("ASC")) {
-				itemList = service.priceLowOrder(itemList);
+				itemList = displayItemListService.priceLowOrder(itemList);
 			} else if (sortOrder.equals("DESC")) {
-				itemList = service.priceHighOrder(itemList);
+				itemList = displayItemListService.priceHighOrder(itemList);
+			} else if (sortOrder.equals("RANKING")) {
+				itemList = displayItemListService.getRanking();
 			}
 		}
 		// 名前のみリストの作成
@@ -53,8 +57,8 @@ public class DisplayItemListController {
 			String name = item.getName();
 			itemNameList.add(name);
 		}
-		List<List<Item>> item3Lists = service.makeItemTable(itemList);
-		Page<List<Item>> itemPage = service.showListPaging(page, VIEW_SIZE, item3Lists);
+		List<List<Item>> item3Lists = displayItemListService.makeItemTable(itemList);
+		Page<List<Item>> itemPage = displayItemListService.showListPaging(page, VIEW_SIZE, item3Lists);
 		List<Integer> pageNumbers = calcPageNumbers(itemPage);
 		model.addAttribute("itemPage", itemPage);
 		model.addAttribute("itemNameList", itemNameList);
@@ -81,22 +85,24 @@ public class DisplayItemListController {
 			model.addAttribute("nullNameCheck", true);
 			return showList(model, 1, sortOrder);
 		}
-		List<Item> itemList = service.findByLikeName(name);
+		List<Item> itemList = displayItemListService.findByLikeName(name);
 		if (itemList.size() == 0) {
 			model.addAttribute("noResult", true);
 			return showList(model, 1, sortOrder);
 		}
 		if (sortOrder != null) {
 			if (sortOrder.equals("ASC")) {
-				itemList = service.priceLowOrder(itemList);
+				itemList = displayItemListService.priceLowOrder(itemList);
 			} else if (sortOrder.equals("DESC")) {
-				itemList = service.priceHighOrder(itemList);
+				itemList = displayItemListService.priceHighOrder(itemList);
+			} else if (sortOrder.equals("RANKING")) {
+				itemList = displayItemListService.getRanking();
 			}
 		}
-		List<List<Item>> item3Lists = service.makeItemTable(itemList);
-		Page<List<Item>> itemPage = service.showListPaging(page, VIEW_SIZE, item3Lists);
+		List<List<Item>> item3Lists = displayItemListService.makeItemTable(itemList);
+		Page<List<Item>> itemPage = displayItemListService.showListPaging(page, VIEW_SIZE, item3Lists);
 		List<Integer> pageNumbers = calcPageNumbers(itemPage);
-		itemList = service.findAll();
+		itemList = displayItemListService.findAll();
 		// 名前のみリストの作成
 		List<String> itemNameList = new ArrayList<String>();
 		for (Item item : itemList) {

@@ -101,6 +101,7 @@
 						<option value="">デフォルト</option>
 						<option value="DESC" th:selected="${hasSortOrder && 'DESC'.equals(param.sortOrder[0])}">価格の高い順</option>
 						<option value="ASC" th:selected="${hasSortOrder && 'ASC'.equals(param.sortOrder[0])}">価格の低い順</option>
+						<option value="RANKING" th:selected="${hasSortOrder && 'RANKING'.equals(param.sortOrder[0])}">人気順</option>
 					</select>
 					<input type="hidden" name="page" th:value="${page}">
 				</form>
@@ -110,6 +111,7 @@
 						<option value="">デフォルト</option>
 						<option value="DESC" th:selected="${hasSortOrder && 'DESC'.equals(param.sortOrder[0])}">価格の高い順</option>
 						<option value="ASC" th:selected="${hasSortOrder && 'ASC'.equals(param.sortOrder[0])}">価格の低い順</option>
+						<option value="RANKING" th:selected="${hasSortOrder && 'RANKING'.equals(param.sortOrder[0])}">人気順</option>
 					</select>
 					<input type="hidden" name="name" th:value="${name}">
 					<input type="hidden" name="page" th:value="${page}">
