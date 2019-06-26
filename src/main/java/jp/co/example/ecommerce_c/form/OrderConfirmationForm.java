@@ -3,8 +3,11 @@ package jp.co.example.ecommerce_c.form;
 import java.time.LocalDate;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -16,25 +19,39 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 public class OrderConfirmationForm {
 	/** 宛先名 **/
+	@Size(min = 0, max = 49, message = "文字数制限を超えています")
 	@NotBlank(message = "お名前を入力して下さい")
 	private String destinationFirstName;
+	@Size(min = 0, max = 50, message = "文字数制限を超えています")
 	@NotBlank(message = "お名前を入力して下さい")
 	private String destinationLastName;
 
 	/** 宛先メールアドレス **/
+	@Pattern(regexp = "^[0-9A-Za-z.@._.,]*$", message = "半角英数字のみです")
+	@Size(min = 0, max = 100, message = "文字数制限を超えています")
+	@Email(message = "メール形式で記入してください")
 	@NotBlank(message = "メールアドレスを入力して下さい")
 	private String destinationEmail;
+	
 	/** 宛先郵便番号 **/
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
+	@Pattern(regexp = ".{7}|", message = "7文字で入力してください")
 	@NotBlank(message = "郵便番号を入力して下さい")
 	private String destinationZipcode;
+	
 	/** 宛先住所 **/
+	@Size(min = 0, max = 200, message = "文字数制限を超えています")
 	@NotBlank(message = "住所を入力して下さい")
 	private String destinationAddress;
+	
 	/** 宛先電話番号 **/
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
 	@NotBlank(message = "電話番号を入力して下さい")
 	private String destinationFirstTel;
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
 	@NotBlank(message = "電話番号を入力して下さい")
 	private String destinationMiddleFirstTel;
+	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
 	@NotBlank(message = "電話番号を入力して下さい")
 	private String destinationLastFirstTel;
 
@@ -42,10 +59,13 @@ public class OrderConfirmationForm {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	@NotNull(message = "配達日時を指定して下さい")
 	private LocalDate deliveryDate;
+	
 	/** 配達時間 **/
 	private String deliveryTime;
+	
 	/** 支払方法 **/
 	private Integer paymentMethod;
+	
 	/** クレジットカード情報 */
 	@Valid
 	private CreditCardForm creditCardForm;

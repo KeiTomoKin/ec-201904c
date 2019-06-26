@@ -234,6 +234,7 @@ $(function(){
 								</td>
 								<td>
 									<div class="form-group">
+										※各50文字以内
 										<label th:if="${#fields.hasErrors('destinationFirstName')}" th:errors="*{destinationFirstName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
 										<label th:if="${NOT #fields.hasErrors('destinationFirstName') AND #fields.hasErrors('destinationLastName')}" th:errors="*{destinationLastName}" class="control-label" style="color: red" for="inputError">名前を入力してください</label>
 											<div class="form-inline">
@@ -251,6 +252,7 @@ $(function(){
 								</td>
 								<td>
 									<div class="form-group">
+										※100文字以内
 										<label th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
 										<input type="text" name="destinationEmail" placeholder="Email" th:field="*{destinationEmail}" id="inputEmail" class="form-control" style="width:350px;">
 									</div>
@@ -264,6 +266,7 @@ $(function(){
 								</td>
 								<td>
 									<div class="form-group">
+										※ハイフンを抜いた7文字で入力してください
 										<div class="form-inline">
 											<label th:if="${#fields.hasErrors('destinationZipcode')}" th:errors="*{destinationZipcode}" class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
 											<input type="text" name="destinationZipcode" placeholder="Zipcode" th:field="*{destinationZipcode}" id="inputZipcode" class="form-control" style="width:100px;" maxlength="7" onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;
@@ -279,6 +282,7 @@ $(function(){
 								</td>
 								<td>
 									<div class="form-group">
+										※200文字以内
 										<label th:if="${#fields.hasErrors('destinationAddress')}" th:errors="*{destinationAddress}" class="control-label" style="color: red" for="inputError">住所を入力してください</label>
 										<textarea rows="3" cols="45" name="destinationAddress" placeholder="Address" th:field="*{destinationAddress}" id="inputAddress" class="form-control"></textarea>
 									</div>

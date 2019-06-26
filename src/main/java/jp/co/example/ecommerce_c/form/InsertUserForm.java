@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class InsertUserForm {
 
 	/** 名前 **/
-	@Size(min = 0, max = 50, message = "文字数制限を超えています")
+	@Size(min = 0, max = 49, message = "文字数制限を超えています")
 	@NotBlank(message = "名前を入力してください")
 	private String firstName;
 	@Size(min = 0, max = 50, message = "文字数制限を超えています")
