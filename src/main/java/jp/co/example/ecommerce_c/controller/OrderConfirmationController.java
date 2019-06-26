@@ -23,7 +23,6 @@ import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.Payment;
 import jp.co.example.ecommerce_c.domain.PaymentResult;
 import jp.co.example.ecommerce_c.domain.User;
-import jp.co.example.ecommerce_c.form.CreditCardForm;
 import jp.co.example.ecommerce_c.form.OrderConfirmationForm;
 import jp.co.example.ecommerce_c.service.CreditCardService;
 import jp.co.example.ecommerce_c.service.OrderConfirmationService;
@@ -64,8 +63,6 @@ public class OrderConfirmationController {
 		orderConfirmationForm.setDestinationMiddleFirstTel(userTel[1]);
 		orderConfirmationForm.setDestinationLastFirstTel(userTel[2]);
 		orderConfirmationForm.setPaymentMethod(1);
-
-		orderConfirmationForm.setCreditCardForm(new CreditCardForm());
 
 		return orderConfirmationForm;
 	}
