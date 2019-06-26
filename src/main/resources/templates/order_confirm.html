@@ -22,14 +22,18 @@
 <!-- 現在の日付と時間から、配達可能時間の制御 -->
 <!--デフォルトで本日の日付　間に合わないなら、明日 -->
 <script>
+var nowDate = new Date().getDate();
+var nowHours = new Date().getHours();
+
 window.onload=function(){
 	$('#inputDate').trigger('change');
+	
+	if(nowHours >= 16){
+		alert('ただ今の時間、本日中にお届けできません');		
+	};
 };
 
 $(function(){
-	var nowDate = new Date().getDate();
-	var nowHours = new Date().getHours();
-	
 	$('#inputDate').change(function(){
 		var selectDateInformation = $('#inputDate').val().split('-');
 		var selectDate = selectDateInformation[2];
@@ -39,7 +43,6 @@ $(function(){
 			$('#time-message1').hide();
 			
 			if(nowDate == selectDate){
-				console.log('OK');
 				$('#time-message2').show();
 				$('.deliveryTime').filter(function(index, element){
 					return $(element).val() > (nowHours + 2);
@@ -48,7 +51,9 @@ $(function(){
 				$('.deliveryTime').filter(function(index, element){
 					return $(element).val() == (nowHours + 3);
 				}).prop('checked',true);
-				
+				if(nowHours >= 16){
+					alert('ただ今の時間、本日中にお届けできません');		
+				};
 			}else{
 				$('#time-message2').hide();
 				$('.deliveryTime').prop('disabled',false);
@@ -61,11 +66,7 @@ $(function(){
 			$('#time-message1').show();			
 			$('#time-message2').hide();
 			$('.deliveryTime').prop('checked', false);
-		};
-		
-		if(nowHours >= 16){
-			alert('ただ今の時間、本日中にお届けできません');		
-		};
+		};		
 	});
 });
 </script>
