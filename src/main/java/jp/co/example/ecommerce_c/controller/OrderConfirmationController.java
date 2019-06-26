@@ -26,6 +26,7 @@ import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.OrderConfirmationForm;
 import jp.co.example.ecommerce_c.service.CreditCardService;
 import jp.co.example.ecommerce_c.service.OrderConfirmationService;
+import jp.co.example.ecommerce_c.service.OrderMailService;
 import jp.co.example.ecommerce_c.service.UserService;
 
 /**
@@ -38,9 +39,10 @@ import jp.co.example.ecommerce_c.service.UserService;
 public class OrderConfirmationController {
 	@Autowired
 	private CreditCardService creditCardService;
-
 	@Autowired
 	private OrderConfirmationService orderConfirmationService;
+	@Autowired
+	private OrderMailService orderMailService;
 	@Autowired
 	private UserService userService;
 
@@ -138,6 +140,9 @@ public class OrderConfirmationController {
 
 		// データベースへアップロード
 		orderConfirmationService.orderComplete(order);
+
+		// 注文完了メール送信
+		orderMailService.sendOrderCompleteMail(order);
 
 		return "order_finished";
 	}

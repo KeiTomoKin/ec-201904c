@@ -2,7 +2,6 @@ $(function() {
 	const creditCardValue = "2";
 	$("input[name=paymentMethod]").on("change", function() {
 		const creditCardForm = $("#creditCardForm");
-		console.log(this);
 		if (this.value === creditCardValue) { // クレジットカード決済が選択された場合
 			creditCardForm.show();
 			creditCardForm.find("input,select").prop("disabled", false)
