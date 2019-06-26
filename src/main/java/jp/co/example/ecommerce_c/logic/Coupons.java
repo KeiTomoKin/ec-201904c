@@ -8,7 +8,7 @@ import jp.co.example.ecommerce_c.domain.Order;
  * @author keita.tomooka
  *
  */
-public interface cupons {
+public interface Coupons {
 
 	/**
 	 * クーポンを利用するメソッド.
