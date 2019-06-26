@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
  * @author kazuya.makida
  *
  */
-public class InsertUserForm {
+public class UpdateUserForm {
 
 	/** 名前 **/
 	@Size(min = 0, max = 50, message = "文字数制限を超えています")
@@ -27,16 +27,6 @@ public class InsertUserForm {
 	@Email(message = "メール形式で記入してください")
 	@NotBlank(message = "メールアドレスを入力してください")
 	private String email;
-
-	/** パスワード **/
-	@Pattern(regexp = ".{8,20}|", message = "文字数制約に反してます")
-	@NotBlank(message="パスワードを入力してください")
-	private String password;
-
-	/** 確認パスワード **/
-	@Pattern(regexp = ".{8,20}|", message = "文字数制約に反してます")
-	@NotBlank(message="パスワードを再度入力してください")
-	private String passwordAgain;
 
 	/** 郵便番号 **/
 	@Pattern(regexp = "^[0-9]*$", message = "半角数字のみです")
@@ -63,6 +53,17 @@ public class InsertUserForm {
 	public String getFirstName() {
 		return firstName;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "UpdateUserForm [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", zipcode="
+				+ zipcode + ", address=" + address + ", firstNumber=" + firstNumber + ", middleNumber=" + middleNumber
+				+ ", lastNumber=" + lastNumber + "]";
+	}
+
+
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -84,21 +85,6 @@ public class InsertUserForm {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPasswordAgain() {
-		return passwordAgain;
-	}
-
-	public void setPasswordAgain(String passwordAgain) {
-		this.passwordAgain = passwordAgain;
-	}
 
 	public String getZipcode() {
 		return zipcode;
@@ -140,11 +126,5 @@ public class InsertUserForm {
 		this.lastNumber = latterNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "InsertUserForm [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password="
-				+ password + ", passwordAgain=" + passwordAgain + ", zipcode=" + zipcode + ", address=" + address
-				+ ", firstNumber=" + firstNumber + ", middleNumber=" + middleNumber + ", lastNumber=" + lastNumber
-				+ "]";
-	}
 }
+

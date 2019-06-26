@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ピザ屋のネット注文</title>
+<title>商品一覧 - ラクラクピザ</title>
 <link href="css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link href="css/piza.css" th:href="@{/css/piza.css}" rel="stylesheet">
 <!--[if lt IE 9]>
@@ -48,7 +48,8 @@ window.onload=function(){
 					id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-left">
 						<span sec:authorize="isAuthenticated()">
-							<span sec:authentication="principal.user.name">山田</span>さんこんにちは！
+							ようこそ <span sec:authentication="principal.user.name">山田</span> さん<br>
+							<a href="item_list.html" class="navbar-link" th:href="@{/logout}"><small>ユーザ情報の変更</small></a>
 						</span>
 					</p>
 					<p class="navbar-text navbar-right">
@@ -57,10 +58,10 @@ window.onload=function(){
 							<a href="order_history.html" class="navbar-link" th:href="@{/history/showHistoryList}">注文履歴</a>&nbsp;&nbsp;
 						</span>
 						<span sec:authorize="isAnonymous()">
-							<a href="login.html" class="navbar-link" th:href="@{/toLogin}">ログイン</a>&nbsp;&nbsp;
+							<a href="login.html" class="navbar-link btn" th:href="@{/toLogin}">ログイン</a>&nbsp;&nbsp;
 						</span>
 						<span sec:authorize="isAuthenticated()">
-							<a href="item_list.html" class="navbar-link" th:href="@{/logout}">ログアウト</a>
+							<a href="item_list.html" class="navbar-link btn" th:href="@{/logout}">ログアウト</a>
 						</span>
 					</p>
 				</div>
@@ -72,8 +73,14 @@ window.onload=function(){
 		<!-- search form -->
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
+				<div class="alert alert-info" th:if="${param.login}">
+			   		<p>ログインしました。</p>
+			    </div>
 				<div class="alert alert-info" th:if="${param.logout}">
-			                        <p>ログアウトしました。</p>
+			    	<p>ログアウトしました。</p>
+			    </div>
+			    <div class="alert alert-info" th:if="${param.edited}">
+			    	<p>ユーザ情報を変更しました。</p>
 			    </div>
 				<div class="panel panel-default">
 					<div class="panel-heading">
