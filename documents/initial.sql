@@ -124,3 +124,6 @@ create table order_toppings (
   , topping_id integer not null
   , order_item_id integer not null
 ) ;
+
+ALTER TABLE orders
+ADD cost Integer NULL;
