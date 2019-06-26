@@ -90,7 +90,7 @@ $(function(){
 					<br><div class="h4 text-center">注文履歴がありません</div>
 				</div>
 				<div th:each = "order : ${orderList}">
-					<div th:if=${order.status!=0}>
+					<div th:if=${order.status.ordered}>
 						<table class="table table-bordered" >
 							<tr><td>
 								<table class="table">
@@ -103,14 +103,7 @@ $(function(){
 					    				<tr>
 					    					<td><span th:text="${#dates.format(order.orderDate,'yyyy年MM月dd日')}">2000年1月1日</span></td>
 					    					<td><span th:text="${#numbers.formatInteger(order.totalPrice, 1, 'COMMA') + '円'}">1000円</span></td>
-					    					<td>
-					    						<span th:switch="${order.status}">
-					    							<span th:case = "1" th:text="未入金">NO STATUS</span>
-					    							<span th:case = "2" th:text="入金済">NO STATUS</span>
-					    							<span th:case = "3" th:text="発送済">NO STATUS</span>
-					    							<span th:case = "9" th:text="キャンセル">NO STATUS</span>
-					    						</span>
-					    					</td>
+											<td th:text="${order.status.description}">配送済</td>
 					    				</tr>
 					    				<tr class="order_detail">
 					    					<th>配達日時</th>
