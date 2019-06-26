@@ -39,6 +39,9 @@ $(function(){
 				console.log($(element).val());
 				return $(element).val() > (nowHours + 2);
 			}).prop('disabled',false);
+			$('.deliveryTime').filter(function(index, element){
+				return $(element).val() == (nowHours + 3);
+			}).prop('checked',true);
 			
 			if(nowHours >= 16){
 				alert('ただ今の時間での、本日中の配達はできません');		
@@ -46,6 +49,9 @@ $(function(){
 			}
 		}else{
 			$('.deliveryTime').prop('disabled',false);
+			$('.deliveryTime').filter(function(index, element){
+				return $(element).val() == 10;
+			}).prop('checked',true);
 		};	
 	});
 });
