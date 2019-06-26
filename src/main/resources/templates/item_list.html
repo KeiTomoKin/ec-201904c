@@ -144,9 +144,9 @@ window.onload=function(){
 					<ul class="pagination" th:remove="all-but-first">
 						<li th:each="pageNumber : ${pageNumbers}"
 							th:class="${pageNumber==itemPage.number + 1} ? active">
-							<a th:if="${name==null}" th:href="@{/displayItemList/showList(page=${pageNumber},sortOrder=${sortOrder})}"
+							<a th:if="${name==null}" th:href="@{/(page=${pageNumber},sortOrder=${sortOrder})}"
 								th:text=${pageNumber}>1</a>
-							<a th:unless="${name==null}" th:href="@{/displayItemList/findName(name=${name},page=${pageNumber},sortOrder=${sortOrder})}"
+							<a th:unless="${name==null}" th:href="@{/findName(name=${name},page=${pageNumber},sortOrder=${sortOrder})}"
 								th:text=${pageNumber}
 								th:class="${pageNumber==itemPage.number + 1} ? active">1</a>
 						</li>
