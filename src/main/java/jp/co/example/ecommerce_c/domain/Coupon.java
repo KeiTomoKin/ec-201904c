@@ -2,6 +2,12 @@ package jp.co.example.ecommerce_c.domain;
 
 import java.util.Date;
 
+/**
+ * クーポンの種類を表すドメイン.
+ * 
+ * @author keita.tomooka
+ *
+ */
 public class Coupon {
 	/** ID */
 	private Integer id;
@@ -12,7 +18,7 @@ public class Coupon {
 	/** 機能（クラス名） */
 	private String className;
 	/** 有効期限 */
-	private Date deadLine;
+	private Date deadline;
 
 	public Integer getId() {
 		return id;
@@ -47,17 +53,17 @@ public class Coupon {
 	}
 
 	public Date getDeadLine() {
-		return deadLine;
+		return deadline;
 	}
 
-	public void setDeadLine(Date deadLine) {
-		this.deadLine = deadLine;
+	public void setDeadLine(Date deadline) {
+		this.deadline = deadline;
 	}
 
 	@Override
 	public String toString() {
 		return "Coupon [id=" + id + ", name=" + name + ", description=" + description + ", className=" + className
-				+ ", deadLine=" + deadLine + "]";
+				+ ", deadLine=" + deadline + "]";
 	}
 
 }
