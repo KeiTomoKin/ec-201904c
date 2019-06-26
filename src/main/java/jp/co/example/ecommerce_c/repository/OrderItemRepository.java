@@ -39,10 +39,11 @@ public class OrderItemRepository {
 	 * 
 	 * @param orderItem 新しいピザ
 	 */
-	public Integer insert(OrderItem orderItem) {
-		String insertSql = "insert into order_items(item_id,order_id,quantity,size) values (:itemId,:orderId,:quantity,:size)  RETURNING id";
+	public void insert(OrderItem orderItem) {
+		String insertSql = "insert into order_items(item_id,order_id,quantity,size) values (:itemId,:orderId,:quantity,:size) RETURNING id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
-		return template.queryForObject(insertSql, param, Integer.class);
+		Integer id = template.queryForObject(insertSql, param, Integer.class);
+		orderItem.setId(id);
 	}
 
 	/**
