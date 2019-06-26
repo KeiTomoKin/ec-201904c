@@ -22,30 +22,51 @@
 <script src="js/bootstrap.min.js"></script>
 
 <script>
+<<<<<<< Updated upstream
+=======
+window.onload=function(){
+	$('#inputDate').trigger('change');
+	$('#inputZipcode').trigger('change');
+};
+
+>>>>>>> Stashed changes
 $(function(){
 	$('')
 });
 
-$("#inputZipCode").change(function(){
-				var zip=$('#inputZipcode').val();
-			    var prefCode=zip.slice(0,2);
-				console.log(prefCode);	
-				var pref={ "00":1500, "04":1500, "05":1500, "06":1500, "07":1500, "08":1500, "09":1500, //北海道
-								 "03":800,   "02":800,   "98":800,   "01":800,   "99":800,   "96":800,   "97":800, //東北
-					 			"30":300,   "31":300,   "32":800,   "37":300,   											//北関東
-					 			"33":300,   "34":300,   "35":300,   "36":300,   "26":300,   "27":300,   "28":300,   "29":300,   "21":300,   "22":300,   "23":300,   "24":300,   "25":300,  //南関東
-					 			"10":0,       "11":0,       "12":0,      "13":0,       "14":0,       "15":0,      "16":0,      "17":0,       "18":0,       "19":0,       "20":0,                                  //東京
-					 			"94":500,    "95":500,   "93":500,   "92":500,   "91":500,   "40":500,  "38":500,   "39":500,    "50":500,   "41":500,   "43":500,  "44":500,   "45":500,   "46":500,   "47":500,   "48":500,   "49":500,   //中部、東海
-					 			"51":700,    "52":700,   "53":700,   "54":700,   "55":700,   "56":700,  "57":700,   "58":700,    "59":700,   "60":700,   "61":700,  "62":700,   "63":700,   "64":700,   "65":700,   "66":700,   "67":700,  //近畿
-					 			"68":800,    "69":800,   "70":800,   "71":800,   "72":800,   "73":800,  "74":800,   "75":800,    //中国
-				 				"76":900,    "77":900,   "78":900,   "79":900,                                                             //四国
-								"80":1000,  "81":1000, "82":1000, "83":1000,  "84":1000, "85":1000, "86":1000, "87":1000, "88":1000, "89":1000,   //九州
-					 			"90":150000   //沖縄
-					 			};
-	var cost=pref[prefCode]
+$(function(){
+$("#inputZipcode").change(function(){
+	console.log("onchange")
+	var zip=$('#inputZipcode').val();
+	var prefCode=zip.slice(0,2);
+	console.log(prefCode);
+	var pref={ "00":1500, "04":1500, "05":1500, "06":1500, "07":1500, "08":1500, "09":1500, //北海道
+					 "03":800,   "02":800,   "98":800,   "01":800,   "99":800,   "96":800,   "97":800, //東北
+		 			"30":300,   "31":300,   "32":800,   "37":300,   											//北関東
+		 			"33":300,   "34":300,   "35":300,   "36":300,   "26":300,   "27":300,   "28":300,   "29":300,   "21":300,   "22":300,   "23":300,   "24":300,   "25":300,  //南関東
+		 			"10":0,       "11":0,       "12":0,      "13":0,       "14":0,       "15":0,      "16":0,      "17":0,       "18":0,       "19":0,       "20":0,                                  //東京
+		 			"94":500,    "95":500,   "93":500,   "92":500,   "91":500,   "40":500,  "38":500,   "39":500,    "50":500,   "41":500,   "43":500,  "44":500,   "45":500,   "46":500,   "47":500,   "48":500,   "49":500,   //中部、東海
+		 			"51":700,    "52":700,   "53":700,   "54":700,   "55":700,   "56":700,  "57":700,   "58":700,    "59":700,   "60":700,   "61":700,  "62":700,   "63":700,   "64":700,   "65":700,   "66":700,   "67":700,  //近畿
+		 			"68":800,    "69":800,   "70":800,   "71":800,   "72":800,   "73":800,  "74":800,   "75":800,    //中国
+	 				"76":900,    "77":900,   "78":900,   "79":900,                                                             //四国
+					"80":1000,  "81":1000, "82":1000, "83":1000,  "84":1000, "85":1000, "86":1000, "87":1000, "88":1000, "89":1000,   //九州
+		 			"90":150000   //沖縄
+	};
+	var cost=pref[prefCode];
+	var formatCost = String(cost).replace(/(\d)(?=(\d\d\d)+$)/g, '$1,');
 	console.log(cost);
-//	document.getElementById('cost').innerHTML = cost;
-});
+	document.getElementById('cost').innerHTML = formatCost;
+	
+	
+	var price=[[${order.calcTotalPrice}]];
+	var totalPrice=price+cost;
+	var formatTotalPrice = String(totalPrice).replace(/(\d)(?=(\d\d\d)+$)/g, '$1,');
+	document.getElementById('taxInTotalPrice').innerHTML = formatTotalPrice;
+	document.getElementById('totalPrice').value = totalPrice ;
+	document.getElementById('shippingCost').value = cost;
+	
+	
+})});
 </script>
 <script th:src="@{/js/order_confirm.js}"></script>
 
@@ -193,7 +214,7 @@ $("#inputZipCode").change(function(){
 					<span id="total-price">消費税：<th:block th:text="${#numbers.formatInteger(order.tax, 1, 'COMMA')}">8,000</th:block>円</span><br>
 					<span id="total-price">ご注文金額：<th:block th:text="${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')}">38,000</th:block>円 (税込)</span><br>
 					<span id="total-price">送料：<span id="cost"></span>円</span><br>
-					<span id="total-price">ご注文金額合計：<th:block th:text="${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')}">38,000</th:block>円 (税込)</span><br>
+					<span id="total-price">ご注文金額合計：<span id="taxInTotalPrice">38,000</span>円 (税込)</span><br>
 				</div>
 			</div>
 		</div>
@@ -441,6 +462,8 @@ $("#inputZipCode").change(function(){
 				<div class="col-xs-offset-4 col-xs-4">
 					<div class="form-group">
 						<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
+						<input type="hidden" id="totalPrice" name="totalPrice">
+						<input type="hidden" id="shippingCost" name="cost">
 					</div>
 				</div>
 			</div>

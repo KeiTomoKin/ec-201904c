@@ -21,7 +21,6 @@ $(function(){
 
    
 <script>
-	$(function(){
 		$(".order_detail").hide();
 		$(".detail_switch").on("click",function(){
 			var detail = $(this).siblings("table").find(".order_detail") ;
@@ -133,6 +132,7 @@ $(function(){
 					    				<tr class="order_detail">
 					    					<th>お支払い方法</th>
 					    					<th>メールアドレス</th>
+					    					<th>内、送料</th>
 					    				</tr>
 					    				<tr class="order_detail">
 					    					<td>
@@ -142,6 +142,8 @@ $(function(){
 					    						</span>
 					    					</td>
 					    					<td><span th:text="${order.destinationEmail}">test@test.com</span></td>
+					    					<td><span th:text="${#numbers.formatInteger(order.cost, 1, 'COMMA')}">500円</span>円
+					    					</td>
 					    				</tr>
 								</table>
 								<a  class="btn btn-link detail_switch">詳細を表示</a>

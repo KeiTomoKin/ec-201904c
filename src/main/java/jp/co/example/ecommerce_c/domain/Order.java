@@ -39,6 +39,8 @@ public class Order {
 	private User user;
 	/** オーダーリスト */
 	private List<OrderItem> orderItemList;
+	/** 送料 */
+	private Integer cost;
 
 	@Override
 	public String toString() {
@@ -46,7 +48,8 @@ public class Order {
 				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
 				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
+				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + ", cost="
+				+ cost + "]";
 	}
 
 	public Integer getId() {
@@ -161,6 +164,14 @@ public class Order {
 		this.orderItemList = orderItemList;
 	}
 
+	public final Integer getCost() {
+		return cost;
+	}
+
+	public final void setCost(Integer cost) {
+		this.cost = cost;
+	}
+
 	/**
 	 * 消費税のゲッター.
 	 * 
@@ -189,10 +200,17 @@ public class Order {
 	 */
 	public void setStutasByPaymentMethod() {
 		if (this.paymentMethod == 1) {
+<<<<<<< Updated upstream
 			this.setStatus(1);
 		}else if(this.paymentMethod==2){
 			this.setStatus(2);
 		}else {
+=======
+			this.setStatus(OrderStatus.NOT_PAID);
+		} else if (this.paymentMethod == 2) {
+			this.setStatus(OrderStatus.PAID);
+		} else {
+>>>>>>> Stashed changes
 			System.out.println("error:status代入");
 		}
 	}

@@ -36,6 +36,7 @@ public class OrderRepository {
 		order.setDestinationTel(rs.getString("destination_tel"));
 		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
 		order.setPaymentMethod(rs.getInt("payment_method"));
+		order.setCost(rs.getInt("cost"));
 		return order;
 	};
 
@@ -90,8 +91,14 @@ public class OrderRepository {
 	 */
 	public Order findByUserId(Integer userId) {
 		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method"
+<<<<<<< Updated upstream
 				+ " FROM orders WHERE user_id=:userId AND status=0";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+=======
+				+ " FROM orders WHERE user_id=:userId AND status=:status";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId)
+				.addValue("status", OrderStatus.NOT_ORDERED.getCode());
+>>>>>>> Stashed changes
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 		return order;
 	}
@@ -104,7 +111,7 @@ public class OrderRepository {
 	 */
 	public List<Order> findAllOrderByUserId(Integer userId) {
 		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,"
-				+ "destination_zipcode,destination_address,destination_tel,delivery_time,payment_method "
+				+ "destination_zipcode,destination_address,destination_tel,delivery_time,payment_method,cost "
 				+ "FROM orders where user_id = :userId ORDER BY order_date DESC, delivery_time DESC;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
@@ -143,7 +150,11 @@ public class OrderRepository {
 	 * @param order 注文内容
 	 */
 	public void updateByOrderId(Order order) {
+<<<<<<< Updated upstream
 		String sql =" UPDATE orders SET user_id=:userId,status=:status,order_date=:orderDate,destination_name=:destinationName,destination_email=:destinationEmail,destination_zipcode=:destinationZipcode,destination_address=:destinationAddress,destination_tel=:destinationTel,delivery_time=:deliveryTime,payment_method=:paymentMethod WHERE id=:id;";
+=======
+		String sql = "UPDATE orders SET user_id=:userId,status=:status.code,order_date=:orderDate,destination_name=:destinationName,destination_email=:destinationEmail,destination_zipcode=:destinationZipcode,destination_address=:destinationAddress,destination_tel=:destinationTel,delivery_time=:deliveryTime,payment_method=:paymentMethod,total_price=:totalPrice,cost=:cost WHERE id=:id;";
+>>>>>>> Stashed changes
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}
