@@ -110,7 +110,6 @@ public class OrderConfirmationController {
 		model.addAttribute("min", formatter.format(minDate));
 		model.addAttribute("max", formatter.format(maxDate));
 
-
 //		model.addAttribute("user", user);
 
 		return "order_confirm";
@@ -125,7 +124,7 @@ public class OrderConfirmationController {
 		}
 
 		Order order = (Order) session.getAttribute("order");
-
+		
 		// クレジットカード決済処理
 		if (form.getPaymentMethod() == 2) {
 			Payment payment = new Payment();
@@ -194,7 +193,7 @@ public class OrderConfirmationController {
 		}
 		model.addAttribute("coupon", issuedTicket);
 		model.addAttribute("order", order);
-		couponService.update(order);
+//		couponService.update(order);
 
 		return "order_confirm";
 	}
