@@ -167,3 +167,7 @@ id serial primary key
 , user_id integer not null
 , coupon_code text not null
 ) ;
+--ユーザーidを都度変更
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(1,1,'1');
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(2,1,'2');
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(3,1,'3');
