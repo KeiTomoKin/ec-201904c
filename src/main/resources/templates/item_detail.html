@@ -177,19 +177,20 @@
 			</div>
 		</div>
 		</form>
-		<div>&nbsp;</div>
-		<div class="row col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-8 col-xs-12 "style="background-color : white">
-		<div class="col-xs-offset-2 col-xs-10">
-		<br><br>
+		</div>
+		<br>
+		<div class="row col-lg-offset-3 col-lg-6 col-md-offset-3 col-md-6 col-sm-6 col-xs-12 "style="background-color : white">
+		<div class="col-xs-offset-1 col-xs-10 text-center">
+		<br>
 		<h2>☆☆レビュー一覧☆☆</h2>
 		<hr>
 		</div>
-		<div class="col-xs-offset-2 col-xs-10">
+		<div class="col-xs-offset-1 col-xs-10">
 		<div class="form-group">
 		<span id="total-price" th:text="'平均評価：'+${#numbers.formatDecimal(item.evaluation,1,'COMMA',1,'POINT')}"></span>
 		</div>
 		</div>
-		<div class="col-xs-offset-2 col-xs-10">
+		<div class="col-xs-offset-1 col-xs-10">
 		<div class="form-group">
 		<form th:action="@{/review/insert}" method="post">
 		<table>
@@ -225,7 +226,7 @@
 		</div>		
 		
 		<div th:each="review:${item.reviewList}">
-		<div class="col-xs-offset-2 col-xs-10">
+		<div class="col-xs-offset-1 col-xs-10">
 		<div class="form-group">
 			名前：<span th:text="${review.name}"></span><br> 
 			内容：<span th:text="${review.content}"></span><br>
@@ -236,7 +237,7 @@
 		</div>
 		</div>
 		</div>
-		</div>
+		
 
 	<!-- end container -->
 	<script

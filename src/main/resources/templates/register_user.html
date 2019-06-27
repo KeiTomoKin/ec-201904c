@@ -126,9 +126,10 @@ $(function(){
 								<label th:if="${#fields.hasErrors('passwordAgain')}" th:errors="*{passwordAgain}" class="control-label" style="color: red" for="inputError">確認用パスワードを入力してください</label>
 								<input type="password" name="passwordAgain" style="width:180px;" maxlength="20" id="inputConfirmationPassword" class="form-control" placeholder="Confirmation Password" th:field="*{passwordAgain}">
 							</div>
-							<div class="form-group">
-								<button type="submit" class="btn btn-primary">登録</button>
-								<button type="button" id="reset" class="btn btn-primary">クリア</button>
+							<hr>
+							<div class="form-group text-center">
+								<button type="submit" class="btn btn-success">　登録　</button>&nbsp;&nbsp;
+								<button type="button" id="reset" class="btn btn-default">クリア</button>
 								<!-- <input type="reset" class="btn btn-primary" value="クリア"> -->
 							</div>
 						</fieldset>
