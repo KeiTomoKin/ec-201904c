@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,8 @@ import jp.co.example.ecommerce_c.service.ShoppingCartService;
 @RequestMapping("/cart")
 public class ShoppingCartController {
 	@Autowired
+	private ItemDetailController itemDetailController;
+	@Autowired
 	private ShoppingCartService shoppingCartService;
 	@Autowired
 	private GuestShoppingCartService guestShoppingCartService;
@@ -28,9 +31,10 @@ public class ShoppingCartController {
 	private HttpSession session;
 
 	@RequestMapping("/add")
-	public String addOrderItem(@Validated OrderItemForm form, BindingResult result, @AuthenticationPrincipal LoginUser loginUser) {
+	public String addOrderItem(@Validated OrderItemForm form, BindingResult result,
+			@AuthenticationPrincipal LoginUser loginUser, Model model) {
 		if (result.hasErrors()) {
-			return "forward:/item/detail";
+			return itemDetailController.detail(form.getItemId(), model);
 		}
 
 		Integer orderId = (Integer) session.getAttribute("orderId");
@@ -74,5 +78,4 @@ public class ShoppingCartController {
 		shoppingCartService.deleteOrderItem(orderItemId, orderId);
 		return "redirect:/cart";
 	}
-
 }

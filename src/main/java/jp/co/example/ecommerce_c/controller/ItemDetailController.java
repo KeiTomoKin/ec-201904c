@@ -23,7 +23,9 @@ public class ItemDetailController {
 
 	@ModelAttribute
 	public OrderItemForm setupOrderItemForm() {
-		return new OrderItemForm();
+		OrderItemForm form = new OrderItemForm();
+		form.setQuantity(1);
+		return form;
 	}
 
 	/**

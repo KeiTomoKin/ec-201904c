@@ -13,7 +13,7 @@ $(function() {
 		const topping_count = $("#toppings input[type=checkbox]:checked").length;
 		const topping_price = PRICE_LIST.toppings[size] * topping_count;
 
-		const pizza_count = parseInt($("select[name=quantity]").val());
+		const pizza_count = parseInt($("input[name=quantity]").val()) || 0;
 
 		return (pizza_price + topping_price) * pizza_count;
 	}
@@ -23,9 +23,28 @@ $(function() {
 		$("#totalPrice").text(price.toLocaleString());
 	}
 
-	$("input[type=radio]").on("change", showCalculatedPrice);
-	$("input[type=checkbox]").on("change", showCalculatedPrice);
-	$("select").on("change", showCalculatedPrice);
+	$("input").on("change", showCalculatedPrice);
+	$("input[type=number]").on("keyup", showCalculatedPrice);
 
 	showCalculatedPrice();
+
+	const getQuantity = () => $("#quantity").val();
+	const updateQuantity = (i) => {
+		$("#quantity").val(i);
+	};
+
+	$("#quantityPlusButton").on("click", () => {
+		let quantity = getQuantity();
+		quantity++;
+		updateQuantity(quantity);
+		showCalculatedPrice();
+	});
+	$("#quantityMinusButton").on("click", () => {
+		let quantity = getQuantity();
+		// 0以下にはしない
+		if (quantity <= 1) return;
+		quantity--;
+		updateQuantity(quantity);
+		showCalculatedPrice();
+	});
 });

@@ -27,3 +27,14 @@ td .form-group:last-child {
 .error-message {
 	color: red;
 }
+
+#quantityDisplay {
+	display: inline-block;
+	width: 2em;
+	font-size: 110%;
+	text-align: center;
+}
+
+.quantity-btn {
+	font-size: 120%;
+}
