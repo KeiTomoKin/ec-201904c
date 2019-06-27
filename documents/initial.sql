@@ -127,3 +127,41 @@ create table order_toppings (
 
 ALTER TABLE orders
 ADD cost Integer NULL;
+
+--クーポンの種類を表すテーブル
+create table coupons (
+id serial primary key
+, name text not null
+, description text not null
+, class_name text not null
+,deadline date not null
+) ;
+
+insert into coupons(name,description,class_name,deadline)values('10%OFF','会計額が1割引きになります','Discount10Percent','2019-8-29');
+
+--発行したクーポンを表すテーブル
+create table issued_tickets (
+id serial primary key
+, coupon_id integer not null
+, user_id integer not null
+, coupon_code text not null
+) ;
+
+
+--クーポンの種類を表すテーブル
+create table coupons (
+id serial primary key
+, name text not null
+, description text not null
+, class_name text not null
+,deadline date not null
+) ;
+insert into coupons(name,description,class_name,deadline)values('10%OFF','会計額が1割引きになります','Discount10Percent','2012-11-29');
+
+--発行したクーポンを表すテーブル
+create table issued_tickets (
+id serial primary key
+, coupon_id integer not null
+, user_id integer not null
+, coupon_code text not null
+) ;
