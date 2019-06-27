@@ -94,7 +94,6 @@ public class CouponService {
 	}
 	
 	public void update(Order order) {
-		System.out.println("3.1"+order);
 		orderRepository.update(order);
 	}
 }

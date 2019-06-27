@@ -9,13 +9,13 @@ import jp.co.example.ecommerce_c.domain.Order;
  *
  */
 
-public class Discount10Percent implements Coupons {
+public class Discount30Percent implements Coupons {
 	/**
 	 *合計金額から10%引きを行うメソッド.
 	 */
 	@Override
 	public Order useCoupon(Order order) {
-		order.setTotalPrice((int)(order.getTotalPrice()*0.9));
+		order.setTotalPrice((int)(order.getTotalPrice()*0.7));
 		
 		return order;
 	}

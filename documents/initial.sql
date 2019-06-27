@@ -156,7 +156,9 @@ id serial primary key
 , class_name text not null
 ,deadline date not null
 ) ;
-insert into coupons(name,description,class_name,deadline)values('10%OFF','会計額が1割引きになります','Discount10Percent','2012-11-29');
+insert into coupons(name,description,class_name,deadline)values('10%OFF','会計額が1割引きになります','Discount10Percent','2018-8-29');
+insert into coupons(name,description,class_name,deadline)values('30%OFF','会計額が3割引きになります','Discount30Percent','2018-8-29');
+insert into coupons(name,description,class_name,deadline)values('100円引き','ピザ1枚につき100円引きになります','Disount100yenPer1P','2018-8-29');
 
 --発行したクーポンを表すテーブル
 create table issued_tickets (
