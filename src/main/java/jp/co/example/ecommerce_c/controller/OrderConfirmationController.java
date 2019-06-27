@@ -79,8 +79,17 @@ public class OrderConfirmationController {
 		LocalDate nowDate = LocalDate.now();
 		LocalTime nowTime = LocalTime.now();
 
+<<<<<<< HEAD
 		if (nowTime.isAfter(DELIVER_TODAY_DEADLINE)) {
 			nowDate = nowDate.plusDays(1);
+=======
+		if (nowTime.getHour() < 16) {
+			orderConfirmationForm.setDeliveryDate(nowDate);
+		} else {
+			nowDate = nowDate.plusDays(1);
+			System.out.println(nowDate);
+			orderConfirmationForm.setDeliveryDate(nowDate);
+>>>>>>> feature/sql
 		}
 		orderConfirmationForm.setDeliveryDate(nowDate);
 
@@ -112,6 +121,7 @@ public class OrderConfirmationController {
 
 		model.addAttribute("min", formatter.format(minDate));
 		model.addAttribute("max", formatter.format(maxDate));
+
 
 //		model.addAttribute("user", user);
 
