@@ -13,14 +13,9 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-$(function(){
-    //ready関数
-});
-</script>
-
    
 <script>
+	$(function(){
 		$(".order_detail").hide();
 		$(".detail_switch").on("click",function(){
 			var detail = $(this).siblings("table").find(".order_detail") ;
@@ -111,7 +106,7 @@ $(function(){
 					    					<th class="col-xs-1"></th>
 					    					<th>配達日時</th>
 					    					<th>お届け先住所</th>
-					    					<th>ご連絡先</th>
+					    					<th>送料</th>
 					    				</tr>
 					    				<tr class="order_detail">
 					    					<td class="col-xs-1"></td>
@@ -125,24 +120,23 @@ $(function(){
 					    						<span th:text="〒+${order.destinationZipcode}">〒000-0000</span><br>
 					    						<span th:text="${order.destinationAddress}">address</span><br>
 					    					</td>
-					    					<td><span th:text="${order.destinationTel}">000-0000-0000</span></td>
+					    					<td><span th:text="${#numbers.formatInteger(order.cost, 1, 'COMMA')}">500円</span>円</td>
 					    				</tr>
 					    				<tr class="order_detail">
 					    					<th class="col-xs-1"></th>
-					    					<th>お支払い方法</th>
+					    					<th>連絡先</th>
 					    					<th>メールアドレス</th>
-					    					<th>内、送料</th>
+					    					<th>お支払い方法</th>
 					    				</tr>
 					    				<tr class="order_detail">
 					    					<td class="col-xs-1"></td>
+					    					<td><span th:text="${order.destinationTel}">000-0000-0000</span></td>
+					    					<td><span th:text="${order.destinationEmail}">test@test.com</span></td>
 					    					<td>
 					    						<span th:switch="${order.paymentMethod}">
 					    							<span th:case = "1" th:text="代金引換">NO PAY</span>
 					    							<span th:case = "2" th:text="クレジットカード">NO PAY</span>
 					    						</span>
-					    					</td>
-					    					<td><span th:text="${order.destinationEmail}">test@test.com</span></td>
-					    					<td><span th:text="${#numbers.formatInteger(order.cost, 1, 'COMMA')}">500円</span>円
 					    					</td>
 					    				</tr>
 								</table>

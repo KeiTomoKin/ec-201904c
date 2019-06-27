@@ -78,7 +78,7 @@ public class InsertUserController {
 
 		userService.insert(user);
 
-		return "login";
+		return "redirect:/toLogin?inserted";
 	}
 	
 }
