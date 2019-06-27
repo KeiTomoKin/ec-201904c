@@ -148,16 +148,28 @@ public class OrderConfirmationController {
 	}
 	
 	@RequestMapping("/useCoupon")
-	public String useCoupon(Integer orderId,String couponCode,Model model) {
+	public String useCoupon(String couponCode,Model model) {
+		Integer orderId = (Integer) session.getAttribute("orderId");
 		Order order = orderConfirmationService.getOrder(orderId);
 		IssuedTicket issuedTicket = couponService.findCouponByUserIdAndCouponCode(order.getUserId(), couponCode);
+		if(issuedTicket==null) {
+			model.addAttribute("couponName","");
+			model.addAttribute("order", order);
+			model.addAttribute("useless", true);
+			return "order_confirm";
+		}
 		issuedTicket.setCoupon(couponService.findCouponByCouponId(issuedTicket.getCouponId()));
+		model.addAttribute("couponName",issuedTicket.getCoupon().getName());
 		if(couponService.checkCoupon(order, issuedTicket)) {
 			order = couponService.useCoupon(order, issuedTicket);
 			model.addAttribute("useCoupon",true);
+			model.addAttribute("couponDescription", issuedTicket.getCoupon().getDescription());
 		}else {
 			model.addAttribute("notToUse",true);
 		}
+		model.addAttribute("order", order);
+		couponService.update(order);
+		
 		
 		return "order_confirm";
 	}

@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_c.logic;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.service.CouponService;
 
@@ -8,15 +10,18 @@ import jp.co.example.ecommerce_c.service.CouponService;
  * @author keita.tomooka
  *
  */
+
 public class Discount10Percent implements Coupons {
-	private CouponService couponService; 
 	/**
 	 *合計金額から10%引きを行うメソッド.
 	 */
 	@Override
 	public Order useCoupon(Order order) {
+		System.out.println("1"+order);
 		order.setTotalPrice((int)(order.getTotalPrice()*0.9));
-		couponService.update(order);
+		System.out.println("2"+order);
+		System.out.println("3"+order);
+		
 		return order;
 	}
 

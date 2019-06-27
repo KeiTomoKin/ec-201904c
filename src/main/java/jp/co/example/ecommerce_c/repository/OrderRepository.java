@@ -59,6 +59,7 @@ public class OrderRepository {
 	 * @param order オーダー
 	 */
 	public void update(Order order) {
+		System.out.println("aaaaaaaaaaaaaaa" + order);
 		String updateSql = "UPDATE orders SET total_price = :totalPrice where id = :id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(updateSql, param);

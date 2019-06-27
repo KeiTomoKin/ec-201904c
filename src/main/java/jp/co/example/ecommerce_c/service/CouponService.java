@@ -1,12 +1,10 @@
 package jp.co.example.ecommerce_c.service;
 
-import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jp.co.example.ecommerce_c.controller.GlobalExceptionHandler;
 import jp.co.example.ecommerce_c.domain.Coupon;
 import jp.co.example.ecommerce_c.domain.IssuedTicket;
 import jp.co.example.ecommerce_c.domain.Order;
@@ -65,7 +63,7 @@ public class CouponService {
 			 {
 		Coupons coupons = null;
 		try {
-			Class<?> myClass = Class.forName(issuedTicket.getCoupon().getClassName());
+			Class<?> myClass = Class.forName("jp.co.example.ecommerce_c.logic."+issuedTicket.getCoupon().getClassName());
 			coupons = (Coupons) myClass.newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			throw new RuntimeException(e);
@@ -85,16 +83,18 @@ public class CouponService {
 	public Order useCoupon(Order order, IssuedTicket issuedTicket) {
 		Coupons coupons = null;
 		try {
-			Class<?> myClass = Class.forName(issuedTicket.getCoupon().getClassName());
+			Class<?> myClass = Class.forName("jp.co.example.ecommerce_c.logic."+issuedTicket.getCoupon().getClassName());
 			coupons = (Coupons) myClass.newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		}
 //		coupons.checkCoupon(order);
 		return coupons.useCoupon(order);
+		
 	}
 	
 	public void update(Order order) {
+		System.out.println("3.1"+order);
 		orderRepository.update(order);
 	}
 }
