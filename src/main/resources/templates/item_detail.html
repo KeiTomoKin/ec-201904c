@@ -237,15 +237,17 @@
 				</form>
 			</div>
 		</div>		
-		<div style="height:280px;overflow:auto;" class="col-xs-offset-1 col-xs-10">
-			<div th:each="review:${item.reviewList}">
-				<div class="col-xs-offset-1 col-xs-10">
-					<div class="form-group">
-						名前：<span th:text="${review.name}"></span><br> 
-						内容：<span th:text="${review.content}"></span><br>
-						満足度：<span th:text="${review.evaluation}"></span> <br>
+		<div th:if="${item.evaluation!=0}" style="height:280px;overflow:auto;" class="col-xs-offset-1 col-xs-10">
+			<div>
+				<div th:each="review:${item.reviewList}">
+					<div class="col-xs-offset-1 col-xs-10">
+						<div class="form-group">
+							名前：<span th:text="${review.name}"></span><br> 
+							内容：<span th:text="${review.content}"></span><br>
+							満足度：<span th:text="${review.evaluation}"></span> <br>
+						</div>
+						<hr>
 					</div>
-					<hr>
 				</div>
 			</div>
 		</div>
