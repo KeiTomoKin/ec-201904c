@@ -556,6 +556,7 @@ $("#inputZipcode").change(function(){
 							<input class="form-control btn btn-warning btn-block" type="submit" value="この内容で注文する">
 							<input type="hidden" id="totalPrice" name="totalPrice">
 							<input type="hidden" id="shippingCost" name="cost"><br>
+							<input type="hidden" name="order" th:value="${order}">
 						</div>
 					</div>
 				</div>
