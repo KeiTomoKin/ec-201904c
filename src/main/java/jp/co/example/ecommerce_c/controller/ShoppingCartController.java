@@ -6,6 +6,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
@@ -26,7 +28,11 @@ public class ShoppingCartController {
 	private HttpSession session;
 
 	@RequestMapping("/add")
-	public String addOrderItem(OrderItemForm form, @AuthenticationPrincipal LoginUser loginUser) {
+	public String addOrderItem(@Validated OrderItemForm form, BindingResult result, @AuthenticationPrincipal LoginUser loginUser) {
+		if (result.hasErrors()) {
+			return "forward:/item/detail";
+		}
+
 		Integer orderId = (Integer) session.getAttribute("orderId");
 
 		OrderItem orderItem = new OrderItem();

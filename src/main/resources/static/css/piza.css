@@ -23,3 +23,7 @@ span#total-price {
 td .form-group:last-child {
 	margin-bottom: 0;
 }
+
+.error-message {
+	color: red;
+}

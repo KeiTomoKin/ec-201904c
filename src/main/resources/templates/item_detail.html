@@ -57,7 +57,7 @@
 			<!-- /.container-fluid -->
 		</nav>
 
-		<form action="cart_list.html" th:action="@{/cart/add}" method="post">
+		<form action="cart_list.html" th:action="@{/cart/add}" th:object="${orderItemForm}" method="post">
 		<input type="hidden" name="itemId" th:value="${item.id}">
 		<input type="hidden" name="userId" value="2">
 		<div class="row">
@@ -146,8 +146,9 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-xs-5 col-sm-5">
-									<label for="">数量:</label>
-									<select name="quantity" class="form-control">
+									<label for="quantity">数量:</label>
+									<div class="error-message" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">数量を選択してください</div>
+									<select name="quantity" class="form-control" id="quantity">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
