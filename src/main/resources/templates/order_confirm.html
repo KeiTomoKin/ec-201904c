@@ -55,7 +55,8 @@ $(function(){
 					return $(element).val() == (nowHours + 3);
 				}).prop('checked',true);
 				if(nowHours >= 16){
-					alert('ただ今の時間、本日中にお届けできません');		
+					alert('ただ今の時間、本日中にお届けできません');
+					$('.deliveryTime').prop('checked',false);
 				};
 			}else{
 				$('#time-message2').hide();

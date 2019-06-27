@@ -104,9 +104,6 @@ public class OrderConfirmationController {
 
 		// 配達可能期間の作成
 		LocalDate minDate = LocalDate.now();
-		if (LocalTime.now().isAfter(DELIVER_TODAY_DEADLINE)) {
-			minDate = minDate.plusDays(1);
-		}
 		LocalDate maxDate = minDate.plusDays(DURATION_OF_DELIVERY_DATE);
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
