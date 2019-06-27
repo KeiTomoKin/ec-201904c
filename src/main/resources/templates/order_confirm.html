@@ -489,7 +489,7 @@ $("#inputZipcode").change(function(){
 									<div class="form-group">
 										※ハイフン抜きの数字14～16桁
 										<div th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}" style="color: red">カード番号を入力してください</div>
-										<input type="text" class="form-control" pattern="\d{14,16}" th:field="*{cardNumber}">
+										<input type="text" class="form-control" pattern="\d{14,16}" th:field="*{cardNumber}" maxlength="16">
 									</div>
 								</td>
 							</tr>

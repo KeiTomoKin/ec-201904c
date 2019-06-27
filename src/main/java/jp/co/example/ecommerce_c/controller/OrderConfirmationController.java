@@ -75,12 +75,11 @@ public class OrderConfirmationController {
 		LocalDate nowDate = LocalDate.now();
 		LocalTime nowTime = LocalTime.now();
 
-		
 		if (nowTime.getHour() < 16) {
 			orderConfirmationForm.setDeliveryDate(nowDate);
-		}else {
+		} else {
 			nowDate = nowDate.plusDays(1);
-			System.out.println(nowDate);			
+			System.out.println(nowDate);
 			orderConfirmationForm.setDeliveryDate(nowDate);
 		}
 
@@ -99,23 +98,23 @@ public class OrderConfirmationController {
 		Order order = orderConfirmationService.getOrder(orderId);
 		order.setUser(userService.findByUserId(order.getUserId()));
 //		User user = userService.findByUserId(order.getUserId());
-		
-		// 配達可能期間の作成
-		
-		java.util.Date min = new java.util.Date();
-		
-		Calendar calendar = Calendar.getInstance();
-        calendar.setTime(min);
-        calendar.add(Calendar.DATE, 21);
-        
-        java.util.Date max = calendar.getTime();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        
+		// 配達可能期間の作成
+
+		java.util.Date min = new java.util.Date();
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(min);
+		calendar.add(Calendar.DATE, 21);
+
+		java.util.Date max = calendar.getTime();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 		model.addAttribute("order", order);
 		model.addAttribute("min", sdf.format(min));
 		model.addAttribute("max", sdf.format(max));
-		
+
 //		model.addAttribute("user", user);
 
 		return "order_confirm";
@@ -178,30 +177,29 @@ public class OrderConfirmationController {
 
 		return "order_finished";
 	}
-	
+
 	@RequestMapping("/useCoupon")
-	public String useCoupon(String couponCode,Model model) {
+	public String useCoupon(String couponCode, Model model) {
 		Integer orderId = (Integer) session.getAttribute("orderId");
 		Order order = orderConfirmationService.getOrder(orderId);
 		IssuedTicket issuedTicket = couponService.findCouponByUserIdAndCouponCode(order.getUserId(), couponCode);
-		if(issuedTicket==null) {
+		if (issuedTicket == null) {
 			model.addAttribute("order", order);
-			model.addAttribute("useless",true);
+			model.addAttribute("useless", true);
 			return "order_confirm";
 		}
 		issuedTicket.setCoupon(couponService.findCouponByCouponId(issuedTicket.getCouponId()));
-		model.addAttribute("couponName",issuedTicket.getCoupon().getName());
-		if(couponService.checkCoupon(order, issuedTicket)) {
+		model.addAttribute("couponName", issuedTicket.getCoupon().getName());
+		if (couponService.checkCoupon(order, issuedTicket)) {
 			order = couponService.useCoupon(order, issuedTicket);
-			model.addAttribute("useCoupon",true);
-		}else {
-			model.addAttribute("notToUse",true);
+			model.addAttribute("useCoupon", true);
+		} else {
+			model.addAttribute("notToUse", true);
 		}
 		model.addAttribute("coupon", issuedTicket);
 		model.addAttribute("order", order);
 		couponService.update(order);
-		
-		
+
 		return "order_confirm";
 	}
 }
