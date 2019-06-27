@@ -172,20 +172,9 @@
 
 		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12 "style="background-color : white">
 			<div class="col-xs-offset-4 col-xs-4">
-				<div class="form-group">
-					<form th:action="@{/}" action="order_confirm.html" method="get">
-						<!--
-						<span th:unless="${#lists.isEmpty(session.order.orderItemList)}">
-							<br><input class="form-control btn btn-warning btn-block" type="submit" value="注文を続ける"><br>
-							<br><input class="form-control btn btn-warning btn-block" type="submit" value="注文を続ける"><br>
-						</span>
-						-->
-					</form>
-					<form th:action="@{/confirm_order}" action="order_confirm.html" method="get">
-						<span th:unless="${#lists.isEmpty(session.order.orderItemList)}">
-							<input class="form-control btn btn-warning btn-block" type="submit" value="注文に進む">
-						</span>
-					</form>
+				<div class="cart-nav">
+					<a th:href="@{/}" href="order_confirm.html" class="btn btn-warning btn-block">続けて商品を選ぶ</a>
+					<a th:href="@{/confirm_order}" href="order_confirm.html" class="btn btn-warning btn-block" th:unless="${#lists.isEmpty(session.order.orderItemList)}">注文に進む</a>
 				</div>
 			</div>
 		</div>

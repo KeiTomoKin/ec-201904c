@@ -49,3 +49,7 @@ div .row{
 .table-responsive {
 	border-radius: 7px;
 }
+
+.cart-nav {
+	margin-bottom: 15px;
+}
