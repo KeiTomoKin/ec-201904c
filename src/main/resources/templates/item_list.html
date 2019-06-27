@@ -61,10 +61,10 @@
 		<!-- search form -->
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
-				<div class="alert alert-info" th:if="${param.login}">
+				<div class="alert alert-success" th:if="${param.login}">
 			   		<p>ログインしました。</p>
 			    </div>
-				<div class="alert alert-info" th:if="${param.logout}">
+				<div class="alert alert-success" th:if="${param.logout}">
 			    	<p>ログアウトしました。</p>
 			    </div>
 			    <div class="alert alert-success" th:if="${param.edited}">
@@ -162,6 +162,7 @@
 			</div>
 		</div>
 	</div>
+	<div>&nbsp;</div>
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

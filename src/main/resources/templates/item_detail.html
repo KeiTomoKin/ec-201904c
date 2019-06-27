@@ -61,19 +61,18 @@
 		<form action="cart_list.html" th:action="@{/cart/add}" th:object="${orderItemForm}" method="post">
 		<input type="hidden" name="itemId" th:value="${item.id}">
 		<input type="hidden" name="userId" value="2">
-		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12 "style="background-color : white">
-			<div class="col-xs-offset-2 col-xs-8">
+		<div class="row col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-8 col-xs-12 "style="background-color : white">
+			<div class="col-xs-offset-1 col-xs-10">
 
 				<h3 class="text-center">商品詳細</h3>
 				<div class="row">
-					<div class="col-xs-5">
+					<div class="col-xs-6">
 						<img src="img/1.jpg" th:src="@{/img/{path}(path=${item.imagePath})}" class="img-responsive img-rounded">
 					</div>
 
-					<div class="col-xs-5">
+					<div class="col-xs-6">
 						<div class="bs-component">
-							<h4 th:text="${item.name}">じゃがバターベーコン</h4><br>
-							<br>
+							<h4 th:text="${item.name}">じゃがバターベーコン</h4>
 							<p th:text="${item.description}">マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
 						</div>
 					</div>
@@ -100,17 +99,17 @@
 					</div>
 				</div><br>
 				<div class="row">
-					<div class="col-xs-offset-2 col-xs-8">
+					<div class="col-xs-offset-1 col-xs-10">
 						<div class="form-group" id="toppings">
 							<div class="row">
-								<div class="col-sm-12">
+								<div class="col-xs-offset-1 col-sm-12">
 									<label for="inputResponsibleCompany">
-										トッピング：&nbsp;1つにつき
+										&nbsp;&nbsp;トッピング：&nbsp;1つにつき
 										<span>&nbsp;M&nbsp;</span>&nbsp;&nbsp;200円(税抜)
 										<span>&nbsp;L&nbsp;</span>&nbsp;&nbsp;300円(税抜)
 									</label>
 								</div>
-								<div class="col-sm-12">
+								<div class="col-sm-12">&nbsp;&nbsp;
 									<label class="checkbox-inline"
 												 th:each="topping : ${item.toppingList}" th:object="${topping}">
 										<input type="checkbox" name="orderToppingList" th:value="*{id}">
@@ -161,28 +160,25 @@
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-10">
 						<div class="form-group">
-							<span id="total-price">この商品金額：<span id="totalPrice">38,000</span> 円(税抜)</span>
+							<span id="total-price">合計金額：<span id="totalPrice">38,000</span> 円 (税抜)</span>
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-xs-offset-2 col-xs-3">
+					<div class="col-xs-offset-3 col-xs-6">
 						<div class="form-group">
 							<p>
-								<input class="form-control btn btn-warning btn-block"
-									type="submit" value="カートに入れる">
+								<br><input class="form-control btn btn-warning btn-block"
+									type="submit" value="カートに入れる"><br>
 							</p>
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		</form>
-		
-		
-		
-		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12 "style="background-color : white">
+		<div>&nbsp;</div>
+		<div class="row col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-8 col-xs-12 "style="background-color : white">
 		<div class="col-xs-offset-2 col-xs-10">
 		<br><br>
 		<h2>☆☆レビュー一覧☆☆</h2>
@@ -241,6 +237,7 @@
 		</div>
 		</div>
 		</div>
+
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
