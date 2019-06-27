@@ -187,7 +187,15 @@
 		</div>
 		<div class="col-xs-offset-1 col-xs-10">
 		<div class="form-group">
+		<span th:unless="${item.evaluation==0}">
 		<span id="total-price" th:text="'平均評価：'+${#numbers.formatDecimal(item.evaluation,1,'COMMA',1,'POINT')}"></span>
+		</span>
+		<span th:if="${item.evaluation==0}">
+		<span th:text="レビューはまだありません。"></span><br>
+		<span th:text="レビューしてみませんか？？？？"></span><br>
+		<span th:text="するよね？？"></span><br>
+		<span th:text="して"></span>
+		</span>
 		</div>
 		</div>
 		<div class="col-xs-offset-1 col-xs-10">
@@ -219,6 +227,10 @@
 				<td><button class="form-control btn btn-warning btn-block">レビューする</button></td>
 		</tr>
 		</table>
+		<br>
+		<span th:if="${item.evaluation==0}">
+		<span th:text="え、しないの？？？？？？？"></span><br>
+		</span>
 		<hr>
 		<input type="hidden" name="itemId" th:value="${item.id}">
 		</form>
