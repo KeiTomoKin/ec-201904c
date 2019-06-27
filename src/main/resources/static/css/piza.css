@@ -5,11 +5,13 @@ span.price {
  display: inline-block;
  /* サイズ指定 */
  width: 1.5em;
- height: 1.2em;
+ height: 1.4em;
  margin-right: 5px;
  text-align: center;
  /* 背景色 */
  background-color:#ff4500;
+ /* 文字色 */
+ color:white;
  /* 角を丸くする */
  border-radius: 50%;
  -webkit-border-radius: 50%;
