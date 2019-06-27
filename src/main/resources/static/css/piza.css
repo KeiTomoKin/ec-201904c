@@ -38,3 +38,14 @@ td .form-group:last-child {
 .quantity-btn {
 	font-size: 120%;
 }
+
+body{
+	background-image: url("../img/background_pizza.jpg"); 
+}
+
+div .row{
+	border-radius: 5px;
+}
+.table-responsive {
+	border-radius: 7px;
+}
