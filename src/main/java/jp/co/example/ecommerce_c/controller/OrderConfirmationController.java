@@ -2,11 +2,10 @@ package jp.co.example.ecommerce_c.controller;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Calendar;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,6 +41,11 @@ import jp.co.example.ecommerce_c.service.UserService;
 @Controller
 @RequestMapping("/confirm_order")
 public class OrderConfirmationController {
+	/** 今日中に配達できる締め切りの時間 */
+	private static final LocalTime DELIVER_TODAY_DEADLINE = LocalTime.of(16, 0);
+	/** 配達日候補に出す日数 */
+	private static final int DURATION_OF_DELIVERY_DATE = 21;
+
 	@Autowired
 	private CreditCardService creditCardService;
 	@Autowired
@@ -75,14 +79,10 @@ public class OrderConfirmationController {
 		LocalDate nowDate = LocalDate.now();
 		LocalTime nowTime = LocalTime.now();
 
-		
-		if (nowTime.getHour() < 16) {
-			orderConfirmationForm.setDeliveryDate(nowDate);
-		}else {
+		if (nowTime.isAfter(DELIVER_TODAY_DEADLINE)) {
 			nowDate = nowDate.plusDays(1);
-			System.out.println(nowDate);			
-			orderConfirmationForm.setDeliveryDate(nowDate);
 		}
+		orderConfirmationForm.setDeliveryDate(nowDate);
 
 		return orderConfirmationForm;
 	}
@@ -99,23 +99,20 @@ public class OrderConfirmationController {
 		Order order = orderConfirmationService.getOrder(orderId);
 		order.setUser(userService.findByUserId(order.getUserId()));
 //		User user = userService.findByUserId(order.getUserId());
-		
-		// 配達可能期間の作成
-		
-		java.util.Date min = new java.util.Date();
-		
-		Calendar calendar = Calendar.getInstance();
-        calendar.setTime(min);
-        calendar.add(Calendar.DATE, 21);
-        
-        java.util.Date max = calendar.getTime();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        
 		model.addAttribute("order", order);
-		model.addAttribute("min", sdf.format(min));
-		model.addAttribute("max", sdf.format(max));
-		
+
+		// 配達可能期間の作成
+		LocalDate minDate = LocalDate.now();
+		if (LocalTime.now().isAfter(DELIVER_TODAY_DEADLINE)) {
+			minDate = minDate.plusDays(1);
+		}
+		LocalDate maxDate = minDate.plusDays(DURATION_OF_DELIVERY_DATE);
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+
+		model.addAttribute("min", formatter.format(minDate));
+		model.addAttribute("max", formatter.format(maxDate));
+
 //		model.addAttribute("user", user);
 
 		return "order_confirm";
@@ -178,30 +175,29 @@ public class OrderConfirmationController {
 
 		return "order_finished";
 	}
-	
+
 	@RequestMapping("/useCoupon")
-	public String useCoupon(String couponCode,Model model) {
+	public String useCoupon(String couponCode, Model model) {
 		Integer orderId = (Integer) session.getAttribute("orderId");
 		Order order = orderConfirmationService.getOrder(orderId);
 		IssuedTicket issuedTicket = couponService.findCouponByUserIdAndCouponCode(order.getUserId(), couponCode);
-		if(issuedTicket==null) {
+		if (issuedTicket == null) {
 			model.addAttribute("order", order);
-			model.addAttribute("useless",true);
+			model.addAttribute("useless", true);
 			return "order_confirm";
 		}
 		issuedTicket.setCoupon(couponService.findCouponByCouponId(issuedTicket.getCouponId()));
-		model.addAttribute("couponName",issuedTicket.getCoupon().getName());
-		if(couponService.checkCoupon(order, issuedTicket)) {
+		model.addAttribute("couponName", issuedTicket.getCoupon().getName());
+		if (couponService.checkCoupon(order, issuedTicket)) {
 			order = couponService.useCoupon(order, issuedTicket);
-			model.addAttribute("useCoupon",true);
-		}else {
-			model.addAttribute("notToUse",true);
+			model.addAttribute("useCoupon", true);
+		} else {
+			model.addAttribute("notToUse", true);
 		}
 		model.addAttribute("coupon", issuedTicket);
 		model.addAttribute("order", order);
 		couponService.update(order);
-		
-		
+
 		return "order_confirm";
 	}
 }
