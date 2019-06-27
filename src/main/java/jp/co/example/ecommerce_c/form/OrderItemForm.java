@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_c.form;
 
 import java.util.List;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -17,6 +18,7 @@ public class OrderItemForm {
 	private Integer itemId;
 	/** ピザの数量 */
 	@NotNull(message = "数量を入力してください")
+	@Min(value = 1, message = "数量は1以上で入力してください")
 	private Integer quantity;
 	/** ピザのサイズ */
 	@NotBlank
