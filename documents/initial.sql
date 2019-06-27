@@ -151,3 +151,14 @@ id serial primary key
 insert into issued_tickets(coupon_id,user_id,coupon_code) values(1,1,'1');
 insert into issued_tickets(coupon_id,user_id,coupon_code) values(2,1,'2');
 insert into issued_tickets(coupon_id,user_id,coupon_code) values(3,1,'3');
+
+
+--レビュー
+CREATE TABLE reviews
+(
+id serial NOT NULL, --コメントID
+name text NOT NULL, --名前
+content text NOT NULL, --コンテント
+item_id integer NOT NULL, --投稿ID
+evaluation integer NOT NULL
+);

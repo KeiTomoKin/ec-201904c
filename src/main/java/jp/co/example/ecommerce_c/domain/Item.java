@@ -25,12 +25,17 @@ public class Item {
 	private Boolean deleted;
 	/** トッピングのリスト */
 	private List<Topping> toppingList;
+	/** レビューのリスト */
+	private List<Review> reviewList;
+	/** 評価 */
+	private double evaluation;
 
 	
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", priceM=" + priceM + ", priceL="
-				+ priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + ", toppingList=" + toppingList + "]";
+				+ priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + ", toppingList=" + toppingList
+				+ ", reviewList=" + reviewList + ", evaluation=" + evaluation + "]";
 	}
 
 	public Integer getId() {
@@ -96,5 +101,22 @@ public class Item {
 	public void setToppingList(List<Topping> toppingList) {
 		this.toppingList = toppingList;
 	}
+
+	public final List<Review> getReviewList() {
+		return reviewList;
+	}
+
+	public final void setReviewList(List<Review> reviewList) {
+		this.reviewList = reviewList;
+	}
+
+	public final double getEvaluation() {
+		return evaluation;
+	}
+
+	public final void setEvaluation(double evaluation) {
+		this.evaluation = evaluation;
+	}
+
 
 }
