@@ -60,7 +60,7 @@
 
 		<!-- search form -->
 		<div class="row">
-			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
+			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-12">
 				<div class="alert alert-success" th:if="${param.login}">
 			   		<p>ログインしました。</p>
 			    </div>
@@ -98,13 +98,13 @@
 		</div>
 		
 		<!-- table -->
-		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12" style="background-color : white">
+		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-xs-12" style="background-color : white">
 			
 			<div
-				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<div>　</div>
+				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-xs-12">
+				<div>&nbsp;</div>
 				<form th:if="${name==null}" th:action="@{/}" method="get" class="form-inline">
-					<select name="sortOrder" class="form-control col-xs-3" onchange="submit(this.form)"
+					<select name="sortOrder" class="form-control col-xs-3 col-sm-3" onchange="submit(this.form)"
 							th:with="hasSortOrder=${param.sortOrder != null}">
 						<option value="">デフォルト</option>
 						<option value="DESC" th:selected="${hasSortOrder && 'DESC'.equals(param.sortOrder[0])}">価格の高い順</option>
@@ -130,8 +130,8 @@
 							<th th:each="item:${item3List}">
 								<a href="item_detail.html" th:href="@{'/item/detail?id='+${item.id}}">
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
-										class="img-responsive img-rounded" width="200" height="600">
-								</a><br>
+										class="img-responsive img-rounded m-5" width="200" height="600">
+								</a>
 								<a href="item_detail.html" th:href="@{/item/detail(id=${item.id})}" th:text="${item.name}">じゃがバターベーコン</a><br>
 								<span class="price">М</span>
 								<th:block th:text="${#numbers.formatInteger(item.priceM,1,'COMMA')}">1,380</th:block>円(税抜)<br>

@@ -168,8 +168,10 @@
 		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12 "style="background-color : white">
 			<div class="col-xs-offset-4 col-xs-4">
 				<div class="cart-nav">
-					<br><a th:href="@{/}" href="order_confirm.html" class="btn btn-success btn-block">続けて商品を選ぶ</a><br>
-					<a th:href="@{/confirm_order}" href="order_confirm.html" class="btn btn-warning btn-block" th:unless="${#lists.isEmpty(session.order.orderItemList)}">注文に進む</a><br>
+					<br><a th:href="@{/}" href="order_confirm.html" class="btn btn-success btn-block">
+						<span th:unless="${#lists.isEmpty(session.order.orderItemList)}">続けて</span>商品を選ぶ
+					</a><br>
+					<a th:href="@{/confirm_order}" href="order_confirm.html" class="btn btn-danger btn-block" th:unless="${#lists.isEmpty(session.order.orderItemList)}">注文に進む</a><br>
 				</div>
 			</div>
 		</div>
