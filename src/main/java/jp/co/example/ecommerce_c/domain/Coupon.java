@@ -52,11 +52,11 @@ public class Coupon {
 		this.className = className;
 	}
 
-	public Date getDeadLine() {
+	public Date getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadLine(Date deadline) {
+	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
 

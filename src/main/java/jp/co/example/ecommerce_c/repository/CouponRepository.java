@@ -24,7 +24,7 @@ public class CouponRepository {
 		coupon.setName(rs.getString("name"));
 		coupon.setDescription(rs.getString("description"));
 		coupon.setClassName(rs.getString("class_name"));
-		coupon.setDeadLine(rs.getDate("deadline"));
+		coupon.setDeadline(rs.getDate("deadline"));
 		return coupon;
 	};
 	@Autowired

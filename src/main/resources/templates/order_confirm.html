@@ -257,7 +257,7 @@ $("#inputZipcode").change(function(){
 				</div>
 			</div>
 		</div>
-		
+		<div  class="col-xs-offset-4 col-xs-4">
 		<form th:unless="${useCoupon}" th:action="@{/confirm_order/useCoupon}" method="post" action="order_confirm.html">
 		  <h4 class="text-center">クーポンはお持ちですか？</h4>
 		  <table class="table table-striped">
@@ -265,8 +265,8 @@ $("#inputZipcode").change(function(){
 	          <tr>
 				<td>
 				  <div class="text-center">
-				  	<div th:if="notToUse" th:text="${couponName}"></div>
-				  	<div th:if="useless" th:text="エラー：無効なクーポンです"　style=color:red></div>
+				  	<div th:if="${notToUse}" th:text="${couponName}"></div>
+				  	<div th:if="${useless}" th:text="エラー：無効なクーポンです" style=color:red></div>
 					  <label for="couponCode">クーポンコード：</label>
 					<input type="text"name="couponCode" id="couponCode">
 					<input type="submit" value="適用する">
@@ -279,22 +279,24 @@ $("#inputZipcode").change(function(){
 		<div th:if="${useCoupon}">
 		<h4 class="text-center">適用中のクーポン</h4>
 		<table  class="table table-striped">
-			<tbody>
+			<tbody class="text-center">
 	          <tr>
 				<td>
 				  	<span>クーポン名：</span>
-				</td>
-				<td>
 				  	<span th:text="${couponName}"></span>
 				</td>
 			 </tr>
 			 <tr>
-				<td colspan="2">
-				  	<span th:text="${couponDescription}"></span>
+				<td >
+				      　        <span>説明：</span>
+				  	    <span th:text="${coupon.coupon.description}"></span><br>
+				  	    <span>有効期限:</span>
+				  	    <span th:text="${coupon.coupon.deadline}"></span>
 				</td>
 			  </tr>
 			</tbody>
 		  </table>		
+		  </div>
 		  </div>
 		
 		

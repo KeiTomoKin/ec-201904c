@@ -168,9 +168,8 @@ public class OrderConfirmationController {
 		Order order = orderConfirmationService.getOrder(orderId);
 		IssuedTicket issuedTicket = couponService.findCouponByUserIdAndCouponCode(order.getUserId(), couponCode);
 		if(issuedTicket==null) {
-			model.addAttribute("couponName","");
 			model.addAttribute("order", order);
-			model.addAttribute("useless", true);
+			model.addAttribute("useless",true);
 			return "order_confirm";
 		}
 		issuedTicket.setCoupon(couponService.findCouponByCouponId(issuedTicket.getCouponId()));
@@ -178,10 +177,10 @@ public class OrderConfirmationController {
 		if(couponService.checkCoupon(order, issuedTicket)) {
 			order = couponService.useCoupon(order, issuedTicket);
 			model.addAttribute("useCoupon",true);
-			model.addAttribute("couponDescription", issuedTicket.getCoupon().getDescription());
 		}else {
 			model.addAttribute("notToUse",true);
 		}
+		model.addAttribute("coupon", issuedTicket);
 		model.addAttribute("order", order);
 		couponService.update(order);
 		
