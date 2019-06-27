@@ -127,3 +127,14 @@ create table order_toppings (
 
 ALTER TABLE orders
 ADD cost Integer NULL;
+
+
+--レビュー
+CREATE TABLE reviews
+(
+id serial NOT NULL, --コメントID
+name text NOT NULL, --名前
+content text NOT NULL, --コンテント
+item_id integer NOT NULL, --投稿ID
+evaluation integer NOT NULL
+);

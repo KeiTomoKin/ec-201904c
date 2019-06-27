@@ -189,8 +189,63 @@
 			</div>
 		</div>
 		</form>
-
-	</div>
+		<div class="col-xs-offset-2 col-xs-10">
+		<br><br>
+		<h2>☆☆レビュー一覧☆☆</h2>
+		<hr>
+		</div>
+		<div class="col-xs-offset-2 col-xs-10">
+		<div class="form-group">
+		<span id="total-price" th:text="'平均評価：'+${#numbers.formatDecimal(item.evaluation,1,'COMMA',1,'POINT')}"></span>
+		</div>
+		</div>
+		<div class="col-xs-offset-2 col-xs-10">
+		<div class="form-group">
+		<form th:action="@{/review/insert}" method="post">
+		<table>
+		<tr>
+				<td>名前：</td>
+				<td><input type="text" name="name" class="form-control"><br></td>
+		</tr>
+		<tr>
+				<td>コメント：</td>
+				<td><textarea rows="5" cols="50" name="content" class="form-control"></textarea><br></td>
+		</tr>
+		<tr>
+		       	<td>満足度:</td>
+		       	<td><select id="evaluation" name="evaluation" class="form-control">
+							<option value="5">5：やばたにえん</option>
+							<option value="4">4：チョベリグ～！</option>
+							<option value="3">3：マジ卍</option>
+							<option value="2">2：タピの方がよくね？</option>
+							<option value="1">1：チョベリバ～</option>
+						</select>
+						<br>
+				</td>
+		</tr>
+		<tr>
+				<td></td>
+				<td><button class="form-control btn btn-warning btn-block">レビューする</button></td>
+		</tr>
+		</table>
+		<hr>
+		<input type="hidden" name="itemId" th:value="${item.id}">
+		</form>
+		</div>
+		</div>		
+		
+		<div th:each="review:${item.reviewList}">
+		<div class="col-xs-offset-2 col-xs-10">
+		<div class="form-group">
+			名前：<span th:text="${review.name}"></span><br> 
+			内容：<span th:text="${review.content}"></span><br>
+			満足度：<span th:text="${review.evaluation}">
+			            </span> <br>
+		</div>
+			<hr>
+		</div>
+		</div>
+		</div>
 	<!-- end container -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
