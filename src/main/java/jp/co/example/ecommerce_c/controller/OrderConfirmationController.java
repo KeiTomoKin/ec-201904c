@@ -2,9 +2,11 @@ package jp.co.example.ecommerce_c.controller;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpSession;
 
@@ -97,8 +99,23 @@ public class OrderConfirmationController {
 		Order order = orderConfirmationService.getOrder(orderId);
 		order.setUser(userService.findByUserId(order.getUserId()));
 //		User user = userService.findByUserId(order.getUserId());
+		
+		// 配達可能期間の作成
+		
+		java.util.Date min = new java.util.Date();
+		
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(min);
+        calendar.add(Calendar.DATE, 21);
+        
+        java.util.Date max = calendar.getTime();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
 		model.addAttribute("order", order);
+		model.addAttribute("min", sdf.format(min));
+		model.addAttribute("max", sdf.format(max));
+		
 //		model.addAttribute("user", user);
 
 		return "order_confirm";
