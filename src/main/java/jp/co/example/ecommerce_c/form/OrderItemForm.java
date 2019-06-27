@@ -2,6 +2,9 @@ package jp.co.example.ecommerce_c.form;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * リクエストパラメータで受け取ったピザのフォーム.
  * 
@@ -10,27 +13,30 @@ import java.util.List;
  */
 public class OrderItemForm {
 	/** 注文するピザID */
-	private String itemId;
+	@NotNull
+	private Integer itemId;
 	/** ピザの数量 */
-	private String quantity;
+	@NotNull(message = "数量を入力してください")
+	private Integer quantity;
 	/** ピザのサイズ */
+	@NotBlank
 	private String size;
 	/** 乗せるトッピングのリスト */
 	private List<Integer> orderToppingList;
 
-	public final String getItemId() {
+	public final Integer getItemId() {
 		return itemId;
 	}
 
-	public final void setItemId(String itemId) {
+	public final void setItemId(Integer itemId) {
 		this.itemId = itemId;
 	}
 
-	public final String getQuantity() {
+	public final Integer getQuantity() {
 		return quantity;
 	}
 
-	public final void setQuantity(String quantity) {
+	public final void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

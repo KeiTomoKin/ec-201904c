@@ -3,9 +3,11 @@ package jp.co.example.ecommerce_c.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.Item;
+import jp.co.example.ecommerce_c.form.OrderItemForm;
 import jp.co.example.ecommerce_c.service.ItemDetailService;
 
 /**
@@ -18,6 +20,13 @@ import jp.co.example.ecommerce_c.service.ItemDetailService;
 public class ItemDetailController {
 	@Autowired
 	private ItemDetailService itemDetailService;
+
+	@ModelAttribute
+	public OrderItemForm setupOrderItemForm() {
+		OrderItemForm form = new OrderItemForm();
+		form.setQuantity(1);
+		return form;
+	}
 
 	/**
 	 * 商品詳細を表示します.
