@@ -37,7 +37,7 @@
 					<p class="navbar-text navbar-left">
 						<span sec:authorize="isAuthenticated()">
 							ようこそ <span sec:authentication="principal.user.name">山田</span> さん<br>
-							<a href="item_list.html" class="navbar-link" th:href="@{/logout}"><small>ユーザ情報の変更</small></a>
+							<a href="item_list.html" class="navbar-link" th:href="@{/edit}"><small>ユーザ情報の変更</small></a>
 						</span>
 					</p>					
 					<p class="navbar-text navbar-right">
