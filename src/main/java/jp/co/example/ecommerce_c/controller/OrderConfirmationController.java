@@ -113,6 +113,7 @@ public class OrderConfirmationController {
 		model.addAttribute("min", formatter.format(minDate));
 		model.addAttribute("max", formatter.format(maxDate));
 
+
 //		model.addAttribute("user", user);
 
 		return "order_confirm";
