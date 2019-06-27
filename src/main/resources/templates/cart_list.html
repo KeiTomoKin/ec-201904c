@@ -61,7 +61,7 @@
 
 		<!-- table -->
 		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12 "style="background-color : white">
-			<div class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+			<div class="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<h3 class="text-center">ショッピングカート</h3>
 				<table class="table table-striped">
 					<tbody>
@@ -145,7 +145,7 @@
 							<td>
 								<div class="text-center">
 									<form th:action="@{/cart/delete}" method="post">
-										<button type="submit" class="btn btn-primary">削除</button>
+										<button type="submit" class="btn btn-success">削除</button>
 										<input type="hidden" name="orderId" th:value="${orderItem.orderId}">
 										<input type="hidden" name="orderItemId" th:value="${orderItem.Id}">
 									</form>
