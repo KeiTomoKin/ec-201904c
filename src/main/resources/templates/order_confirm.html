@@ -264,8 +264,8 @@ $("#inputZipcode").change(function(){
 								  	<div th:if="${notToUse}" th:text="${couponName}"></div>
 								  	<div th:if="${useless}" th:text="エラー：無効なクーポンです" style=color:red></div>
 									  <label for="couponCode">クーポンコード：</label>
-									<input type="text"name="couponCode" id="couponCode">
-									<input type="submit" value="適用する">
+									<input type="text"name="couponCode" id="couponCode" class="form-control">
+									<input type="submit" value="適用する" class="btn btn-success">
 								  </div>
 								</td>
 							  </tr>
