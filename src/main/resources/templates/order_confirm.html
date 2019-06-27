@@ -20,10 +20,10 @@
 <script src="js/bootstrap.min.js"></script>
 
 <!-- 現在の日付と時間から、配達可能時間の制御 -->
-<!--デフォルトで本日の日付　間に合わないなら、明日 -->
 <script>
-var nowDate = new Date().getDate();
-var nowHours = new Date().getHours();
+var now = new Date();
+var nowDate = now.getDate();
+var nowHours = now.getHours();
 	
 
 window.onload=function(){
@@ -32,6 +32,7 @@ window.onload=function(){
 	if(nowHours >= 16){
 		alert('ただ今の時間、本日中にお届けできません');		
 	};
+	
 };
 
 
@@ -266,7 +267,7 @@ $("#inputZipcode").change(function(){
 				<td>
 				  <div class="text-center">
 				  	<div th:if="notToUse" th:text="${couponName}"></div>
-				  	<div th:if="useless" th:text="エラー：無効なクーポンです"　style=color:red></div>
+				  	<div th:if="useless" th:text="エラー：無効なクーポンです" style=color:red></div>
 					  <label for="couponCode">クーポンコード：</label>
 					<input type="text"name="couponCode" id="couponCode">
 					<input type="submit" value="適用する">
@@ -401,7 +402,7 @@ $("#inputZipcode").change(function(){
 													<nobr>
 														<label th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" class="control-label" style="color: red;" for="inputError">配達日時を入力してください</label>
 													</nobr>
-													<input type="date" name="deliveryDate" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:field="*{deliveryDate}" id="inputDate"  class="form-control input-sm" />
+													<input type="date" name="deliveryDate" th:min="${min}" th:max="${max}" th:field="*{deliveryDate}" id="inputDate"  class="form-control input-sm" />
 												</div>
 											</div>
 										</div>
