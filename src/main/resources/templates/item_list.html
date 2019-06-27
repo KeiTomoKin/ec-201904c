@@ -88,7 +88,7 @@
 								</div>
 							</div>
 							<div class="text-center">
-								<button type="submit" value="検索" class="btn btn-primary">検索</button>
+								<button type="submit" value="検索" class="btn btn-success">検索</button>
 								<button type="reset" value="クリア" class="btn btn-default">クリア</button>
 							</div>
 						</form>
@@ -98,10 +98,11 @@
 		</div>
 		
 		<!-- table -->
-		<div class="row">
+		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12" style="background-color : white">
 			
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<div>　</div>
 				<form th:if="${name==null}" th:action="@{/}" method="get" class="form-inline">
 					<select name="sortOrder" class="form-control col-xs-3" onchange="submit(this.form)"
 							th:with="hasSortOrder=${param.sortOrder != null}">

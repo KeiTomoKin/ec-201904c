@@ -23,3 +23,9 @@ span#total-price {
 td .form-group:last-child {
 	margin-bottom: 0;
 }
+
+body{
+	background-image: url("../img/background_pizza.jpg"); 
+	}
+
+
