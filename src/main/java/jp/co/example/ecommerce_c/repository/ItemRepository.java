@@ -83,9 +83,38 @@ public class ItemRepository {
 	 * @return ソートされたアイテムリスト
 	 */
 	public List<Item> findAllSortByPopularity() {
-		String sql = "select i.id as id,i.name as name,description as description,price_m as price_m,price_l as price_l,image_path as image_path,deleted as deleted "
-				+ "FROM items i LEFT OUTER JOIN order_items o ON o.item_id=i.id GROUP BY o.item_id,i.name,i.id "
-				+ "ORDER BY CASE WHEN sum(quantity) is null THEN 0 ELSE sum(quantity) END DESC,id;";
+		String sql = "select \r\n" + 
+				"i.id as id,i.name as name,\r\n" + 
+				"description as description,\r\n" + 
+				"price_m as price_m,\r\n" + 
+				"price_l as price_l,\r\n" + 
+				"image_path as image_path,\r\n" + 
+				"deleted as deleted\r\n" + 
+				"FROM \r\n" + 
+				"items i \r\n" + 
+				"LEFT OUTER JOIN \r\n" + 
+				"order_items o \r\n" + 
+				"ON \r\n" + 
+				"o.item_id=i.id \r\n" + 
+				"LEFT OUTER JOIN \r\n" + 
+				"orders s \r\n" + 
+				"ON \r\n" + 
+				"o.order_id=s.id\r\n" + 
+				"GROUP BY \r\n" + 
+				"o.item_id,i.name,i.id,s.status\r\n" + 
+				"ORDER BY \r\n" + 
+				"CASE \r\n" + 
+				"  WHEN \r\n" + 
+				"  sum(quantity) is null THEN 0 \r\n" + 
+				"  ELSE sum(\r\n" + 
+				"  CASE \r\n" + 
+				"    WHEN\r\n" + 
+				"    s.status=0 THEN 0\r\n" + 
+				"    ELSE quantity\r\n" + 
+				"  END\r\n" + 
+				"  )\r\n" + 
+				"END DESC,\r\n" + 
+				"id;";
 		return template.query(sql, ITEM_ROW_MAPPER);
 	}
 }
