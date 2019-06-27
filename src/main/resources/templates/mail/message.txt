@@ -12,6 +12,6 @@
 					#strings.listJoin(orderToppingList.![topping.name], '、')})][/]
 お届け予定時間：[(*{#dates.format(deliveryTime,'M月d日 H時ごろ')})]
 お届け先：〒[(*{destinationZipcode})] [(*{destinationAddress})]
-お支払方法：[(*{paymentMethod})]
+お支払方法：[(*{paymentMethod == 1 ? '代金引換' : 'クレジットカード支払い'})]
 
 今後ともどうぞラクラクピザをご利用くださいませ。[/]
