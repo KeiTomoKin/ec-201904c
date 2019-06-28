@@ -16,11 +16,11 @@ public class UpdateUserForm {
 	/** 名前 **/
 	@Size(min = 0, max = 50, message = "文字数制限を超えています")
 	@NotBlank(message = "名前を入力してください")
-	@Pattern(regexp = "^[\\S]+$", message="半角スペースは登録できません")
+	@Pattern(regexp = "^[\\S]*$", message="半角スペースは登録できません")
 	private String firstName;
 	@Size(min = 0, max = 50, message = "文字数制限を超えています")
 	@NotBlank(message = "名前を入力してください")
-	@Pattern(regexp = "^[\\S]+$", message="半角スペースは登録できません")
+	@Pattern(regexp = "^[\\S]*$", message="半角スペースは登録できません")
 	private String lastName;
 
 	/** メールアドレス **/
