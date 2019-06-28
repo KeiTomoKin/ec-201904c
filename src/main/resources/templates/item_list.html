@@ -79,7 +79,7 @@
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
-									<input type="text" name="name" id="code" class="form-control input-sm" autocomplete="on" list="dt1"/>
+									<input type="text" name="name" id="code" class="form-control input-sm" autocomplete="on" list="dt1" th:value="${name}"/>
 										<datalist id="dt1">
 											<option th:each="name : ${itemNameList}" th:value="${name}"></option>
 										</datalist>
@@ -111,7 +111,7 @@
 						<option value="ASC" th:selected="${hasSortOrder && 'ASC'.equals(param.sortOrder[0])}">価格の低い順</option>
 						<option value="RANKING" th:selected="${hasSortOrder && 'RANKING'.equals(param.sortOrder[0])}">人気順</option>
 					</select>
-					<input type="hidden" name="page" th:value="${page}">
+					<input type="hidden" name="page" value="1">
 				</form>
 				<form th:unless="${name==null}" th:action="@{/findName}" method="get" class="form-inline">
 					<select name="sortOrder" class="form-control col-xs-3" onchange="submit(this.form)"
