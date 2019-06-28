@@ -94,8 +94,8 @@ public class ItemRepository {
 	 * @return ソートされたアイテムリスト
 	 */
 	public List<Item> findAllSortByPopularity() {
-		String sql = "SELECT i.id as id,i.name as name,price_m as price_m,price_l as price_l,image_path as image_path,deleted as deleted " + 
-				"FROM items i LEFT OUTER JOIN order_items o ON o.item_id=i.id LEFT OUTER JOIN orders s ON o.order_id=s.id GROUP BY o.item_id,i.name,i.id " + 
+		String sql = "SELECT i.id as id,i.name as name,i.price_m as price_m,i.price_l as price_l,i.image_path as image_path,i.deleted as deleted " + 
+				"FROM items i LEFT OUTER JOIN order_items o ON o.item_id=i.id LEFT OUTER JOIN orders s ON o.order_id=s.id GROUP BY o.item_id,i.name,i.id,i.price_m,i.price_l,i.image_path,i.deleted " + 
 				"ORDER BY CASE WHEN sum(quantity) is null THEN 0 ELSE sum( CASE WHEN s.status=0 THEN 0 ELSE quantity END )END DESC,id;";
 		return template.query(sql, ITEM_ROW_MAPPER2);
 	}
