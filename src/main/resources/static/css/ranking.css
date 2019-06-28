@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+#ranking tr:nth-of-type(1) th {
+position: relative;
+overflow: hidden; /* 不要部分を消す */
+padding: 1px;
+}
+
+#ranking tr:nth-of-type(1) th:nth-of-type(1):after {
+content: "";
+position: absolute;
+z-index: 1;
+width: 120px;
+height: auto;
+background: red;
+content: "1位"; /* 表示するテキスト */
+text-align: center;
+color: #fff;
+font-family: 'Arial';
+font-weight: bold;
+padding: 5px 10px;
+left: -30px;
+top: 3px;
+transform: rotate(-30deg);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#ranking tr:nth-of-type(1) th:nth-of-type(2):after {
+content: "";
+position: absolute;
+z-index: 1;
+width: 120px;
+height: auto;
+background: red;
+content: "2位"; /* 表示するテキスト */
+text-align: center;
+color: #fff;
+font-family: 'Arial';
+font-weight: bold;
+padding: 5px 10px;
+left: -30px;
+top: 3px;
+transform: rotate(-30deg);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#ranking tr:nth-of-type(1) th:nth-of-type(3):after {
+content: "";
+position: absolute;
+z-index: 1;
+width: 120px;
+height: auto;
+background: red;
+content: "3位"; /* 表示するテキスト */
+text-align: center;
+color: #fff;
+font-family: 'Arial';
+font-weight: bold;
+padding: 5px 10px;
+left: -30px;
+top: 3px;
+transform: rotate(-30deg);
+box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}

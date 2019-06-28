@@ -147,6 +147,10 @@ public class OrderConfirmationController {
 		// コピーできなかった各情報の作成
 		Date orderDate = Date.valueOf(LocalDate.now());
 		order.setOrderDate(orderDate);
+		
+		// 半角空欄の
+		form.getDestinationFirstName().replace(":", "　");
+		form.getDestinationLastName().replace(":", "　");
 
 		order.setDestinationName(form.getDestinationFirstName() + " " + form.getDestinationLastName());
 		order.setDestinationTel(form.getDestinationFirstTel() + "-" + form.getDestinationMiddleFirstTel() + "-"

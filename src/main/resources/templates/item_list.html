@@ -8,6 +8,7 @@
 <title>商品一覧 - ラクラクピザ</title>
 <link href="css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet">
 <link href="css/piza.css" th:href="@{/css/piza.css}" rel="stylesheet">
+<link href="css/ranking.css" th:href="@{/css/ranking.css}" rel="stylesheet">
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -96,16 +97,13 @@
 				</div>
 			</div>
 		</div>
-		
 		<!-- table -->
 		<div class="row col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-xs-12" style="background-color : white">
 			
-			<div
-				class="table-responsive  col-xs-12">
+			<div class="table-responsive  col-xs-12">
 				<div>&nbsp;</div>
 				<form th:if="${name==null}" th:action="@{/}" method="get" class="form-inline">
-					<select name="sortOrder" class="form-control col-xs-3 col-sm-3" onchange="submit(this.form)"
-							th:with="hasSortOrder=${param.sortOrder != null}">
+					<select name="sortOrder" class="form-control col-xs-3 col-sm-3" onchange="submit(this.form)" th:with="hasSortOrder=${param.sortOrder != null}">
 						<option value="">デフォルト</option>
 						<option value="DESC" th:selected="${hasSortOrder && 'DESC'.equals(param.sortOrder[0])}">価格の高い順</option>
 						<option value="ASC" th:selected="${hasSortOrder && 'ASC'.equals(param.sortOrder[0])}">価格の低い順</option>
@@ -114,8 +112,7 @@
 					<input type="hidden" name="page" th:value="${page}">
 				</form>
 				<form th:unless="${name==null}" th:action="@{/findName}" method="get" class="form-inline">
-					<select name="sortOrder" class="form-control col-xs-3" onchange="submit(this.form)"
-							th:with="hasSortOrder=${param.sortOrder != null}">
+					<select name="sortOrder" class="form-control col-xs-3" onchange="submit(this.form)" th:with="hasSortOrder=${param.sortOrder != null}">
 						<option value="">デフォルト</option>
 						<option value="DESC" th:selected="${hasSortOrder && 'DESC'.equals(param.sortOrder[0])}">価格の高い順</option>
 						<option value="ASC" th:selected="${hasSortOrder && 'ASC'.equals(param.sortOrder[0])}">価格の低い順</option>
@@ -124,13 +121,15 @@
 					<input type="hidden" name="name" th:value="${name}">
 					<input type="hidden" name="page" th:value="${page}">
 				</form>
-				<table class="table table-striped">
+				<br>
+				<br>
+				<br>
+				<table th:id="${param.sortOrder != null && 'RANKING'.equals(param.sortOrder[0]) ? 'ranking':''}" Class="table table-striped">
 					<tbody>
 						<tr th:each="item3List:${itemPage}">
 							<th th:each="item:${item3List}">
 								<a href="item_detail.html" th:href="@{'/item/detail?id='+${item.id}}">
-									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
-										class="img-responsive img-rounded m-5" width="250" height="600">
+									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}" class="img-responsive img-rounded m-5" width="250" height="600">
 								</a>
 								<a href="item_detail.html" th:href="@{/item/detail(id=${item.id})}" th:text="${item.name}">じゃがバターベーコン</a><br>
 								<span class="price">М</span>
