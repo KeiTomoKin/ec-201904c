@@ -124,7 +124,7 @@
 				<br>
 				<br>
 				<br>
-				<table th:id="${param.sortOrder != null && 'RANKING'.equals(param.sortOrder[0]) ? 'ranking':''}" Class="table table-striped">
+				<table th:id="${param.sortOrder != null && 'RANKING'.equals(param.sortOrder[0]) && '1'.equals(param.page[0]) ? 'ranking':''}" Class="table table-striped">
 					<tbody>
 						<tr th:each="item3List,s:${itemPage}">
 							<th class = "col-lg-3 col-md-3 col-sm-3" th:each="item:${item3List}">
