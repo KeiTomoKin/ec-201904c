@@ -136,9 +136,9 @@ id serial primary key
 , class_name text not null
 ,deadline date not null
 ) ;
-insert into coupons(name,description,class_name,deadline)values('10%OFF','会計額が1割引きになります','Discount10Percent','2018-8-29');
-insert into coupons(name,description,class_name,deadline)values('30%OFF','会計額が3割引きになります','Discount30Percent','2018-8-29');
-insert into coupons(name,description,class_name,deadline)values('100円引き','ピザ1枚につき100円引きになります','Disount100yenPer1P','2018-8-29');
+insert into coupons(name,description,class_name,deadline)values('【夏限定!!】10%OFF【スペシャルクーポン】','会計額が1割引きになります','Discount10Percent','2018-8-29');
+insert into coupons(name,description,class_name,deadline)values('【夏限定!!】30%OFF【スペシャルクーポン】','会計額が3割引きになります','Discount30Percent','2018-8-29');
+insert into coupons(name,description,class_name,deadline)values('【夏限定!!】100円引き','ピザ1枚につき100円引きになります【スペシャルクーポン】','Disount100yenPer1P','2018-8-29');
 
 --発行したクーポンを表すテーブル
 create table issued_tickets (
@@ -148,10 +148,19 @@ id serial primary key
 , coupon_code text not null
 ) ;
 --ユーザーidを都度変更
-insert into issued_tickets(coupon_id,user_id,coupon_code) values(1,1,'1');
-insert into issued_tickets(coupon_id,user_id,coupon_code) values(2,1,'2');
-insert into issued_tickets(coupon_id,user_id,coupon_code) values(3,1,'3');
 
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(1,2,'1');
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(2,2,'2');
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(3,2,'3');
+
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(1,3,'1');
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(2,3,'2');
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(3,3,'3');
+
+
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(1,4,'1');
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(2,4,'2');
+insert into issued_tickets(coupon_id,user_id,coupon_code) values(3,4,'3');
 
 --レビュー
 CREATE TABLE reviews
