@@ -88,6 +88,7 @@ public class DisplayItemListController {
 		List<Item> itemList = displayItemListService.findByLikeName(name);
 		if (itemList.size() == 0) {
 			model.addAttribute("noResult", true);
+			model.addAttribute("name", name);
 			return showList(model, 1, sortOrder);
 		}
 		if (sortOrder != null) {
