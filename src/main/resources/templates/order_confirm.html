@@ -246,6 +246,7 @@ $("#inputZipcode").change(function(){
 						</tr>
 					</tbody>
 				</table>
+				<hr>
 				<div>
 					<div class="form-group text-center">
 						<span id="total-price">消費税：<th:block th:text="${#numbers.formatInteger(order.tax, 1, 'COMMA')}">8,000</th:block>円</span><br>

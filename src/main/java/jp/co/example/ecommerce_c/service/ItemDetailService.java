@@ -33,7 +33,6 @@ public class ItemDetailService {
 		item.setReviewList(reviewRepository.findByItemId(id));
 		if (item.getReviewList().size()!=0) {
 			item.setEvaluation(reviewRepository.averageByItemId(id));
-			System.out.println(reviewRepository.averageByItemId(id));
 		}else {
 			item.setEvaluation(0);
 		}
