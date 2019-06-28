@@ -19,7 +19,8 @@ span.price {
 }
 /* 合計金額の文字の大きさを変える */
 span#total-price {
-	font-size: 35px;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 td .form-group:last-child {
@@ -54,4 +55,8 @@ div .row{
 
 .cart-nav {
 	margin-bottom: 15px;
+}
+
+#price-table {
+  border: 2px #EEE8AA solid;
 }

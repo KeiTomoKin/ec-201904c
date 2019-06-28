@@ -79,7 +79,7 @@
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
-									<input type="text" name="name" id="code" class="form-control input-sm" autocomplete="on" list="dt1"/>
+									<input type="text" name="name" id="code" class="form-control input-sm" autocomplete="on" list="dt1" th:value="${name}"/>
 										<datalist id="dt1">
 											<option th:each="name : ${itemNameList}" th:value="${name}"></option>
 										</datalist>

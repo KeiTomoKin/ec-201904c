@@ -156,7 +156,7 @@
 													サイズ
 												</div>
 											</th>
-											<th class="col-xs-2">
+											<th class="col-xs-1">
 												<div class="text-center">
 													価格(税抜)
 												</div>
@@ -166,7 +166,7 @@
 													数量
 												</div>
 											</th>
-											<th class="col-xs-4">
+											<th class="col-xs-5">
 												<div class="text-center">
 													トッピング、価格(税抜・1枚あたり)
 												</div>
@@ -204,6 +204,9 @@
 												</div>
 											</td>
 											<td>
+												<div class = "text-center">
+													<span th:if ="*{#lists.isEmpty(orderToppingList)}" th:text="なし"></span>
+												</div>	
 												<ul th:with="OrderTopping=${T(jp.co.example.ecommerce_c.domain.OrderTopping)},
 																		 toppingPrice=${isMSize ? OrderTopping.PRICE_M: OrderTopping.PRICE_L}">
 													<li th:each="orderTopping : *{orderToppingList}" th:object="${orderTopping}">
