@@ -33,6 +33,17 @@ public class ItemRepository {
 		item.setDeleted(rs.getBoolean("deleted"));
 		return item;
 	};
+	
+	private static final RowMapper<Item> ITEM_ROW_MAPPER2 = (rs, i) -> {
+		Item item = new Item();
+		item.setId(rs.getInt("id"));
+		item.setName(rs.getString("name"));
+		item.setPriceM(rs.getInt("price_m"));
+		item.setPriceL(rs.getInt("price_l"));
+		item.setImagePath(rs.getString("image_path"));
+		item.setDeleted(rs.getBoolean("deleted"));
+		return item;
+	};
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
@@ -84,9 +95,9 @@ public class ItemRepository {
 	 * @return ソートされたアイテムリスト
 	 */
 	public List<Item> findAllSortByPopularity() {
-		String sql = "SELECT i.id as id,i.name as name,description as description,price_m as price_m,price_l as price_l,image_path as image_path,deleted as deleted " + 
+		String sql = "SELECT i.id as id,i.name as name,price_m as price_m,price_l as price_l,image_path as image_path,deleted as deleted " + 
 				"FROM items i LEFT OUTER JOIN order_items o ON o.item_id=i.id LEFT OUTER JOIN orders s ON o.order_id=s.id GROUP BY o.item_id,i.name,i.id " + 
 				"ORDER BY CASE WHEN sum(quantity) is null THEN 0 ELSE sum( CASE WHEN s.status=0 THEN 0 ELSE quantity END )END DESC,id;";
-		return template.query(sql, ITEM_ROW_MAPPER);
+		return template.query(sql, ITEM_ROW_MAPPER2);
 	}
 }
