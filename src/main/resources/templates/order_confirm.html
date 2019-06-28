@@ -76,7 +76,6 @@ $(function(){
 
 $(function(){
 $("#inputZipcode").change(function(){
-	console.log("onchange")
 	var zip=$('#inputZipcode').val();
 	var prefCode=zip.slice(0,2);
 	console.log(prefCode);
@@ -92,7 +91,13 @@ $("#inputZipcode").change(function(){
 					"80":1000,  "81":1000, "82":1000, "83":1000,  "84":1000, "85":1000, "86":1000, "87":1000, "88":1000, "89":1000,   //九州
 		 			"90":150000   //沖縄
 	};
-	var cost=pref[prefCode];
+	
+	if(pref[prefCode] === undefined){
+		var cost = 0;
+	}else{
+		var cost=pref[prefCode];	
+	}
+	
 	var formatCost = String(cost).replace(/(\d)(?=(\d\d\d)+$)/g, '$1,');
 	console.log(cost);
 	document.getElementById('cost').innerHTML = formatCost;
