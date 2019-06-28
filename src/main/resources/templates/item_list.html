@@ -126,8 +126,8 @@
 				<br>
 				<table th:id="${param.sortOrder != null && 'RANKING'.equals(param.sortOrder[0]) ? 'ranking':''}" Class="table table-striped">
 					<tbody>
-						<tr th:each="item3List:${itemPage}">
-							<th th:each="item:${item3List}">
+						<tr th:each="item3List,s:${itemPage}">
+							<th class = "col-lg-3 col-md-3 col-sm-3" th:each="item:${item3List}">
 								<a href="item_detail.html" th:href="@{'/item/detail?id='+${item.id}}">
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}" class="img-responsive img-rounded m-5" width="250" height="600">
 								</a>

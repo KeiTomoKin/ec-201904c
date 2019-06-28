@@ -21,11 +21,11 @@ public class OrderConfirmationForm {
 	/** 宛先名 **/
 	@Size(min = 0, max = 49, message = "文字数制限を超えています")
 	@NotBlank(message = "お名前を入力して下さい")
-	@Pattern(regexp = "^[\\S]+$", message="半角スペースは登録できません")
+	@Pattern(regexp = "^[\\S]*$", message="半角スペースは登録できません")
 	private String destinationFirstName;
 	@Size(min = 0, max = 50, message = "文字数制限を超えています")
 	@NotBlank(message = "お名前を入力して下さい")
-	@Pattern(regexp = "^[\\S]+$", message="半角スペースは登録できません")
+	@Pattern(regexp = "^[\\S]*$", message="半角スペースは登録できません")
 	private String destinationLastName;
 
 	/** 宛先メールアドレス **/
